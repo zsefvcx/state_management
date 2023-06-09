@@ -18,6 +18,7 @@ dependencies:
   #dart run build_runner build
   json_serializable: ^6.7.0
   json_annotation: ^4.8.1
+  http: ^1.0.0
 
 dev_dependencies:
   flutter_test:

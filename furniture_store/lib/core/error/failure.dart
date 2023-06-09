@@ -6,3 +6,15 @@ abstract class Failure extends Equatable{
   @override
   List<Object> get props => [];
 }
+
+abstract class ServerFailure extends Equatable{
+
+  @override
+  List<Object> get props => [];
+}
+
+abstract class CacheFailure extends Equatable{
+
+  @override
+  List<Object> get props => [];
+}
