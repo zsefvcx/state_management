@@ -5,13 +5,13 @@ import 'package:json_annotation/json_annotation.dart';
 part 'trademark.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class Trademark  extends Equatable{
+class TrademarkEntity  extends Equatable{
   final int id;
   final String title;
   @JsonKey(defaultValue: [])
   final List<String> pictures;
 
-  const Trademark({
+  const TrademarkEntity({
     required this.id,
     required this.title,
     required this.pictures
@@ -23,7 +23,7 @@ class Trademark  extends Equatable{
   @override
   bool get stringify => true;
 
-  factory Trademark.fromJson(Map<String, dynamic> json) => _$TrademarkFromJson(json);
+  factory TrademarkEntity.fromJson(Map<String, dynamic> json) => _$TrademarkFromJson(json);
 
   Map<String, dynamic> toJson() => _$TrademarkToJson(this);
 }

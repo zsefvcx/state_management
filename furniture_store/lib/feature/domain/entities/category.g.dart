@@ -6,7 +6,8 @@ part of 'category.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Category _$CategoryFromJson(Map<String, dynamic> json) => Category(
+CategoryEntity _$CategoryEntityFromJson(Map<String, dynamic> json) =>
+    CategoryEntity(
       id: json['id'] as int,
       title: json['title'] as String? ?? 'Default',
       parentId: json['parent_id'] as int?,
@@ -16,7 +17,8 @@ Category _$CategoryFromJson(Map<String, dynamic> json) => Category(
           [],
     );
 
-Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
+Map<String, dynamic> _$CategoryEntityToJson(CategoryEntity instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'parent_id': instance.parentId,

@@ -5,7 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'product.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class Product  extends Equatable{
+class ProductEntity  extends Equatable{
   final int id;
   @JsonKey(name: 'trademark_id')
   final int? trademarkId;
@@ -18,7 +18,7 @@ class Product  extends Equatable{
   @JsonKey(defaultValue: [])
   final List<String> pictures;
 
-  const Product({
+  const ProductEntity({
     required this.id,
     required this.trademarkId,
     required this.parentId,
@@ -34,7 +34,7 @@ class Product  extends Equatable{
   @override
   bool get stringify => true;
 
-  factory Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);
+  factory ProductEntity.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);
 
   Map<String, dynamic> toJson() => _$ProductToJson(this);
 }

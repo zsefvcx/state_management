@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 part 'category.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class Category extends Equatable{
+class CategoryEntity extends Equatable{
   final int id;
   @JsonKey(defaultValue: 'Default')
   final String title;
@@ -15,7 +15,7 @@ class Category extends Equatable{
   @JsonKey(defaultValue: [])
   final List<String> pictures;
 
-  const Category({
+  const CategoryEntity({
     required this.id,
     required this.title,
     required this.parentId,
@@ -28,7 +28,7 @@ class Category extends Equatable{
   @override
   bool get stringify => true;
 
-  factory Category.fromJson(Map<String, dynamic> json) => _$CategoryFromJson(json);
+  factory CategoryEntity.fromJson(Map<String, dynamic> json) => _$CategoryFromJson(json);
 
   Map<String, dynamic> toJson() => _$CategoryToJson(this);
 }

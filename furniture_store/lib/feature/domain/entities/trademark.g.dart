@@ -6,7 +6,8 @@ part of 'trademark.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Trademark _$TrademarkFromJson(Map<String, dynamic> json) => Trademark(
+TrademarkEntity _$TrademarkEntityFromJson(Map<String, dynamic> json) =>
+    TrademarkEntity(
       id: json['id'] as int,
       title: json['title'] as String,
       pictures: (json['pictures'] as List<dynamic>?)
@@ -15,7 +16,8 @@ Trademark _$TrademarkFromJson(Map<String, dynamic> json) => Trademark(
           [],
     );
 
-Map<String, dynamic> _$TrademarkToJson(Trademark instance) => <String, dynamic>{
+Map<String, dynamic> _$TrademarkEntityToJson(TrademarkEntity instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'pictures': instance.pictures,
