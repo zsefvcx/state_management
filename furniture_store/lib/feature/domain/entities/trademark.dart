@@ -5,7 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'trademark.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class TrademarkEntity  extends Equatable{
+class TrademarkEntity extends Equatable{
   final int id;
   final String title;
   @JsonKey(defaultValue: [])
@@ -23,7 +23,7 @@ class TrademarkEntity  extends Equatable{
   @override
   bool get stringify => true;
 
-  factory TrademarkEntity.fromJson(Map<String, dynamic> json) => _$TrademarkFromJson(json);
+  factory TrademarkEntity.fromJson(Map<String, dynamic> json) => _$TrademarkEntityFromJson(json);
 
-  Map<String, dynamic> toJson() => _$TrademarkToJson(this);
+  Map<String, dynamic> toJson() => _$TrademarkEntityToJson(this);
 }

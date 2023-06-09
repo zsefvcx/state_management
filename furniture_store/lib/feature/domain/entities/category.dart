@@ -28,7 +28,7 @@ class CategoryEntity extends Equatable{
   @override
   bool get stringify => true;
 
-  factory CategoryEntity.fromJson(Map<String, dynamic> json) => _$CategoryFromJson(json);
+  factory CategoryEntity.fromJson(Map<String, dynamic> json) => _$CategoryEntityFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CategoryToJson(this);
+  Map<String, dynamic> toJson() => _$CategoryEntityToJson(this);
 }
