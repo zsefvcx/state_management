@@ -20,6 +20,7 @@ dependencies:
   json_annotation: ^4.8.1
   http: ^1.0.0
   internet_connection_checker: ^1.0.0+1
+  get_it: ^7.6.0
 
 dev_dependencies:
   flutter_test:
