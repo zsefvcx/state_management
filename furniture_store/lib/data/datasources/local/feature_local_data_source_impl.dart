@@ -5,7 +5,6 @@ class FeatureLocalDataSourceImpl extends FeatureLocalDataSource {
 
 FeatureLocalDataSourceImpl();
 
-
 @override
 Future<List<ProductModel>> gatAllProducts(int page) async {
   List<ProductModel> result = [

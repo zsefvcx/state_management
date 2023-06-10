@@ -4,12 +4,13 @@ import 'package:furniture_store/core/core.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 import 'package:furniture_store/domain/repositories/feature_repository.dart';
 
-class SearchProducts extends UseCase<List<ProductEntity>, SearchProductParams>{
+class SearchProducts extends UseCase<List<ProductEntity>?, SearchProductParams>{
   final FeatureRepository featureRepository;
 
   SearchProducts(this.featureRepository);
 
-  Future<(Failure, List<ProductEntity>)> call(SearchProductParams params) async {
+  @override
+  Future<(Failure?, List<ProductEntity>?)> call(SearchProductParams params) async {
     return await featureRepository.gatAllProducts(params.id);
   }
 
