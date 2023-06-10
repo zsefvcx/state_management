@@ -1,5 +1,5 @@
-import 'package:furniture_store/feature/data/datasources/remote/feature_remote_data_source.dart';
-import 'package:furniture_store/feature/data/models/product_model.dart';
+import 'package:furniture_store/data/datasources/remote/feature_remote_data_source.dart';
+import 'package:furniture_store/data/models/product_model.dart';
 
 class FeatureRemoteDataSourceImpl extends FeatureRemoteDataSource {
 

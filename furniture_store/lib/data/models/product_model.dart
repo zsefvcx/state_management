@@ -1,6 +1,6 @@
 
 import 'package:json_annotation/json_annotation.dart';
-import 'package:furniture_store/feature/domain/entities/entities.dart';
+import 'package:furniture_store/domain/entities/entities.dart';
 
 part 'product_model.g.dart';
 

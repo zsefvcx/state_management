@@ -1,5 +1,5 @@
 import 'package:furniture_store/core/error/failure.dart';
-import 'package:furniture_store/feature/domain/entities/entities.dart';
+import 'package:furniture_store/domain/entities/entities.dart';
 
 abstract class FeatureRepository {
   Future<(Failure, List<ProductEntity>)> gatAllProducts(int page);//с пагинацией

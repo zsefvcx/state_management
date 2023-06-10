@@ -1,4 +1,4 @@
-import 'package:furniture_store/feature/data/models/product_model.dart';
+import 'package:furniture_store/data/models/product_model.dart';
 
 abstract class FeatureRemoteDataSource {
 

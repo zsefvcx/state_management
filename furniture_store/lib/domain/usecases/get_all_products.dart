@@ -1,8 +1,8 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:furniture_store/core/core.dart';
-import 'package:furniture_store/feature/domain/entities/entities.dart';
-import 'package:furniture_store/feature/domain/repositories/feature_repository.dart';
+import 'package:furniture_store/domain/entities/entities.dart';
+import 'package:furniture_store/domain/repositories/feature_repository.dart';
 
 class GatAllProducts extends UseCase<List<ProductEntity>, PageProductParams>{
   final FeatureRepository featureRepository;
