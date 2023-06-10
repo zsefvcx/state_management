@@ -4,7 +4,6 @@ import 'package:furniture_store/data/datasources/local/feature_local_data_source
 import 'package:furniture_store/data/datasources/remote/feature_remote_data_source.dart';
 import 'package:furniture_store/domain/entities/product.dart';
 import 'package:furniture_store/domain/repositories/feature_repository.dart';
-import 'package:get_it/get_it.dart';
 
 class FeatureRepositoryImpl extends FeatureRepository {
 
