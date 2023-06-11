@@ -11,7 +11,7 @@ class GatAllProducts extends UseCase<List<ProductEntity>?, PageProductParams>{
 
   @override
   Future<(Failure?, List<ProductEntity>?)> call(PageProductParams params) async {
-    return await featureRepository.gatAllProducts(params.page);
+    return await featureRepository.getAllProducts(params.page);
   }
 
 }

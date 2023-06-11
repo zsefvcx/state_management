@@ -6,7 +6,7 @@ class FeatureRemoteDataSourceImpl extends FeatureRemoteDataSource {
   FeatureRemoteDataSourceImpl();
 
   @override
-  Future<List<ProductModel>> gatAllProducts(int page) async {
+  Future<List<ProductModel>> getAllProducts(int page) async {
     List<ProductModel> result = [
       ProductModel(
         id: 0,

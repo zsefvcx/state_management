@@ -11,7 +11,7 @@ class SearchProducts extends UseCase<List<ProductEntity>?, SearchProductParams>{
 
   @override
   Future<(Failure?, List<ProductEntity>?)> call(SearchProductParams params) async {
-    return await featureRepository.gatAllProducts(params.id);
+    return await featureRepository.getAllProducts(params.id);
   }
 
 }

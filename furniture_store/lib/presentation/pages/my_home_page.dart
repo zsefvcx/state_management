@@ -1,5 +1,9 @@
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:furniture_store/domain/bloc/main_bloc.dart';
+import 'package:furniture_store/domain/entities/entities.dart';
+import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -13,7 +17,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  void _incrementCounter() {
+  Future<void> _incrementCounter() async {
+    if (kDebugMode) {
+      List<ProductEntity> res = await context.read<MainBloc>().getAllProducts(0);
+      print('\n');
+      print(res.join('\n'));
+    }
     setState(() {
       _counter++;
     });

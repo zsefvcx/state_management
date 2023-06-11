@@ -18,8 +18,8 @@ class FeatureRepositoryImpl extends FeatureRepository {
   });
 
   @override
-  Future<(Failure?, List<ProductEntity>?)> gatAllProducts(int page) async {
-    return await _getPersons(() => featureRemoteDataSource.gatAllProducts(page));
+  Future<(Failure?, List<ProductEntity>?)> getAllProducts(int page) async {
+    return await _getPersons(() => featureRemoteDataSource.getAllProducts(page));
   }
 
   @override

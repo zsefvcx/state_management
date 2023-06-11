@@ -7,13 +7,13 @@ part 'product_model.g.dart';
 @JsonSerializable(explicitToJson: true)
 class ProductModel extends ProductEntity{
   const ProductModel({
-    required id,
-    required trademarkId,
-    required parentId,
-    required title,
-    required url,
-    required price,
-    required pictures,
+    required int id,
+    required int? trademarkId,
+    required int? parentId,
+    required String title,
+    required String? url,
+    required double price,
+    required List<String> pictures,
   }) : super(
       id: id,
       trademarkId:

@@ -2,6 +2,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
+
 abstract class ProductEntity extends Equatable{
   final int id;
   @JsonKey(name: 'trademark_id')
@@ -30,4 +31,9 @@ abstract class ProductEntity extends Equatable{
 
   @override
   bool get stringify => true;
+
+  @override
+  String toString() {
+    return '$id) $title - $price';
+  }
 }
