@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:furniture_store/presentation/pages/MyHomePage.dart';
+import 'package:furniture_store/presentation/pages/my_home_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

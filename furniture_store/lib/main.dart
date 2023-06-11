@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:furniture_store/presentation/MyApp.dart';
+import 'package:furniture_store/presentation/my_app.dart';
 
 import 'domain/bloc/bloc_factory.dart';
 
