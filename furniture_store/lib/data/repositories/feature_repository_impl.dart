@@ -19,18 +19,18 @@ class FeatureRepositoryImpl extends FeatureRepository {
 
   @override
   Future<(Failure?, List<ProductEntity>?)> getAllProducts(int page) async {
-    return await _getPersons(() => featureRemoteDataSource.getAllProducts(page));
+    return await _getProduct(() => featureRemoteDataSource.getAllProducts(page));
   }
 
   @override
   Future<(Failure?, List<ProductEntity>?)> searchProduct(int id) async {
-    return await _getPersons(() => featureRemoteDataSource.searchProduct(id));
+    return await _getProduct(() => featureRemoteDataSource.searchProduct(id));
   }
 
-  Future<(Failure?, List<ProductEntity>?)> _getPersons(Future<List<ProductEntity>> Function() getPersons) async {
+  Future<(Failure?, List<ProductEntity>?)> _getProduct(Future<List<ProductEntity>> Function() getProducts) async {
     if(await networkInfo.isConnected){
       try {
-        final remoteProduct = await getPersons();
+        final remoteProduct = await getProducts();
         // сохранить в кеш
         return (null, remoteProduct);
       } on ServerException {
@@ -38,7 +38,7 @@ class FeatureRepositoryImpl extends FeatureRepository {
       }
     } else {
       try {
-        final localProduct = await getPersons();
+        final localProduct = await getProducts();
         return (null, localProduct);
       } on ServerException {
         return (CacheFailure(), null);

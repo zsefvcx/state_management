@@ -8,7 +8,7 @@ class FeatureRemoteDataSourceImpl extends FeatureRemoteDataSource {
   @override
   Future<List<ProductModel>> getAllProducts(int page) async {
     List<ProductModel> result = [
-      ProductModel(
+      const ProductModel(
         id: 0,
         parentId: null,
         trademarkId: 0,
@@ -17,7 +17,7 @@ class FeatureRemoteDataSourceImpl extends FeatureRemoteDataSource {
         url: null,
         price: 15000,
       ),
-      ProductModel(
+      const ProductModel(
         id: 1,
         parentId: null,
         trademarkId: 0,
@@ -26,7 +26,7 @@ class FeatureRemoteDataSourceImpl extends FeatureRemoteDataSource {
         url: null,
         price: 2000,
       ),
-      ProductModel(
+      const ProductModel(
         id: 2,
         parentId: null,
         trademarkId: 0,
@@ -35,7 +35,7 @@ class FeatureRemoteDataSourceImpl extends FeatureRemoteDataSource {
         url: null,
         price: 5000,
       ),
-      ProductModel(
+      const ProductModel(
         id: 3,
         parentId: null,
         trademarkId: 0,
@@ -44,7 +44,7 @@ class FeatureRemoteDataSourceImpl extends FeatureRemoteDataSource {
         url: null,
         price: 15000,
       ),
-      ProductModel(
+      const ProductModel(
         id: 4,
         parentId: null,
         trademarkId: 0,
@@ -54,7 +54,7 @@ class FeatureRemoteDataSourceImpl extends FeatureRemoteDataSource {
         price: 13000,
       ),
     ];
-    return await Future<List<ProductModel>>.delayed(const Duration(seconds: 5),
+    return await Future<List<ProductModel>>.delayed(const Duration(seconds: 2),
           () => result,);
   }
 

@@ -22,16 +22,20 @@ class _MyAppState extends State<MyApp> {
     _mainBloc = BlocFactory.instance.get<MainBloc>();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    _mainBloc.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   _mainBloc.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return Provider<MainBloc>(
-      create: (_) => _mainBloc,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<MainBloc>(
+            create: (_) =>
+            _mainBloc),
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(

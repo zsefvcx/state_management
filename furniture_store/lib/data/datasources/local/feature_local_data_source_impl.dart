@@ -107,7 +107,7 @@ Future<List<ProductModel>> searchProduct(int id) async {
       price: 13000,
     ),
   ];
-  return await Future<List<ProductModel>>.delayed(const Duration(seconds: 5),
+  return await Future<List<ProductModel>>.delayed(const Duration(seconds: 2),
         () => [result[id]],);
 }
 
