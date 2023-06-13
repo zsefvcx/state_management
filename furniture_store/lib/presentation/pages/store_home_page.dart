@@ -45,12 +45,16 @@ class _StoreHomePageState extends State<StoreHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text('isTimeOut:${mainBloc.isTimeOut.toString()}'),
-            Text('isError  :${mainBloc.isError.toString()}'),
-            Text('isErrorType  :${mainBloc.e.runtimeType}'),
+            Text('isTimeOut  :${mainBloc.isTimeOut.toString()}'),
+            Text('isError    :${mainBloc.isError.toString()}'),
+            Text('isErrorType:${mainBloc.e.runtimeType}'),
             const SizedBox(height: 50,),
             TextButton(
-                onPressed: () => mainBloc.getAllProducts(0),
+                onPressed: () {
+                  mainBloc.getAllProducts(0);
+                  setState(() {
+                  });
+                },
                 child: const Text('Try again')
             ),
           ],
@@ -70,7 +74,7 @@ class _StoreHomePageState extends State<StoreHomePage> {
               ),
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 200,
+                  maxCrossAxisExtent: 400,
                   mainAxisExtent: 200, // here set custom Height You Want
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
@@ -79,6 +83,7 @@ class _StoreHomePageState extends State<StoreHomePage> {
               //padding: const EdgeInsets.only(top: 16),
               itemCount: mainBloc.lpAll.length,
               itemBuilder: (_, index) {
+                if (kDebugMode) print('Build CardProductWidget $index');
                 return CardProductWidget(productEntity: mainBloc.lpAll[index],);
               },
             ),
