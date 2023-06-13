@@ -7,13 +7,17 @@ import 'package:furniture_store/domain/repositories/feature_repository.dart';
 class MainBloc  with ChangeNotifier{
   final FeatureRepository _featureRepository;
 
-  bool get isLoaded => _lpAll.isNotEmpty;
-  bool get isLoadedSingle => _lpSingle.isNotEmpty;
-
+  bool _timeOut = true;
+  bool _loading = false;
   List<ProductEntity> _lpAll = [];
   List<ProductEntity> _lpSingle = [];
   Failure? _e;
 
+  bool get isLoaded => _lpAll.isNotEmpty;
+  bool get isLoading => _loading;
+  bool get isTimeOut => _timeOut;
+  bool get isLoadedSingle => _lpSingle.isNotEmpty;
+  bool get isError => e!=null;
   List<ProductEntity> get lpAll => _lpAll;
   List<ProductEntity> get lpSingle => _lpSingle;
   Failure? get e => _e;
@@ -23,23 +27,42 @@ class MainBloc  with ChangeNotifier{
   }) : _featureRepository = featureRepository;
 
   Future<void> getAllProducts(int page) async {
-    var(Failure? e , List<ProductEntity>? lp) = await _getProduct(() => _featureRepository.getAllProducts(page));
     _lpAll.clear();
-    if(lp!=null){_lpAll = lp;notifyListeners(); return;}
-    if(e!=null){ _e = e;notifyListeners();return;}
+    var(Failure? e , List<ProductEntity>? lp) = await _getProduct(() => _featureRepository.getAllProducts(page));
+
+    if(lp!=null){_lpAll = lp; notifyListeners(); return;}
+    if(e !=null){ _e = e;notifyListeners();return;}
   }
+
   Future<void> searchProduct(int id) async {
-    var(Failure? e , List<ProductEntity>? lp) = await _getProduct(() => _featureRepository.searchProduct(id));
     _lpSingle.clear();
+    var(Failure? e , List<ProductEntity>? lp) = await _getProduct(() => _featureRepository.searchProduct(id));
+
     if(lp!=null){_lpSingle = lp;notifyListeners(); return;}
     if(e!=null){ _e = e;notifyListeners();return;}
   }
 
   Future<(Failure?, List<ProductEntity>?)> _getProduct(Future<(Failure?, List<ProductEntity>?)> Function() getProducts) async {
-    var(Failure? e , List<ProductEntity>? lp) = await getProducts();
-    if(lp!=null){return (null, lp);}
-    if(e!=null) {return (e,  null);}
-    throw('Что-то пошло не так...');
+    try {
+      _timeOut = false; _e = null; _loading = true;
+      var (Failure? e, List<ProductEntity>? lp) = await getProducts()
+         .timeout(const Duration(seconds: 5),
+           onTimeout: () {
+             _timeOut  = true; _loading = false;
+             return ( MainBlocFailure(),  null);
+           });
+      _loading = false;
+      if (lp != null) {
+        return (null, lp);
+      }
+      if (e != null) {
+        return (e, null);
+      }
+    } catch (e){//все ошибки отловим
+      //что то тут сделаем но потом...
+      return ( MainBlocFailure(),  null);
+    }
+    return (null ,null);//что то пошло не так
   }
 
 }

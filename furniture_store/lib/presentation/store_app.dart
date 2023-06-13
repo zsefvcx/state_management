@@ -1,19 +1,19 @@
 
 import 'package:flutter/material.dart';
 import 'package:furniture_store/domain/bloc/main_bloc.dart';
-import 'package:furniture_store/presentation/pages/my_home_page.dart';
+import 'package:furniture_store/presentation/pages/store_home_page.dart';
 import 'package:provider/provider.dart';
 
 import '../domain/bloc/bloc_factory.dart';
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class StoreApp extends StatefulWidget {
+  const StoreApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<StoreApp> createState() => _StoreAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _StoreAppState extends State<StoreApp> {
   late final MainBloc _mainBloc;
 
   @override
@@ -37,12 +37,12 @@ class _MyAppState extends State<MyApp> {
             _mainBloc),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Store Demo',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        home: const StoreHomePage(title: 'Store'),
       ),
     );
   }
