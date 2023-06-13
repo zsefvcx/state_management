@@ -72,21 +72,24 @@ class _StoreHomePageState extends State<StoreHomePage> {
                   PointerDeviceKind.mouse,
                 },
               ),
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 400,
-                  mainAxisExtent: 200, // here set custom Height You Want
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                  childAspectRatio: 1,
-                ),
-              //padding: const EdgeInsets.only(top: 16),
-              itemCount: mainBloc.lpAll.length,
-              itemBuilder: (_, index) {
-                if (kDebugMode) print('Build CardProductWidget $index');
-                return CardProductWidget(productEntity: mainBloc.lpAll[index],);
-              },
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 400,
+                    mainAxisExtent: 200, // here set custom Height You Want
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 1,
+                  ),
+                //padding: const EdgeInsets.only(top: 16),
+                itemCount: mainBloc.lpAll.length,
+                itemBuilder: (_, index) {
+                  if (kDebugMode) print('Build CardProductWidget $index');
+                  return CardProductWidget(productEntity: mainBloc.lpAll[index],);
+                },
             ),
+              ),
             ),
           );
       }

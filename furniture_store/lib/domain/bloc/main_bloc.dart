@@ -24,7 +24,9 @@ class MainBloc  with ChangeNotifier{
 
   MainBloc({
     required FeatureRepository featureRepository,
-  }) : _featureRepository = featureRepository;
+  }) : _featureRepository = featureRepository{
+    getAllProducts(0);
+  }
 
   Future<void> getAllProducts(int page) async {
     _lpAll.clear();

@@ -8,7 +8,7 @@ FeatureLocalDataSourceImpl();
 @override
 Future<List<ProductModel>> gatAllProducts(int page) async {
   List<ProductModel> result = [
-    ProductModel(
+    const ProductModel(
       id: 0,
       parentId: null,
       trademarkId: 0,
@@ -17,7 +17,7 @@ Future<List<ProductModel>> gatAllProducts(int page) async {
       url: null,
       price: 15000,
     ),
-    ProductModel(
+    const ProductModel(
       id: 1,
       parentId: null,
       trademarkId: 0,
@@ -26,7 +26,7 @@ Future<List<ProductModel>> gatAllProducts(int page) async {
       url: null,
       price: 2000,
     ),
-    ProductModel(
+    const ProductModel(
       id: 2,
       parentId: null,
       trademarkId: 0,
@@ -35,7 +35,7 @@ Future<List<ProductModel>> gatAllProducts(int page) async {
       url: null,
       price: 5000,
     ),
-    ProductModel(
+    const ProductModel(
       id: 3,
       parentId: null,
       trademarkId: 0,
@@ -44,7 +44,7 @@ Future<List<ProductModel>> gatAllProducts(int page) async {
       url: null,
       price: 15000,
     ),
-    ProductModel(
+    const ProductModel(
       id: 4,
       parentId: null,
       trademarkId: 0,
