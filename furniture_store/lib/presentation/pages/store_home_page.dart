@@ -7,7 +7,6 @@ import 'package:furniture_store/domain/bloc/main_bloc.dart';
 import 'package:furniture_store/presentation/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
-import '../../domain/entities/entities.dart';
 
 class StoreHomePage extends StatefulWidget {
   const StoreHomePage({super.key, required this.title});

@@ -7,13 +7,16 @@ part of 'product_model.dart';
 // **************************************************************************
 
 ProductModel _$ProductModelFromJson(Map<String, dynamic> json) => ProductModel(
-      id: json['id'],
-      trademarkId: json['trademark_id'],
-      parentId: json['parent_id'],
-      title: json['title'],
-      url: json['url'],
-      price: json['price'] ?? 0,
-      pictures: json['pictures'] ?? [],
+      id: json['id'] as int,
+      trademarkId: json['trademark_id'] as int?,
+      parentId: json['parent_id'] as int?,
+      title: json['title'] as String,
+      url: json['url'] as String?,
+      price: (json['price'] as num?)?.toDouble() ?? 0,
+      pictures: (json['pictures'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
     );
 
 Map<String, dynamic> _$ProductModelToJson(ProductModel instance) =>

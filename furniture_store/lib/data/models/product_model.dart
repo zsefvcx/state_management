@@ -16,8 +16,7 @@ class ProductModel extends ProductEntity{
     required List<String> pictures,
   }) : super(
       id: id,
-      trademarkId:
-      trademarkId,
+      trademarkId: trademarkId,
       parentId: parentId,
       title: title,
       url: url,

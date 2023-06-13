@@ -1,10 +1,10 @@
 
 import 'package:flutter/material.dart';
-import 'package:furniture_store/domain/bloc/main_bloc.dart';
+import 'package:furniture_store/domain/bloc/bloc.dart';
 import 'package:furniture_store/presentation/pages/store_home_page.dart';
 import 'package:provider/provider.dart';
 
-import '../domain/bloc/bloc_factory.dart';
+
 
 class StoreApp extends StatefulWidget {
   const StoreApp({super.key});
@@ -15,11 +15,12 @@ class StoreApp extends StatefulWidget {
 
 class _StoreAppState extends State<StoreApp> {
   late final MainBloc _mainBloc;
-
+  late final FavoritesBloc _favoritesBloc;
   @override
   void initState() {
     super.initState();
     _mainBloc = BlocFactory.instance.get<MainBloc>();
+    _favoritesBloc = BlocFactory.instance.get<FavoritesBloc>();
   }
 
   // @override
@@ -35,6 +36,9 @@ class _StoreAppState extends State<StoreApp> {
         ChangeNotifierProvider<MainBloc>(
             create: (_) =>
             _mainBloc),
+        ChangeNotifierProvider<FavoritesBloc>(
+            create: (_) =>
+            _favoritesBloc),
       ],
       child: MaterialApp(
         title: 'Store Demo',

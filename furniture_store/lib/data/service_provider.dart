@@ -1,22 +1,21 @@
 
-
-import 'package:furniture_store/data/datasources/remote/feature_remote_data_source_impl.dart';
-import 'package:furniture_store/data/repositories/feature_repository_impl.dart';
-import 'package:furniture_store/domain/repositories/feature_repository.dart';
+import 'package:furniture_store/core/core.dart';
+import 'package:furniture_store/data/datasources/data_source.dart';
+import 'package:furniture_store/data/repositories/repositories.dart';
+import 'package:furniture_store/domain/repositories/repositories.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
-import '../core/platform/network_info.dart';
-import 'datasources/local/feature_local_data_source.dart';
-import 'datasources/local/feature_local_data_source_impl.dart';
-import 'datasources/remote/feature_remote_data_source.dart';
 
 class ServiceProvider{
   static final _getIt = GetIt.I;
 
   final FeatureRemoteDataSource featureRemoteDataSource = FeatureRemoteDataSourceImpl();
   final FeatureLocalDataSource featureLocalDataSource = FeatureLocalDataSourceImpl();
+  final FeatureFavoritesDataSource featureFavoritesDataSource = FeatureFavoritesDataSourceImp();
   final NetworkInfo networkInfo = NetworkInfoImp(internetConnectionChecker: InternetConnectionChecker());
+
+
 
   T get<T extends Object>() => _getIt.get<T>();
 
@@ -28,6 +27,9 @@ class ServiceProvider{
             featureLocalDataSource: featureLocalDataSource,
             featureRemoteDataSource: featureRemoteDataSource,
           ),
+    );
+    _getIt.registerLazySingleton<FavoritesRepository>(
+          () => FavoritesRepositoryImpl(featureFavoritesDataSource: featureFavoritesDataSource),
     );
   }
 }

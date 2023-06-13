@@ -1,17 +1,20 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:furniture_store/domain/bloc/bloc.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
+import 'package:provider/provider.dart';
 
 class CardProductWidget extends StatelessWidget {
   const CardProductWidget({
     super.key,
-    required ProductEntity productEntity
+    required ProductEntity productEntity,
   }) : _productEntity = productEntity;
 
   final ProductEntity _productEntity;
 
   @override
   Widget build(BuildContext context) {
-
+    if (kDebugMode) print('Build ${_productEntity.id}');
     return Container(
       margin: const EdgeInsets.fromLTRB(5, 5, 5, 5),
       decoration: BoxDecoration(
@@ -30,23 +33,36 @@ class CardProductWidget extends StatelessWidget {
         height: double.infinity,
         width: double.infinity,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Expanded(
               flex: 3,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                    width: 200,
-                    child: Stack(children: [
-                        const Placeholder(),
-                        IconButton(
-                          onPressed: () => print('Нравиться id:${_productEntity.id}'),
-                          icon: const Icon(Icons.star_border,
-                            color: Colors.blue,
-                            size: 24,
-                          )),
-                      ],
-                    ),
+                child: Center(
+                  child: SizedBox(
+                      width: 200,
+                      child: Stack(children: [
+                          const Placeholder(),
+                          Consumer<FavoritesBloc>(builder: (_, favoritesBloc, __) {
+                            if (kDebugMode) print('Build favorite ${_productEntity.id}');
+                            bool status = favoritesBloc.statusFav(_productEntity.id);
+                            return IconButton(
+                              onPressed: () async {
+                                status? await favoritesBloc.remFav(_productEntity.id):
+                                        await favoritesBloc.addFav(_productEntity.id);
+                              }, //print('Нравиться id:${_productEntity.id}'),
+                              icon: Icon(status?Icons.favorite:Icons.favorite_border,
+                                color: Colors.blue,
+                                size: 24,
+                              ),
+                            );
+                          }
+                          ),
+                        ],
+                      ),
+                  ),
                 ),
               ),
             ),
@@ -62,7 +78,10 @@ class CardProductWidget extends StatelessWidget {
                       children: [
                         Text(
                           _productEntity.title,
-                          style: const TextStyle(fontSize: 14),
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500
+                          ),
                         ),
                       ],
                     ),
@@ -79,36 +98,26 @@ class CardProductWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     FittedBox(
-                      child: Text('${_productEntity.price} ₽', style: const TextStyle(fontSize: 14),),
+                      child: Text('${_productEntity.price.toInt()} ₽', style: const TextStyle(fontSize: 14),),
                     ),
                   ],
                 ),
               ),
             ),
-            Expanded(
-              flex: 2,
+            FittedBox(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(10,0,10,0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ElevatedButton(onPressed: () => print('В Корзину id:${_productEntity.id}'),
-
-                        child: const Row(
-                          children: [
-                            Icon(Icons.shopping_basket_outlined),
-                            Center(
-                              child: FittedBox(
-
-                                child: Text(' В корзину', textDirection: TextDirection.ltr,),
-                              ),
-                            ),
-                          ],
+                child: ElevatedButton(onPressed: () => print('В Корзину id:${_productEntity.id}'),
+                    child: const Row(
+                      children: [
+                        Icon(Icons.shopping_basket_outlined),
+                        Center(
+                          child: FittedBox(
+                            child: Text(' В корзину', textDirection: TextDirection.ltr,),
+                          ),
                         ),
+                      ],
                     ),
-
-                  ],
                 ),
               ),
             )

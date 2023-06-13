@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:furniture_store/core/error/failure.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
-import 'package:furniture_store/domain/repositories/feature_repository.dart';
+import 'package:furniture_store/domain/repositories/repositories.dart';
 
 class MainBloc  with ChangeNotifier{
   final FeatureRepository _featureRepository;
@@ -11,6 +11,7 @@ class MainBloc  with ChangeNotifier{
   bool _loading = false;
   List<ProductEntity> _lpAll = [];
   List<ProductEntity> _lpSingle = [];
+
   Failure? _e;
 
   bool get isLoaded => _lpAll.isNotEmpty;
@@ -24,9 +25,11 @@ class MainBloc  with ChangeNotifier{
 
   MainBloc({
     required FeatureRepository featureRepository,
-  }) : _featureRepository = featureRepository{
+  }) : _featureRepository = featureRepository {
     getAllProducts(0);
   }
+
+
 
   Future<void> getAllProducts(int page) async {
     _lpAll.clear();
