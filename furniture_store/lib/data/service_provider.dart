@@ -10,11 +10,11 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 class ServiceProvider{
   static final _getIt = GetIt.I;
 
-  final FeatureRemoteDataSource featureRemoteDataSource = FeatureRemoteDataSourceImpl();
-  final FeatureLocalDataSource featureLocalDataSource = FeatureLocalDataSourceImpl();
-  final FeatureFavoritesDataSource featureFavoritesDataSource = FeatureFavoritesDataSourceImp();
+  final FeatureRemoteDataSource featureRemoteData = FeatureRemoteDataSourceImpl();
+  final FeatureLocalDataSource featureLocalData = FeatureLocalDataSourceImpl();
+  final FeatureFavoritesDataSource featureFavoritesData = FeatureFavoritesDataSourceImp();
+  final FeatureShoppingBasketDataSource featureShoppingBasketData = FeatureShoppingBasketDataSourceImp();
   final NetworkInfo networkInfo = NetworkInfoImp(internetConnectionChecker: InternetConnectionChecker());
-
 
 
   T get<T extends Object>() => _getIt.get<T>();
@@ -24,12 +24,15 @@ class ServiceProvider{
   void initialize(){
     _getIt.registerLazySingleton<FeatureRepository>(
           () => FeatureRepositoryImpl(networkInfo: networkInfo,
-            featureLocalDataSource: featureLocalDataSource,
-            featureRemoteDataSource: featureRemoteDataSource,
+            featureLocalDataSource: featureLocalData,
+            featureRemoteDataSource: featureRemoteData,
           ),
     );
     _getIt.registerLazySingleton<FavoritesRepository>(
-          () => FavoritesRepositoryImpl(featureFavoritesDataSource: featureFavoritesDataSource),
+          () => FavoritesRepositoryImpl(featureFavoritesDataSource: featureFavoritesData),
+    );
+    _getIt.registerLazySingleton<ShoppingBasketRepository>(
+          () => ShoppingBasketRepositoryImpl(featureShoppingBasketDataSource: featureShoppingBasketData),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:furniture_store/domain/entities/entities.dart';
 
-abstract class FavoritesRepository {
+abstract class ShoppingBasketRepository {
 
   Future<void> add(int id);
 
@@ -8,6 +8,6 @@ abstract class FavoritesRepository {
 
   bool status(int id);
 
-  Future<Set<FavoritesEntity>> fav();
+  Future<Set<ShoppingBasketEntity>> bas();
 
 }

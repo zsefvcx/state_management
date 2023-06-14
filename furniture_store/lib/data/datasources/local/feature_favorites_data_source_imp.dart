@@ -11,9 +11,10 @@ class FeatureFavoritesDataSourceImp extends FeatureFavoritesDataSource{
 
   @override
   Future<void> add(int id) async {
-    if(favoritesModel[id] == null) {
-      favoritesModel[id] = FavoritesModel(id: id);
-    }
+    favoritesModel.putIfAbsent(id, () => FavoritesModel(id: id));
+    // if(favoritesModel[id] == null) {
+    //   favoritesModel[id] = FavoritesModel(id: id);
+    // }
   }
 
   @override

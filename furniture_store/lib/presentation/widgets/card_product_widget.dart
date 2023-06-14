@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture_store/domain/bloc/bloc.dart';
+import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 import 'package:provider/provider.dart';
 
@@ -107,18 +108,34 @@ class CardProductWidget extends StatelessWidget {
             FittedBox(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(10,0,10,0),
-                child: ElevatedButton(onPressed: () => print('В Корзину id:${_productEntity.id}'),
-                    child: const Row(
+                child:  Consumer<ShoppingBasketBloc>(builder: (_, shoppingBasketBloc, __) {
+                  if (kDebugMode) print('Build button shoppingBasket ${_productEntity.id}');
+                  bool status = shoppingBasketBloc.statusBas(_productEntity.id);
+                  return ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                            status?Colors.grey:Colors.white,
+                        ),
+                    ),
+                    onPressed: () async {
+                      status? await shoppingBasketBloc.remBas(_productEntity.id):
+                      await shoppingBasketBloc.addBas(_productEntity.id);
+                    },//print('В Корзину id:${_productEntity.id}');
+                    child: Row(
                       children: [
-                        Icon(Icons.shopping_basket_outlined),
+                        Icon(status?Icons.shopping_basket:Icons.shopping_basket_outlined),
                         Center(
                           child: FittedBox(
-                            child: Text(' В корзину', textDirection: TextDirection.ltr,),
+                            child: Text(
+                              status?' В корзинe':' В корзину', textDirection: TextDirection.ltr,
+                            style: TextStyle(color: status?Colors.white:Colors.blueAccent),
+                            ),
                           ),
                         ),
                       ],
                     ),
-                ),
+                  );
+                }),
               ),
             )
           ],
