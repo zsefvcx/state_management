@@ -75,7 +75,7 @@ class _StoreHomePageState extends State<StoreHomePage> {
                 padding: const EdgeInsets.all(10.0),
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 400,
+                    maxCrossAxisExtent: 550,
                     mainAxisExtent: 200, // here set custom Height You Want
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
