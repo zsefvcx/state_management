@@ -13,4 +13,8 @@ abstract class FeatureShoppingBasketDataSource {
 
   bool status(int id);
 
+  int getCountBas(int id);
+
+  Future<void> setCountBas(int id, int value);
+
 }

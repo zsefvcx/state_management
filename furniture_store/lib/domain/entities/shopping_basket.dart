@@ -1,10 +1,15 @@
 
 
+import 'package:json_annotation/json_annotation.dart';
+
 abstract class ShoppingBasketEntity{
 
-  int id;
+  final int id;
 
-  ShoppingBasketEntity(this.id);
+  @JsonKey(defaultValue: 1)
+  int count;
+
+  ShoppingBasketEntity(this.id, [this.count = 1]);
 
   @override
   String toString() {

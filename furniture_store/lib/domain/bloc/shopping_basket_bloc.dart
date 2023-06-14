@@ -34,5 +34,11 @@ class ShoppingBasketBloc  with ChangeNotifier{
     notifyListeners();
   }
 
+  Future<void> setCountBas(int id, int value) async {
+    await _shoppingBasketRepository.setCountBas(id, value);
+    notifyListeners();
+  }
+
+  int getCountBas(int id) => _shoppingBasketRepository.getCountBas(id);
 
 }

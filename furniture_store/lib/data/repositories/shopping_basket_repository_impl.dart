@@ -26,9 +26,17 @@ class ShoppingBasketRepositoryImpl extends ShoppingBasketRepository {
   }
 
   @override
-  bool status(int id) {
-    return featureShoppingBasketDataSource.status(id);
+  bool status(int id) => featureShoppingBasketDataSource.status(id);
+
+  @override
+  int getCountBas(int id) => featureShoppingBasketDataSource.getCountBas(id);
+
+  @override
+  Future<void> setCountBas(int id, int value) async{
+    await featureShoppingBasketDataSource.setCountBas(id, value);
   }
+
+
 
 
 }

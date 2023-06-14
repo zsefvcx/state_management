@@ -6,7 +6,7 @@ class FeatureShoppingBasketDataSourceImp extends FeatureShoppingBasketDataSource
 
   Map<int, ShoppingBasketModel> shoppingBasketModel = {
     1:ShoppingBasketModel(id: 1),
-    4:ShoppingBasketModel(id: 4),
+    4:ShoppingBasketModel(id: 4, count: 10),
   };
 
   @override
@@ -30,6 +30,22 @@ class FeatureShoppingBasketDataSourceImp extends FeatureShoppingBasketDataSource
   @override
   bool status(int id) {//Мы берем из оперативки, а в остальных случаях должны сохранять на диск.
     return shoppingBasketModel[id]==null?false:true;
+  }
+
+  @override
+  int getCountBas(int id) {
+    int count = 1;
+    if(shoppingBasketModel[id] != null) {
+      count = shoppingBasketModel[id]!.count;
+    }
+    return count;
+  }
+
+  @override
+  Future<void> setCountBas(int id, int value) async {
+    if(shoppingBasketModel[id] != null) {
+      shoppingBasketModel[id]!.count = value;
+    }
   }
 
 }

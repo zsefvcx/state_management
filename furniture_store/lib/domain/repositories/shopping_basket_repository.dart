@@ -10,4 +10,7 @@ abstract class ShoppingBasketRepository {
 
   Future<Set<ShoppingBasketEntity>> bas();
 
+  Future<void> setCountBas(int id, int value);
+
+  int getCountBas(int id);
 }

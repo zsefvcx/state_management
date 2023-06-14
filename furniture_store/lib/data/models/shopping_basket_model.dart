@@ -6,7 +6,7 @@ part 'shopping_basket_model.g.dart';
 @JsonSerializable(explicitToJson: true)
 class ShoppingBasketModel extends ShoppingBasketEntity{
 
-  ShoppingBasketModel({required int id}) : super(id = id);
+  ShoppingBasketModel({required int id, int count = 1}) : super(id = id, count = count);
 
   factory ShoppingBasketModel.fromJson(Map<String, dynamic> json) => _$ShoppingBasketModelFromJson(json);
 
