@@ -7,8 +7,9 @@ class DetailProductEntityWidget extends StatelessWidget {
   const DetailProductEntityWidget({
     super.key,
     required ProductEntity productEntity,
-  }) : _productEntity = productEntity;
-
+    required int count,
+  }) : _productEntity = productEntity, _count = count==0?1:count;
+  final int _count;
   final ProductEntity _productEntity;
 
   @override
@@ -25,7 +26,7 @@ class DetailProductEntityWidget extends StatelessWidget {
           ),
         ),
         Text(
-          '${_productEntity.price.toInt()} ₽',
+          '${(_productEntity.price*_count).toInt()} ₽',
           style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500

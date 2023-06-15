@@ -10,8 +10,9 @@ class CardProductWidget extends StatefulWidget {
     super.key,
     required ProductEntity productEntity,
     required int type,
-  }) : _productEntity = productEntity, _type = type;
-
+    required int count,
+  }) : _productEntity = productEntity, _type = type, _count = count==0?1:count;
+  final int _count;
   final int _type;
   final ProductEntity _productEntity;
 
@@ -52,7 +53,7 @@ class _CardProductWidgetState extends State<CardProductWidget> {
             ),
             Expanded(
               flex: 2,
-              child: DetailProductEntityWidget(productEntity: widget._productEntity),
+              child: DetailProductEntityWidget(productEntity: widget._productEntity, count: widget._count,),
             ),
             Expanded(
               flex: 2,

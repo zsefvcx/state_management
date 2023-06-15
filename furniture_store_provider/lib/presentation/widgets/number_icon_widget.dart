@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:furniture_store/domain/bloc/bloc.dart';
+import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
 import 'package:provider/provider.dart';
 
 class NumberIconWidget<T> extends StatelessWidget {
@@ -12,17 +13,24 @@ class NumberIconWidget<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<T>(builder: (_, bloc, __){
-      String text = '0';
+      int num = 0;
       if (bloc is MyBloc) {
-        text = bloc.model.length.toString();
+        if(bloc is ShoppingBasketBloc){
+          num = bloc.model.fold(0, (previousValue, element) => previousValue + element.count);
+        } else{
+          num = bloc.model.length;
+        }
+
       }
-      return Stack(children: [_icon, Positioned(
-        top: -4,
-        child: Text(text,
-          style: TextStyle(
+      return Stack(children: [Padding(
+        padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+        child: _icon,
+      ), if(num!=0)Positioned(
+        right: 0,
+        child: Text(num.toString(),
+          style: const TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w900,
-              backgroundColor: Colors.white.withOpacity(0.2),
               color: Colors.black),
         ),
       ),]);

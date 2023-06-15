@@ -8,5 +8,4 @@ abstract class MyBloc<T> with ChangeNotifier{
 
   Set<T> model = {};
 
-
 }

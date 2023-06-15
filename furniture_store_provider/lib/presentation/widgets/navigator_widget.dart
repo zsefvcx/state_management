@@ -8,7 +8,6 @@ import 'package:furniture_store/presentation/pages/shopping_basket_page.dart';
 import 'package:furniture_store/presentation/pages/store_home_page.dart';
 import 'package:furniture_store/presentation/route_generator.dart';
 import 'package:furniture_store/presentation/widgets/number_icon_widget.dart';
-import 'package:provider/provider.dart';
 
 class TabItem {
   int id;
@@ -74,13 +73,15 @@ class _NavigatorWidgetState extends State<NavigatorWidget> {
     }
     return BottomAppBar(
 
-      // shape: const CircularNotchedRectangle(),
-      // clipBehavior: Clip.antiAlias,
-      // notchMargin: 15,
+      shape: const CircularNotchedRectangle(),
+      clipBehavior: Clip.antiAliasWithSaveLayer,
       height: 85,
-      //color: Theme.of(context).colorScheme.inversePrimary,
+      color: Theme.of(context).colorScheme.inversePrimary,
       elevation: 0,
       child: BottomNavigationBar(
+        elevation: 0,
+
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         onTap: (value) {
           setState(() {});
           if(value == RouteGenerator.currentIndex.index) return;
@@ -93,8 +94,6 @@ class _NavigatorWidgetState extends State<NavigatorWidget> {
             },
           );
         },
-        //backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        elevation: 0,
         currentIndex: RouteGenerator.currentIndex.index,
         items: [
           ..._tabItemsBar.map((e) => BottomNavigationBarItem(

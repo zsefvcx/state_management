@@ -92,7 +92,8 @@ class _StoreHomePageState extends State<StoreHomePage> {
                   itemCount: mainBloc.lpAll.length,
                   itemBuilder: (_, index) {
                     if (kDebugMode) print('Build CardProductWidget $index');
-                    return CardProductWidget(productEntity: mainBloc.lpAll[index], type: 0,);
+                    return CardProductWidget(productEntity: mainBloc.lpAll[index],
+                      type: 0, count: 1,);
                   },
               ),
                 ),

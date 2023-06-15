@@ -36,6 +36,11 @@ class ShoppingBasketRepositoryImpl extends ShoppingBasketRepository {
     await featureShoppingBasketDataSource.setCountBas(id, value);
   }
 
+  @override
+  Future<void> remAll() async{
+    await featureShoppingBasketDataSource.remAll();
+  }
+
 
 
 

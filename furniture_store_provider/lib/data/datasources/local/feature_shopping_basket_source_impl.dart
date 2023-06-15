@@ -11,6 +11,11 @@ class FeatureShoppingBasketDataSourceImp extends FeatureShoppingBasketDataSource
 
   @override
   Future<void> add(int id) async {
+    if(shoppingBasketModel.length>999) {
+      shoppingBasketModel.remove(
+          shoppingBasketModel.keys.toList()[0]
+      );
+    }
     shoppingBasketModel.putIfAbsent(id, () => ShoppingBasketModel(id: id));
     // if(shoppingBasketModel[id] == null) {
     //   shoppingBasketModel[id] = ShoppingBasketModel(id: id);
@@ -46,6 +51,11 @@ class FeatureShoppingBasketDataSourceImp extends FeatureShoppingBasketDataSource
     if(shoppingBasketModel[id] != null) {
       shoppingBasketModel[id]!.count = value;
     }
+  }
+
+  @override
+  Future<void> remAll() async{
+    shoppingBasketModel.clear();
   }
 
 }

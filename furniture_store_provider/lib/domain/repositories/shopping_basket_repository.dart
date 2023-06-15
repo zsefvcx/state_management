@@ -13,4 +13,6 @@ abstract class ShoppingBasketRepository {
   Future<void> setCountBas(int id, int value);
 
   int getCountBas(int id);
+
+  Future<void> remAll();
 }

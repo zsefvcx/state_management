@@ -3,7 +3,6 @@ import 'package:furniture_store/domain/bloc/bloc.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 import 'package:furniture_store/domain/repositories/repositories.dart';
 
-
 class ShoppingBasketBloc  extends MyBloc<ShoppingBasketEntity>{
 
   final ShoppingBasketRepository _shoppingBasketRepository;
@@ -35,6 +34,12 @@ class ShoppingBasketBloc  extends MyBloc<ShoppingBasketEntity>{
 
   Future<void> setCountBas(int id, int value) async {
     await _shoppingBasketRepository.setCountBas(id, value);
+    await bas();
+    notifyListeners();
+  }
+
+  Future<void> remAll() async {
+    await _shoppingBasketRepository.remAll();
     await bas();
     notifyListeners();
   }

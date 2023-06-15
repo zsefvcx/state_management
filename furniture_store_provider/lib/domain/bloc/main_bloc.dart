@@ -29,8 +29,6 @@ class MainBloc  with ChangeNotifier{
     getAllProducts(0);
   }
 
-
-
   Future<void> getAllProducts(int page) async {
     _lpAll.clear();
     var(Failure? e , List<ProductEntity>? lp) = await _getProduct(() => _featureRepository.getAllProducts(page));
