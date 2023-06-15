@@ -9,8 +9,10 @@ class CardProductWidget extends StatefulWidget {
   const CardProductWidget({
     super.key,
     required ProductEntity productEntity,
-  }) : _productEntity = productEntity;
+    required int type,
+  }) : _productEntity = productEntity, _type = type;
 
+  final int _type;
   final ProductEntity _productEntity;
 
   @override
@@ -54,7 +56,7 @@ class _CardProductWidgetState extends State<CardProductWidget> {
             ),
             Expanded(
               flex: 2,
-              child: UniPayButtonWidget(productEntity: widget._productEntity),
+              child: UniPayButtonWidget(productEntity: widget._productEntity, type: widget._type),
             ),
           ],
         ),

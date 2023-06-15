@@ -9,7 +9,7 @@ class ShoppingBasketBloc  with ChangeNotifier{
 
   final ShoppingBasketRepository _shoppingBasketRepository;
 
-  Set<ShoppingBasketEntity> favoritesModel = {};
+  Set<ShoppingBasketEntity> shoppingBasketModel = {};
 
   ShoppingBasketBloc({
     required ShoppingBasketRepository shoppingBasketRepository,
@@ -18,7 +18,7 @@ class ShoppingBasketBloc  with ChangeNotifier{
   }
 
   Future<void> bas() async {
-    favoritesModel = await _shoppingBasketRepository.bas();
+    shoppingBasketModel = await _shoppingBasketRepository.bas();
     notifyListeners();
   }
 
@@ -26,16 +26,19 @@ class ShoppingBasketBloc  with ChangeNotifier{
 
   Future<void> addBas(int id) async {
     await _shoppingBasketRepository.add(id);
+    await bas();
     notifyListeners();
   }
 
   Future<void> remBas(int id) async {
     await _shoppingBasketRepository.rem(id);
+    await bas();
     notifyListeners();
   }
 
   Future<void> setCountBas(int id, int value) async {
     await _shoppingBasketRepository.setCountBas(id, value);
+    await bas();
     notifyListeners();
   }
 

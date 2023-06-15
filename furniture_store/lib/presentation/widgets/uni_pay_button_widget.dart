@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
+import 'package:furniture_store/presentation/pages/store_home_page.dart';
+import 'package:furniture_store/presentation/route_generator.dart';
 import 'package:provider/provider.dart';
 
 import '../../domain/entities/entities.dart';
@@ -10,8 +12,10 @@ class UniPayButtonWidget extends StatelessWidget {
   const UniPayButtonWidget({
     super.key,
     required ProductEntity productEntity,
-  }) : _productEntity = productEntity;
+    required int type,
+  }) : _productEntity = productEntity, _type = type;
 
+  final int _type;
   final ProductEntity _productEntity;
 
   @override
@@ -103,17 +107,56 @@ class UniPayButtonWidget extends StatelessWidget {
               maximumSize: MaterialStateProperty.all(const Size(150, 30)),
               minimumSize: MaterialStateProperty.all(const Size(150, 30)),
             ),
-            onPressed: () async {
-              status? await shoppingBasketBloc.remBas(_productEntity.id):
-              await shoppingBasketBloc.addBas(_productEntity.id);
+            onPressed: () {
+              if(_type==1) {
+                showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Оплатить'),
+                    content: const Text(''),
+                    actions: [
+                      ElevatedButton(
+                        child: const Text('Ok'),
+                        onPressed: () {
+                          shoppingBasketBloc.remBas(_productEntity.id);
+                          RouteGenerator.currentIndex.index = 0;
+                          Navigator.of(context).
+                          pushReplacementNamed(StoreHomePage.routeName,
+                            arguments: {
+                              'TabIndex':RouteGenerator.currentIndex.index,
+                            },
+                          );
+                        },
+                      ),
+                      ElevatedButton(
+                        child: const Text('Отмена'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+              } else {
+                status? shoppingBasketBloc.remBas(_productEntity.id):
+                shoppingBasketBloc.addBas(_productEntity.id);
+              }
+
+
+
             },//print('В Корзину id:${_productEntity.id}');
             child: Row(
               children: [
                 Icon(status?Icons.shopping_basket:Icons.shopping_basket_outlined),
                 Center(
                   child: FittedBox(
-                    child: Text(
+                    child: _type==0?Text(
                       status?'  В корзинe':'  В корзину', textDirection: TextDirection.ltr,
+                      style: TextStyle(color: status?Colors.white:Colors.blueAccent),
+                    ):Text(
+                      '  Оплатить', textDirection: TextDirection.ltr,
                       style: TextStyle(color: status?Colors.white:Colors.blueAccent),
                     ),
                   ),

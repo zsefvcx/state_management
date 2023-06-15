@@ -4,48 +4,9 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture_store/domain/bloc/main_bloc.dart';
+import 'package:furniture_store/presentation/widgets/navigator_widget.dart';
 import 'package:furniture_store/presentation/widgets/widgets.dart';
 import 'package:provider/provider.dart';
-
-class TabItem {
-  String routename;
-  String title;
-  Icon icon;
-  Icon iconActivation;
-  Color color;
-
-  TabItem({
-    required this.routename,
-    required this.title,
-    required this.icon,
-    required this.iconActivation,
-    required this.color,
-  });
-}
-
-final List<TabItem> _tabItemsBar = [
-  TabItem(
-    routename: StoreHomePage.routeName,
-    color: Colors.white,
-    icon: const Icon(Icons.home),
-    iconActivation: const Icon(Icons.home_outlined),
-    title: 'Store',
-  ),
-  TabItem(
-    routename: '/favorite',
-    color: Colors.white,
-    icon: const Icon(Icons.favorite),
-    iconActivation: const Icon(Icons.favorite_outline),
-    title: 'Favorite',
-  ),
-  TabItem(
-    routename: '/basket',
-    color: Colors.white,
-    icon: const Icon(Icons.shopping_basket),
-    iconActivation: const Icon(Icons.shopping_basket_outlined),
-    title: 'Basket',
-  ),
-];
 
 class StoreHomePage extends StatefulWidget {
   static const routeName = '/';
@@ -58,28 +19,9 @@ class StoreHomePage extends StatefulWidget {
   State<StoreHomePage> createState() => _StoreHomePageState();
 }
 
-class _StoreHomePageState extends State<StoreHomePage> with SingleTickerProviderStateMixin {
+class _StoreHomePageState extends State<StoreHomePage> {
 
-  late TabController _tabController;
-  int _currentTabIndex = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 3, vsync: this);
-    _tabController.addListener(() {
-      print('Listener ${_tabController.index}');
-      setState(() {
-        _currentTabIndex = _tabController.index;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
+  int currentTabIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -88,10 +30,10 @@ class _StoreHomePageState extends State<StoreHomePage> with SingleTickerProvider
     }
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: AppBarTitleWidget(title: widget.title),
         centerTitle: true,
-
       ),
       //Использовать Visibility
       body:SafeArea(
@@ -150,7 +92,7 @@ class _StoreHomePageState extends State<StoreHomePage> with SingleTickerProvider
                   itemCount: mainBloc.lpAll.length,
                   itemBuilder: (_, index) {
                     if (kDebugMode) print('Build CardProductWidget $index');
-                    return CardProductWidget(productEntity: mainBloc.lpAll[index],);
+                    return CardProductWidget(productEntity: mainBloc.lpAll[index], type: 0,);
                   },
               ),
                 ),
@@ -160,48 +102,10 @@ class _StoreHomePageState extends State<StoreHomePage> with SingleTickerProvider
         }),
       ),
 
-      bottomNavigationBar: BottomAppBar(
-        
-        // shape: const CircularNotchedRectangle(),
-        // clipBehavior: Clip.antiAlias,
-        // notchMargin: 15,
-        height: 85,
-        //color: Theme.of(context).colorScheme.inversePrimary,
-        elevation: 0,
-        child: BottomNavigationBar(
-          onTap: (value) {
-            setState(() {
-              _tabController.index = value;
-              _currentTabIndex = value;
-            });
-
-            Navigator.of(context).pushNamed(_tabItemsBar[value].routename,
-              // arguments: {
-              //   'hotel':hotel,
-              // },
-            );
-
-
-
-
-          },
-          //backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          elevation: 0,
-          currentIndex: _currentTabIndex,
-          items: [
-            ..._tabItemsBar.map(
-                  (e) => BottomNavigationBarItem(
-                    icon: e.icon,
-                    label: e.title,
-                    backgroundColor: e.color,
-                    activeIcon: e.iconActivation,
-                  ),
-            ),
-          ],
-        ),
-      ),
+      bottomNavigationBar: const NavigatorWidget(),
 
 
     );
   }
 }
+
