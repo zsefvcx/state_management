@@ -1,5 +1,3 @@
-
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -24,15 +22,6 @@ Future<void> main() async {
       titleBarStyle: TitleBarStyle.normal,
     );
     windowManager.waitUntilReadyToShow(windowOptions, () async {
-      // await windowManager.setPosition(settingsApp.positionStart);
-      // await windowManager.setMaximumSize(SettingsApp.maxSizeLite);
-      // await windowManager.setMinimumSize(SettingsApp.minSizeLite);
-      // await windowManager.setSize(SettingsApp.sizeLite);
-      // await windowManager.setTitleBarStyle(TitleBarStyle.hidden);
-      // await windowManager.setResizable(true);
-      // await windowManager.setMinimizable(true);
-      // await windowManager.setMaximizable(true);
-      // await windowManager.setAsFrameless();
       await windowManager.show();
       await windowManager.focus();
     });

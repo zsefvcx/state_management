@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:furniture_store/domain/bloc/bloc.dart';
 import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
 import 'package:furniture_store/presentation/pages/store_home_page.dart';
+import 'package:furniture_store/presentation/route_generator.dart';
 import 'package:provider/provider.dart';
 
 
@@ -42,11 +43,13 @@ class _StoreAppState extends State<StoreApp> {
       ],
       child: MaterialApp(
         title: 'Store Demo',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const StoreHomePage(title: 'Store'),
+        initialRoute: RouteGenerator.initialRoute,
+        onGenerateRoute: (RouteSettings settings)=>RouteGenerator.generateRoute(settings),
       ),
     );
   }
