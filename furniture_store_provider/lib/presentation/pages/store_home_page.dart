@@ -20,14 +20,8 @@ class StoreHomePage extends StatefulWidget {
 }
 
 class _StoreHomePageState extends State<StoreHomePage> {
-
-  int currentTabIndex = 0;
-
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode) {
-      print('build MyHomePage');
-    }
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -38,14 +32,6 @@ class _StoreHomePageState extends State<StoreHomePage> {
       //Использовать Visibility
       body:SafeArea(
         child: Consumer<MainBloc>(builder: (_, mainBloc, __) {
-          if (kDebugMode) {
-            print(mainBloc.lpAll.join('\t'));
-            print('isLoaded : ${mainBloc.isLoaded.toString()}');
-            print('isTimeOut:${mainBloc.isTimeOut.toString()}');
-            print('isError  :${mainBloc.isError.toString()}');
-            print('isErrorType  :${mainBloc.e.runtimeType}');
-          }
-          //;
         if (mainBloc.isTimeOut || mainBloc.isError){
           return Center(child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -91,7 +77,6 @@ class _StoreHomePageState extends State<StoreHomePage> {
                   //padding: const EdgeInsets.only(top: 16),
                   itemCount: mainBloc.lpAll.length,
                   itemBuilder: (_, index) {
-                    if (kDebugMode) print('Build CardProductWidget $index');
                     return CardProductWidget(productEntity: mainBloc.lpAll[index],
                       type: 0, count: 1,);
                   },
@@ -102,10 +87,7 @@ class _StoreHomePageState extends State<StoreHomePage> {
         }
         }),
       ),
-
       bottomNavigationBar: const NavigatorWidget(),
-
-
     );
   }
 }

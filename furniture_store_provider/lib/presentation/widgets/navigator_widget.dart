@@ -68,11 +68,7 @@ class _NavigatorWidgetState extends State<NavigatorWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode) {
-      print('build NavigatorWidget');
-    }
     return BottomAppBar(
-
       shape: const CircularNotchedRectangle(),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       height: 85,

@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:furniture_store/domain/entities/entities.dart';
 
-import '../../domain/entities/entities.dart';
 
 class DetailProductEntityWidget extends StatelessWidget {
   const DetailProductEntityWidget({

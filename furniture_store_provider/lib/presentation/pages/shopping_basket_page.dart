@@ -22,15 +22,10 @@ class ShoppingBasketPage extends StatefulWidget {
 }
 
 class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
-
-  int currentTabIndex = 0;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    if (kDebugMode) {
-      print('build MyHomePage');
-    }
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -42,14 +37,6 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
       //Использовать Visibility
       body:SafeArea(
         child: Consumer<MainBloc>(builder: (_, mainBloc, __) {
-          if (kDebugMode) {
-            print(mainBloc.lpAll.join('\t'));
-            print('isLoaded : ${mainBloc.isLoaded.toString()}');
-            print('isTimeOut:${mainBloc.isTimeOut.toString()}');
-            print('isError  :${mainBloc.isError.toString()}');
-            print('isErrorType  :${mainBloc.e.runtimeType}');
-          }
-          //;
           if (mainBloc.isTimeOut || mainBloc.isError){
             return Center(child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -96,7 +83,6 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
                         //padding: const EdgeInsets.only(top: 16),
                         itemCount: shoppingBasketBloc.model.length,
                         itemBuilder: (_, index) {
-                        if (kDebugMode) print('Build CardProductWidget Basket $index');
                             return CardProductWidget(productEntity: mainBloc.lpAll[
                               shoppingBasketBloc.model.toList()[index].id
                             ],
