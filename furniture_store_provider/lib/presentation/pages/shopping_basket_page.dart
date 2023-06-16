@@ -156,7 +156,7 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
               },
             ),
           ],
-        );;
+        );
       },
     );
     }
