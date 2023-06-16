@@ -1,9 +1,7 @@
 
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
-import 'package:furniture_store/domain/bloc/bloc.dart';
-import 'package:furniture_store/domain/bloc/favorites_bloc.dart';
-import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:furniture_store/presentation/pages/shopping_basket_page.dart';
 import 'package:furniture_store/presentation/pages/store_home_page.dart';
 import 'package:furniture_store/presentation/route_generator.dart';
@@ -54,24 +52,17 @@ final List<TabItem> _tabItemsBar = [
   ),
 ];
 
-class NavigatorWidget extends StatefulWidget {
+class NavigatorWidget extends ConsumerWidget {
+
   const NavigatorWidget({
     super.key,
   });
 
-
   @override
-  State<NavigatorWidget> createState() => _NavigatorWidgetState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    return
 
-class _NavigatorWidgetState extends State<NavigatorWidget> {
-
-  @override
-  Widget build(BuildContext context) {
-    if (kDebugMode) {
-      print('build NavigatorWidget');
-    }
-    return BottomAppBar(
+      BottomAppBar(
 
       shape: const CircularNotchedRectangle(),
       clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -83,11 +74,11 @@ class _NavigatorWidgetState extends State<NavigatorWidget> {
 
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         onTap: (value) {
-          setState(() {});
+          //setState(() {});
           if(value == RouteGenerator.currentIndex.index) return;
-          setState(() {
+          //setState(() {
             RouteGenerator.currentIndex.index = value;
-          });
+          //});
           Navigator.of(context).pushReplacementNamed(_tabItemsBar[value].routeName,
             arguments: {
                'TabIndex':value,
@@ -98,8 +89,8 @@ class _NavigatorWidgetState extends State<NavigatorWidget> {
         items: [
           ..._tabItemsBar.map((e) => BottomNavigationBarItem(
               icon:  e.id == 2?
-              NumberIconWidget<ShoppingBasketBloc>(icon: e.icon,)
-              :e.id == 1?NumberIconWidget<FavoritesBloc>(icon: e.icon,):e.icon,
+              NumberIconWidget(icon: e.icon,type: 1,)
+              :e.id == 1?NumberIconWidget(icon: e.icon,type: 0,):e.icon,
               label: e.title,
               backgroundColor: e.color,
               activeIcon: e.iconActivation,

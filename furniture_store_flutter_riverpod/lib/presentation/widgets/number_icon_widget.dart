@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:furniture_store/domain/bloc/bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
-import 'package:provider/provider.dart';
 
-class NumberIconWidget<T> extends StatelessWidget {
+import '../store_app.dart';
+
+
+class NumberIconWidget extends ConsumerWidget {
   const NumberIconWidget({
     super.key,
     required Icon icon,
-  }) : _icon = icon;
+    required int type,
+  }) : _icon = icon, _type = type;
   final Icon _icon;
+  final int _type;
 
   @override
-  Widget build(BuildContext context) {
-    return Consumer<T>(builder: (_, bloc, __){
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Consumer(builder: (_, ref, __){
+      final bloc = ref.watch(_type==0?favoritesProvider:shoppingBasketProvider);
       int num = 0;
-      if (bloc is MyBloc) {
         if(bloc is ShoppingBasketBloc){
           num = bloc.model.fold(0, (previousValue, element) => previousValue + element.count);
         } else{
           num = bloc.model.length;
         }
 
-      }
       return Stack(children: [Padding(
         padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
         child: _icon,

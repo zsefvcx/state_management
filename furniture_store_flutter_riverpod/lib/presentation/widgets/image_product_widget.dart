@@ -1,12 +1,11 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
-import 'package:provider/provider.dart';
+import 'package:furniture_store/presentation/store_app.dart';
 
-import '../../domain/bloc/favorites_bloc.dart';
-
-class ImageProductWidget extends StatelessWidget {
+class ImageProductWidget  extends ConsumerWidget {
   const ImageProductWidget({
     super.key,
     required ProductEntity productEntity,
@@ -15,14 +14,15 @@ class ImageProductWidget extends StatelessWidget {
   final ProductEntity _productEntity;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     if (kDebugMode) print('Build ImageProductWidget ${_productEntity.id}');
     return Center(
       child: SizedBox(
         width: 200,
         child: Stack(children: [
           const Placeholder(),
-          Consumer<FavoritesBloc>(builder: (_, favoritesBloc, __) {
+          Consumer(builder: (_, ref, __) {
+            final favoritesBloc = ref.watch(favoritesProvider);
             if (kDebugMode) print('Build favorite ${_productEntity.id}');
             bool status = favoritesBloc.statusFav(_productEntity.id);
             return IconButton(

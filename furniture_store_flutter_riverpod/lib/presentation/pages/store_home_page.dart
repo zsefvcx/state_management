@@ -3,12 +3,13 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:furniture_store/domain/bloc/main_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:furniture_store/presentation/store_app.dart';
 import 'package:furniture_store/presentation/widgets/navigator_widget.dart';
 import 'package:furniture_store/presentation/widgets/widgets.dart';
-import 'package:provider/provider.dart';
 
-class StoreHomePage extends StatefulWidget {
+
+class StoreHomePage extends ConsumerWidget {
   static const routeName = '/';
 
   const StoreHomePage({super.key, required this.title});
@@ -16,15 +17,7 @@ class StoreHomePage extends StatefulWidget {
   final String title;
 
   @override
-  State<StoreHomePage> createState() => _StoreHomePageState();
-}
-
-class _StoreHomePageState extends State<StoreHomePage> {
-
-  int currentTabIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     if (kDebugMode) {
       print('build MyHomePage');
     }
@@ -32,12 +25,13 @@ class _StoreHomePageState extends State<StoreHomePage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: AppBarTitleWidget(title: widget.title),
+        title: AppBarTitleWidget(title: title),
         centerTitle: true,
       ),
       //Использовать Visibility
       body:SafeArea(
-        child: Consumer<MainBloc>(builder: (_, mainBloc, __) {
+        child: Consumer(builder: (_, ref, __) {
+          final mainBloc = ref.watch(mainBlocProvider);
           if (kDebugMode) {
             print(mainBloc.lpAll.join('\t'));
             print('isLoaded : ${mainBloc.isLoaded.toString()}');
@@ -58,8 +52,8 @@ class _StoreHomePageState extends State<StoreHomePage> {
               TextButton(
                   onPressed: () {
                     mainBloc.getAllProducts(0);
-                    setState(() {
-                    });
+                    //setState(() {
+                    //});
                   },
                   child: const Text('Try again')
               ),

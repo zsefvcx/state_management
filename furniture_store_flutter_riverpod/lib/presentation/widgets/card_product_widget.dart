@@ -1,11 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 import 'package:furniture_store/presentation/widgets/detail_product_entity_widget.dart';
 import 'package:furniture_store/presentation/widgets/image_product_widget.dart';
 import 'package:furniture_store/presentation/widgets/uni_pay_button_widget.dart';
 
-class CardProductWidget extends StatefulWidget {
+class CardProductWidget extends ConsumerWidget {
   const CardProductWidget({
     super.key,
     required ProductEntity productEntity,
@@ -17,14 +18,8 @@ class CardProductWidget extends StatefulWidget {
   final ProductEntity _productEntity;
 
   @override
-  State<CardProductWidget> createState() => _CardProductWidgetState();
-}
-
-class _CardProductWidgetState extends State<CardProductWidget> {
-
-  @override
-  Widget build(BuildContext context) {
-    if (kDebugMode) print('Build ${widget._productEntity.id}');
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (kDebugMode) print('Build ${_productEntity.id}');
     return Container(
       margin: const EdgeInsets.fromLTRB(5, 5, 5, 5),
       padding: const EdgeInsets.all(10.0),
@@ -49,15 +44,15 @@ class _CardProductWidgetState extends State<CardProductWidget> {
           children: [
             Expanded(
               flex: 5,
-              child: ImageProductWidget(productEntity: widget._productEntity),
+              child: ImageProductWidget(productEntity: _productEntity),
             ),
             Expanded(
               flex: 2,
-              child: DetailProductEntityWidget(productEntity: widget._productEntity, count: widget._count,),
+              child: DetailProductEntityWidget(productEntity: _productEntity, count: _count,),
             ),
             Expanded(
               flex: 2,
-              child: UniPayButtonWidget(productEntity: widget._productEntity, type: widget._type),
+              child: UniPayButtonWidget(productEntity: _productEntity, type: _type),
             ),
           ],
         ),

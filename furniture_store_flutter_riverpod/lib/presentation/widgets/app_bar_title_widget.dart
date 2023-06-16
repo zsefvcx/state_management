@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AppBarTitleWidget extends StatelessWidget {
+class AppBarTitleWidget extends ConsumerWidget {
   const AppBarTitleWidget({
     super.key,
     required String title,
@@ -9,7 +10,7 @@ class AppBarTitleWidget extends StatelessWidget {
   final String _title;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
       height: 50,
       child: Row(

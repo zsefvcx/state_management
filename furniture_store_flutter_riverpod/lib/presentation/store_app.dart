@@ -1,46 +1,23 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:furniture_store/domain/bloc/bloc.dart';
 import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
 import 'package:furniture_store/presentation/route_generator.dart';
-import 'package:provider/provider.dart';
 
+final MainBloc _mainBloc = BlocFactory.instance.get<MainBloc>();
+final FavoritesBloc _favoritesBloc = BlocFactory.instance.get<FavoritesBloc>();
+final ShoppingBasketBloc _shoppingBasketBloc = BlocFactory.instance.get<ShoppingBasketBloc>();
+final StateProvider mainBlocProvider = StateProvider<MainBloc>((ref) => _mainBloc);
+final StateProvider favoritesProvider = StateProvider<FavoritesBloc>((ref) => _favoritesBloc);
+final StateProvider shoppingBasketProvider = StateProvider<ShoppingBasketBloc>((ref) => _shoppingBasketBloc);
 
-
-class StoreApp extends StatefulWidget {
+class StoreApp extends ConsumerWidget {
   const StoreApp({super.key});
 
   @override
-  State<StoreApp> createState() => _StoreAppState();
-}
-
-class _StoreAppState extends State<StoreApp> {
-  late final MainBloc _mainBloc;
-  late final FavoritesBloc _favoritesBloc;
-  late final ShoppingBasketBloc _shoppingBasketBloc;
-  @override
-  void initState() {
-    super.initState();
-    _mainBloc = BlocFactory.instance.get<MainBloc>();
-    _favoritesBloc = BlocFactory.instance.get<FavoritesBloc>();
-    _shoppingBasketBloc = BlocFactory.instance.get<ShoppingBasketBloc>();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<MainBloc>(
-            create: (_) =>
-            _mainBloc),
-        ChangeNotifierProvider<FavoritesBloc>(
-            create: (_) =>
-            _favoritesBloc),
-        ChangeNotifierProvider<ShoppingBasketBloc>(
-            create: (_) =>
-            _shoppingBasketBloc),
-      ],
-      child: MaterialApp(
+  Widget build(BuildContext context, WidgetRef ref) {
+    return MaterialApp(
         title: 'Store Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -49,7 +26,6 @@ class _StoreAppState extends State<StoreApp> {
         ),
         initialRoute: RouteGenerator.initialRoute,
         onGenerateRoute: (RouteSettings settings)=>RouteGenerator.generateRoute(settings),
-      ),
     );
   }
 }

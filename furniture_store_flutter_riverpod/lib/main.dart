@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:furniture_store/presentation/store_app.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -29,5 +30,5 @@ Future<void> main() async {
 
 
   BlocFactory.instance.initialize();
-  runApp(const StoreApp());
+  runApp(const ProviderScope(child: StoreApp()));
 }

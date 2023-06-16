@@ -1,14 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:furniture_store/presentation/pages/store_home_page.dart';
 import 'package:furniture_store/presentation/route_generator.dart';
-import 'package:provider/provider.dart';
+import 'package:furniture_store/presentation/store_app.dart';
 
 import '../../domain/entities/entities.dart';
 
-class UniPayButtonWidget extends StatelessWidget {
+class UniPayButtonWidget extends ConsumerWidget {
   const UniPayButtonWidget({
     super.key,
     required ProductEntity productEntity,
@@ -19,9 +19,10 @@ class UniPayButtonWidget extends StatelessWidget {
   final ProductEntity _productEntity;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     if (kDebugMode) print('Build UniPayButtonWidget ${_productEntity.id}');
-    return Consumer<ShoppingBasketBloc>(builder: (_, shoppingBasketBloc, __) {
+    return Consumer(builder: (_, ref, __) {
+      final shoppingBasketBloc = ref.watch(shoppingBasketProvider);
       final TextEditingController controller = TextEditingController();
       if (kDebugMode) print('Build button shoppingBasket ${_productEntity.id}');
       bool status = shoppingBasketBloc.statusBas(_productEntity.id);

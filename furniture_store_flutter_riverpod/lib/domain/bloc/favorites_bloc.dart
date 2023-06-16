@@ -1,12 +1,12 @@
 
-import 'package:furniture_store/domain/bloc/bloc.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 import 'package:furniture_store/domain/repositories/repositories.dart';
 
-class FavoritesBloc extends MyBloc<FavoritesEntity> {
+class FavoritesBloc {
 
   final FavoritesRepository _favoritesRepository;
 
+  Set<FavoritesEntity> model = {};
 
   FavoritesBloc({
     required FavoritesRepository favoritesRepository,
@@ -16,7 +16,6 @@ class FavoritesBloc extends MyBloc<FavoritesEntity> {
 
   Future<void> fav() async {
     model = await _favoritesRepository.fav();
-    notifyListeners();
   }
 
   bool statusFav(int id) => _favoritesRepository.status(id);
@@ -24,13 +23,11 @@ class FavoritesBloc extends MyBloc<FavoritesEntity> {
   Future<void> addFav(int id) async {
     await _favoritesRepository.add(id);
     await fav();
-    notifyListeners();
   }
 
   Future<void> remFav(int id) async {
     await _favoritesRepository.rem(id);
     await fav();
-    notifyListeners();
   }
 
 
