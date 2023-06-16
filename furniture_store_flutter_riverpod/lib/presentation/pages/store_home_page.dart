@@ -8,7 +8,7 @@ import 'package:furniture_store/presentation/widgets/navigator_widget.dart';
 import 'package:furniture_store/presentation/widgets/widgets.dart';
 
 
-class StoreHomePage extends ConsumerWidget {
+class StoreHomePage extends StatelessWidget {
   static const routeName = '/';
 
   const StoreHomePage({super.key, required this.title});
@@ -16,7 +16,7 @@ class StoreHomePage extends ConsumerWidget {
   final String title;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -27,21 +27,19 @@ class StoreHomePage extends ConsumerWidget {
       //Использовать Visibility
       body:SafeArea(
         child: Consumer(builder: (_, ref, __) {
-          final mainBloc = ref.read(mainBlocProvider.notifier);
-          final mainBlocValue =  ref.watch(mainBlocProvider);
-          print('$mainBlocValue');
-        if (mainBloc.isTimeOut || mainBloc.isError){
+          final mainBlocStatus =  ref.watch(mainBlocProvider);
+        if (mainBlocStatus.timeOut || mainBlocStatus.isError){
           return Center(child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text('isTimeOut  :${mainBloc.isTimeOut.toString()}'),
-              Text('isError    :${mainBloc.isError.toString()}'),
-              Text('isErrorType:${mainBloc.e.runtimeType}'),
+              Text('isTimeOut  :${mainBlocStatus.timeOut.toString()}'),
+              Text('isError    :${mainBlocStatus.isError.toString()}'),
+              Text('isErrorType:${mainBlocStatus.e.runtimeType}'),
               const SizedBox(height: 50,),
               TextButton(
                   onPressed: () {
-                    mainBloc.getAllProducts(0);
+                    ref.read(mainBlocProvider.notifier).getAllProducts(0);
                     //setState(() {
                     //});
                   },
@@ -49,12 +47,12 @@ class StoreHomePage extends ConsumerWidget {
               ),
             ],
           ));
-        } if (!mainBloc.isLoaded) {
+        } if (!mainBlocStatus.isLoaded) {
           return const Center(child: CircularProgressIndicator());
         } else {
           return
             RefreshIndicator(
-              onRefresh: () async => await mainBloc.getAllProducts(0),
+              onRefresh: () async => await ref.read(mainBlocProvider.notifier).getAllProducts(0),
               child: ScrollConfiguration(// + windows
                 behavior: ScrollConfiguration.of(context).copyWith(
                   dragDevices: {
@@ -73,9 +71,9 @@ class StoreHomePage extends ConsumerWidget {
                       childAspectRatio: 1,
                     ),
                   //padding: const EdgeInsets.only(top: 16),
-                  itemCount: mainBloc.lpAll.length,
+                  itemCount: mainBlocStatus.lpAll.length,
                   itemBuilder: (_, index) {
-                    return CardProductWidget(productEntity: mainBloc.lpAll[index],
+                    return CardProductWidget(productEntity: mainBlocStatus.lpAll[index],
                       type: 0, count: 1,);
                   },
               ),

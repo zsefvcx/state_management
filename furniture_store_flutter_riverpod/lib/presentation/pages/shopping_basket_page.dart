@@ -30,17 +30,16 @@ class ShoppingBasketPage extends ConsumerWidget {
       body:SafeArea(
         child: Consumer(builder: (_, ref, __) {
           final mainBloc = ref.read(mainBlocProvider.notifier);
-          final mainBlocValue =  ref.watch(mainBlocProvider);
-          print('$mainBlocValue');
+          final mainBlocStatus =  ref.watch(mainBlocProvider);
           ref.watch(mainBlocProvider);
-          if (mainBloc.isTimeOut || mainBloc.isError){
+          if (mainBlocStatus.timeOut || mainBlocStatus.isError){
             return Center(child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('isTimeOut  :${mainBloc.isTimeOut.toString()}'),
-                Text('isError    :${mainBloc.isError.toString()}'),
-                Text('isErrorType:${mainBloc.e.runtimeType}'),
+                Text('isTimeOut  :${mainBlocStatus.timeOut.toString()}'),
+                Text('isError    :${mainBlocStatus.isError.toString()}'),
+                Text('isErrorType:${mainBlocStatus.e.runtimeType}'),
                 const SizedBox(height: 50,),
                 TextButton(
                     onPressed: () {
@@ -52,7 +51,7 @@ class ShoppingBasketPage extends ConsumerWidget {
                 ),
               ],
             ));
-          } if (!mainBloc.isLoaded) {
+          } if (!mainBlocStatus.isLoaded) {
             return const Center(child: CircularProgressIndicator());
           } else {
             return
@@ -80,10 +79,10 @@ class ShoppingBasketPage extends ConsumerWidget {
                         //padding: const EdgeInsets.only(top: 16),
                         itemCount: shoppingBasketBlocModel.model.length,
                         itemBuilder: (_, index) {
-                            return CardProductWidget(productEntity: mainBloc.lpAll[
-                            shoppingBasketBlocModel.model.toList()[index].id
+                            return CardProductWidget(productEntity: mainBlocStatus.lpAll[
+                            shoppingBasketBlocModel.model.values.toList()[index].id
                             ],
-                            type: 1, count: shoppingBasketBlocModel.model.toList()[index].count,);
+                            type: 1, count: shoppingBasketBlocModel.model.values.toList()[index].count,);
                       });                          //
                       },
                     ),

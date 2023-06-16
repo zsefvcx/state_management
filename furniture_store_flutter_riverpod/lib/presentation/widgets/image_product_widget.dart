@@ -20,14 +20,12 @@ class ImageProductWidget  extends ConsumerWidget {
           const Placeholder(),
           Consumer(builder: (_, ref, __) {
             final favoritesBloc = ref.read(favoritesProvider.notifier);
-            final favoritesBlocValue =  ref.watch(favoritesProvider);
-            print('$favoritesBlocValue');
-            bool status = favoritesBloc.statusFav(_productEntity.id);
+            bool status = ref.watch(favoritesProvider).statusFav(_productEntity.id);
             return IconButton(
               onPressed: () async {
                 status? await favoritesBloc.remFav(_productEntity.id):
                 await favoritesBloc.addFav(_productEntity.id);
-              }, //print('Нравиться id:${_productEntity.id}'),
+              },
               icon: Icon(status?Icons.favorite:Icons.favorite_border,
                 color: Colors.blue,
                 size: 24,

@@ -17,7 +17,7 @@ class FavoritesRepositoryImpl extends FavoritesRepository {
   }
 
   @override
-  Future<Set<FavoritesEntity>> fav() async {
+  Future<Map<int, FavoritesEntity>> fav() async {
     return await featureFavoritesDataSource.fav();
   }
 

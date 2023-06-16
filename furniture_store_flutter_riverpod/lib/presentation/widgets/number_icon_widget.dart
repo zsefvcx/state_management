@@ -18,12 +18,12 @@ class NumberIconWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Consumer(builder: (_, ref, __){
-      final blocMadel =  ref.watch(_type==0?favoritesProvider:shoppingBasketProvider);
+      final blocModel =  ref.watch(_type==0?favoritesProvider:shoppingBasketProvider);
       int num = 0;
-        if(blocMadel is ShoppingBasket){
-          num = blocMadel.model.fold(0, (previousValue, element) => previousValue + element.count);
-        } else if(blocMadel is Favorites){
-          num = blocMadel.model.length;
+        if(blocModel is ShoppingBasket){
+          num = blocModel.model.values.fold(0, (previousValue, element) => previousValue + element.count);
+        } else if(blocModel is Favorites){
+          num = blocModel.model.values.length;
         }
 
       return Stack(children: [Padding(

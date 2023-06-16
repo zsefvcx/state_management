@@ -21,10 +21,8 @@ class UniPayButtonWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Consumer(builder: (_, ref, __) {
       final shoppingBasketBloc = ref.read(shoppingBasketProvider.notifier);
-      final shoppingBasketBlocValue =  ref.watch(shoppingBasketProvider);
-      print('$shoppingBasketBlocValue');
       final TextEditingController controller = TextEditingController();
-      bool status = shoppingBasketBloc.statusBas(_productEntity.id);
+      bool status = ref.watch(shoppingBasketProvider).statusBas(_productEntity.id);
       controller.value = TextEditingValue(text: shoppingBasketBloc.getCountBas(_productEntity.id).toString());
       return Row(
         crossAxisAlignment: CrossAxisAlignment.center,

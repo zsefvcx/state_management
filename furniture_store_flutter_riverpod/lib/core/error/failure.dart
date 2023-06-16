@@ -12,3 +12,5 @@ class ServerFailure extends Failure{}
 class CacheFailure extends Failure{}
 
 class MainBlocFailure extends Failure{}
+
+class NoFailure extends Failure{}

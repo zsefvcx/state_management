@@ -5,13 +5,19 @@ import 'package:furniture_store/domain/repositories/repositories.dart';
 
 class ShoppingBasket{
 
-  Set<ShoppingBasketEntity> model;
+  final Map<int, ShoppingBasketEntity> model;
 
-  void updateState(Set<ShoppingBasketEntity> data){
+  const ShoppingBasket({required this.model});
 
+  bool statusBas(int id) => model[id]!=null;
+
+  ShoppingBasket copyWith({
+    Map<int, ShoppingBasketEntity>? model,
+  }) {
+    return ShoppingBasket(
+      model: model ?? this.model,
+    );
   }
-
-  ShoppingBasket(this.model);
 }
 
 
@@ -22,15 +28,14 @@ class ShoppingBasketBloc extends StateNotifier<ShoppingBasket>{
 
   ShoppingBasketBloc({
     required ShoppingBasketRepository shoppingBasketRepository,
-  }) : _shoppingBasketRepository= shoppingBasketRepository, super(ShoppingBasket({})){
+  }) : _shoppingBasketRepository= shoppingBasketRepository, super(const ShoppingBasket(model: {})){
     bas();
   }
 
   Future<void> bas() async {
-    state.model = await _shoppingBasketRepository.bas();
+    Map<int, ShoppingBasketEntity> data = await _shoppingBasketRepository.bas();
+    state = state.copyWith(model: data);
   }
-
-  bool statusBas(int id) => _shoppingBasketRepository.status(id);
 
   Future<void> addBas(int id) async {
     await _shoppingBasketRepository.add(id);

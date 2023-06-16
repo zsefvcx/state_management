@@ -5,10 +5,19 @@ import 'package:furniture_store/domain/repositories/repositories.dart';
 
 class Favorites {
 
-  Set<FavoritesEntity> model;
+  final Map<int, FavoritesEntity> model;
 
-  Favorites(this.model);
+  const Favorites({required this.model});
 
+  bool statusFav(int id) => model[id]!=null;
+
+  Favorites copyWith({
+    Map<int, FavoritesEntity>? model,
+  }) {
+    return Favorites(
+      model: model ?? this.model,
+    );
+  }
 }
 
 
@@ -18,15 +27,14 @@ class FavoritesBloc extends StateNotifier<Favorites>{
 
   FavoritesBloc({
     required FavoritesRepository favoritesRepository,
-  }) : _favoritesRepository= favoritesRepository, super(Favorites({})) {
+  }) : _favoritesRepository= favoritesRepository, super(const Favorites(model: {})) {
     fav();
   }
 
   Future<void> fav() async {
-    state.model = await _favoritesRepository.fav();
+    Map<int, FavoritesEntity> data = await _favoritesRepository.fav();
+    state = state.copyWith(model: data);
   }
-
-  bool statusFav(int id) => _favoritesRepository.status(id);
 
   Future<void> addFav(int id) async {
     await _favoritesRepository.add(id);

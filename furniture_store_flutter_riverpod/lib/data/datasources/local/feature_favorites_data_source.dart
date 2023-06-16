@@ -7,7 +7,7 @@ abstract class FeatureFavoritesDataSource {
 
    Future<void> rem(int id);
 
-   Future<Set<FavoritesModel>> fav();
+   Future<Map<int, FavoritesModel>> fav();
 
    bool status(int id);
 
