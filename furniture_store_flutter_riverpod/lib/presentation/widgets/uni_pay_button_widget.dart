@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,11 +19,11 @@ class UniPayButtonWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (kDebugMode) print('Build UniPayButtonWidget ${_productEntity.id}');
     return Consumer(builder: (_, ref, __) {
-      final shoppingBasketBloc = ref.watch(shoppingBasketProvider);
+      final shoppingBasketBloc = ref.read(shoppingBasketProvider.notifier);
+      final shoppingBasketBlocValue =  ref.watch(shoppingBasketProvider);
+      print('$shoppingBasketBlocValue');
       final TextEditingController controller = TextEditingController();
-      if (kDebugMode) print('Build button shoppingBasket ${_productEntity.id}');
       bool status = shoppingBasketBloc.statusBas(_productEntity.id);
       controller.value = TextEditingValue(text: shoppingBasketBloc.getCountBas(_productEntity.id).toString());
       return Row(

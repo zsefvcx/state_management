@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:furniture_store/domain/bloc/bloc.dart';
 import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
 
 import '../store_app.dart';
@@ -17,12 +18,12 @@ class NumberIconWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Consumer(builder: (_, ref, __){
-      final bloc = ref.watch(_type==0?favoritesProvider:shoppingBasketProvider);
+      final blocMadel =  ref.watch(_type==0?favoritesProvider:shoppingBasketProvider);
       int num = 0;
-        if(bloc is ShoppingBasketBloc){
-          num = bloc.model.fold(0, (previousValue, element) => previousValue + element.count);
-        } else{
-          num = bloc.model.length;
+        if(blocMadel is ShoppingBasket){
+          num = blocMadel.model.fold(0, (previousValue, element) => previousValue + element.count);
+        } else if(blocMadel is Favorites){
+          num = blocMadel.model.length;
         }
 
       return Stack(children: [Padding(

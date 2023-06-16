@@ -1,7 +1,6 @@
 
 import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:furniture_store/presentation/store_app.dart';
@@ -18,9 +17,6 @@ class StoreHomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (kDebugMode) {
-      print('build MyHomePage');
-    }
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -31,15 +27,9 @@ class StoreHomePage extends ConsumerWidget {
       //Использовать Visibility
       body:SafeArea(
         child: Consumer(builder: (_, ref, __) {
-          final mainBloc = ref.watch(mainBlocProvider);
-          if (kDebugMode) {
-            print(mainBloc.lpAll.join('\t'));
-            print('isLoaded : ${mainBloc.isLoaded.toString()}');
-            print('isTimeOut:${mainBloc.isTimeOut.toString()}');
-            print('isError  :${mainBloc.isError.toString()}');
-            print('isErrorType  :${mainBloc.e.runtimeType}');
-          }
-          //;
+          final mainBloc = ref.read(mainBlocProvider.notifier);
+          final mainBlocValue =  ref.watch(mainBlocProvider);
+          print('$mainBlocValue');
         if (mainBloc.isTimeOut || mainBloc.isError){
           return Center(child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -85,7 +75,6 @@ class StoreHomePage extends ConsumerWidget {
                   //padding: const EdgeInsets.only(top: 16),
                   itemCount: mainBloc.lpAll.length,
                   itemBuilder: (_, index) {
-                    if (kDebugMode) print('Build CardProductWidget $index');
                     return CardProductWidget(productEntity: mainBloc.lpAll[index],
                       type: 0, count: 1,);
                   },

@@ -1,13 +1,12 @@
 import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:furniture_store/presentation/pages/store_home_page.dart';
+import 'package:furniture_store/presentation/route_generator.dart';
 import 'package:furniture_store/presentation/store_app.dart';
 import 'package:furniture_store/presentation/widgets/navigator_widget.dart';
 import 'package:furniture_store/presentation/widgets/widgets.dart';
-
-final GlobalKey _scaffoldKey = GlobalKey<ScaffoldState>();
 
 class ShoppingBasketPage extends ConsumerWidget {
   static const routeName = '/shopping_basket_page';
@@ -18,11 +17,9 @@ class ShoppingBasketPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (kDebugMode) {
-      print('build MyHomePage');
-    }
+    final GlobalKey scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
-      key: _scaffoldKey,
+      key: scaffoldKey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -32,15 +29,10 @@ class ShoppingBasketPage extends ConsumerWidget {
       //Использовать Visibility
       body:SafeArea(
         child: Consumer(builder: (_, ref, __) {
-          final mainBloc = ref.watch(mainBlocProvider);
-          if (kDebugMode) {
-            print(mainBloc.lpAll.join('\t'));
-            print('isLoaded : ${mainBloc.isLoaded.toString()}');
-            print('isTimeOut:${mainBloc.isTimeOut.toString()}');
-            print('isError  :${mainBloc.isError.toString()}');
-            print('isErrorType  :${mainBloc.e.runtimeType}');
-          }
-          //;
+          final mainBloc = ref.read(mainBlocProvider.notifier);
+          final mainBlocValue =  ref.watch(mainBlocProvider);
+          print('$mainBlocValue');
+          ref.watch(mainBlocProvider);
           if (mainBloc.isTimeOut || mainBloc.isError){
             return Center(child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -76,7 +68,7 @@ class ShoppingBasketPage extends ConsumerWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Consumer(builder: (_, ref, __) {
-                      final shoppingBasketBloc = ref.watch(shoppingBasketProvider);
+                      final shoppingBasketBlocModel =  ref.watch(shoppingBasketProvider);
                       return GridView.builder(
                         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: 550,
@@ -86,13 +78,12 @@ class ShoppingBasketPage extends ConsumerWidget {
                           childAspectRatio: 1,
                         ),
                         //padding: const EdgeInsets.only(top: 16),
-                        itemCount: shoppingBasketBloc.model.length,
+                        itemCount: shoppingBasketBlocModel.model.length,
                         itemBuilder: (_, index) {
-                        if (kDebugMode) print('Build CardProductWidget Basket $index');
                             return CardProductWidget(productEntity: mainBloc.lpAll[
-                              shoppingBasketBloc.model.toList()[index].id
+                            shoppingBasketBlocModel.model.toList()[index].id
                             ],
-                            type: 1, count: shoppingBasketBloc.model.toList()[index].count,);
+                            type: 1, count: shoppingBasketBlocModel.model.toList()[index].count,);
                       });                          //
                       },
                     ),
@@ -107,11 +98,50 @@ class ShoppingBasketPage extends ConsumerWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton.small(
         tooltip: 'Оплатить',
-        onPressed: () {},//_showDialog(),
+        onPressed: ()  {
+          BuildContext? contextGlobal = scaffoldKey.currentContext;
+          if(contextGlobal != null) {
+            int cont = ref.watch(shoppingBasketProvider).model.length;
+            if(cont == 0) return;
+            showDialog(// flutter defined function
+              context: contextGlobal,
+              builder: (BuildContext context) {
+                // return object of type Dialog
+                return AlertDialog(
+                  title: const Text('Оплатить'),
+                  content: const Text(''),
+                  actions: [
+                    ElevatedButton(
+                      child: const Text('Ok'),
+                      onPressed: () {
+                        ref.read(shoppingBasketProvider.notifier).remAll();
+                        RouteGenerator.currentIndex.index = 0;
+                        Navigator.of(context).
+                        pushReplacementNamed(StoreHomePage.routeName,
+                          arguments: {
+                            'TabIndex':RouteGenerator.currentIndex.index,
+                          },
+                        );
+                      },
+                    ),
+                    ElevatedButton(
+                      child: const Text('Отмена'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          }
+        },
         backgroundColor: Colors.blue.withOpacity(0.8),
         child: const Center(child: Icon(Icons.payments_outlined, )),
       ),
     );
+
+
   }
 }
 

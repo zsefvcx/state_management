@@ -1,12 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 import 'package:furniture_store/presentation/widgets/detail_product_entity_widget.dart';
 import 'package:furniture_store/presentation/widgets/image_product_widget.dart';
 import 'package:furniture_store/presentation/widgets/uni_pay_button_widget.dart';
 
-class CardProductWidget extends ConsumerWidget {
+class CardProductWidget extends StatelessWidget {
   const CardProductWidget({
     super.key,
     required ProductEntity productEntity,
@@ -18,8 +16,7 @@ class CardProductWidget extends ConsumerWidget {
   final ProductEntity _productEntity;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    if (kDebugMode) print('Build ${_productEntity.id}');
+  Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.fromLTRB(5, 5, 5, 5),
       padding: const EdgeInsets.all(10.0),

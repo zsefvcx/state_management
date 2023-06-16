@@ -1,10 +1,9 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:furniture_store/domain/entities/entities.dart';
 
-import '../../domain/entities/entities.dart';
 
-class DetailProductEntityWidget extends ConsumerWidget {
+class DetailProductEntityWidget extends StatelessWidget {
   const DetailProductEntityWidget({
     super.key,
     required ProductEntity productEntity,
@@ -14,7 +13,7 @@ class DetailProductEntityWidget extends ConsumerWidget {
   final ProductEntity _productEntity;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

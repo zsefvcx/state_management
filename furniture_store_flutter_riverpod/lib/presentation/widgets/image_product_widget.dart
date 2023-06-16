@@ -1,5 +1,3 @@
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
@@ -15,15 +13,15 @@ class ImageProductWidget  extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (kDebugMode) print('Build ImageProductWidget ${_productEntity.id}');
     return Center(
       child: SizedBox(
         width: 200,
         child: Stack(children: [
           const Placeholder(),
           Consumer(builder: (_, ref, __) {
-            final favoritesBloc = ref.watch(favoritesProvider);
-            if (kDebugMode) print('Build favorite ${_productEntity.id}');
+            final favoritesBloc = ref.read(favoritesProvider.notifier);
+            final favoritesBlocValue =  ref.watch(favoritesProvider);
+            print('$favoritesBlocValue');
             bool status = favoritesBloc.statusFav(_productEntity.id);
             return IconButton(
               onPressed: () async {

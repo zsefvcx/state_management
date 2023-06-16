@@ -1,7 +1,6 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:furniture_store/presentation/pages/shopping_basket_page.dart';
 import 'package:furniture_store/presentation/pages/store_home_page.dart';
 import 'package:furniture_store/presentation/route_generator.dart';
@@ -52,14 +51,14 @@ final List<TabItem> _tabItemsBar = [
   ),
 ];
 
-class NavigatorWidget extends ConsumerWidget {
+class NavigatorWidget extends StatelessWidget {
 
   const NavigatorWidget({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return
 
       BottomAppBar(

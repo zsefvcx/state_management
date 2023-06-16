@@ -1,21 +1,33 @@
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 import 'package:furniture_store/domain/repositories/repositories.dart';
 
-class ShoppingBasketBloc {
+class ShoppingBasket{
+
+  Set<ShoppingBasketEntity> model;
+
+  void updateState(Set<ShoppingBasketEntity> data){
+
+  }
+
+  ShoppingBasket(this.model);
+}
+
+
+class ShoppingBasketBloc extends StateNotifier<ShoppingBasket>{
 
   final ShoppingBasketRepository _shoppingBasketRepository;
 
-  Set<ShoppingBasketEntity> model = {};
 
   ShoppingBasketBloc({
     required ShoppingBasketRepository shoppingBasketRepository,
-  }) : _shoppingBasketRepository= shoppingBasketRepository{
+  }) : _shoppingBasketRepository= shoppingBasketRepository, super(ShoppingBasket({})){
     bas();
   }
 
   Future<void> bas() async {
-    model = await _shoppingBasketRepository.bas();
+    state.model = await _shoppingBasketRepository.bas();
   }
 
   bool statusBas(int id) => _shoppingBasketRepository.status(id);

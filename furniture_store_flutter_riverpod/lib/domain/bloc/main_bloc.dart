@@ -1,10 +1,11 @@
 
-import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:furniture_store/core/error/failure.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 import 'package:furniture_store/domain/repositories/repositories.dart';
 
-class MainBloc  with ChangeNotifier{
+class MainBloc extends StateNotifier<int> {
+
   final FeatureRepository _featureRepository;
 
   bool _timeOut = true;
@@ -25,7 +26,7 @@ class MainBloc  with ChangeNotifier{
 
   MainBloc({
     required FeatureRepository featureRepository,
-  }) : _featureRepository = featureRepository {
+  }) : _featureRepository = featureRepository, super(0) {
     getAllProducts(0);
   }
 
@@ -33,16 +34,16 @@ class MainBloc  with ChangeNotifier{
     _lpAll.clear();
     var(Failure? e , List<ProductEntity>? lp) = await _getProduct(() => _featureRepository.getAllProducts(page));
 
-    if(lp!=null){_lpAll = lp; notifyListeners(); return;}
-    if(e !=null){ _e = e;notifyListeners();return;}
+    if(lp!=null){_lpAll = lp; state++; return;}
+    if(e !=null){ _e = e;     state++; return;}
   }
 
   Future<void> searchProduct(int id) async {
     _lpSingle.clear();
     var(Failure? e , List<ProductEntity>? lp) = await _getProduct(() => _featureRepository.searchProduct(id));
 
-    if(lp!=null){_lpSingle = lp;notifyListeners(); return;}
-    if(e!=null){ _e = e;notifyListeners();return;}
+    if(lp!=null){_lpSingle = lp; state++; return;}
+    if(e!=null){ _e = e;         state++; return;}
   }
 
   Future<(Failure?, List<ProductEntity>?)> _getProduct(Future<(Failure?, List<ProductEntity>?)> Function() getProducts) async {

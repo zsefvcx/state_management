@@ -8,11 +8,16 @@ import 'package:get_it/get_it.dart';
 class BlocFactory {
   static final _getIt = GetIt.I;
 
+  static bool _statusInit = false;
+
+
   T get<T extends Object>() => _getIt.get<T>();
 
   static final instance = BlocFactory();
 
   void initialize(){
+    if (_statusInit == true) return;
+
     ServiceProvider.instance.initialize();
 
     _getIt.registerLazySingleton<MainBloc>(
@@ -32,6 +37,8 @@ class BlocFactory {
         shoppingBasketRepository: ServiceProvider.instance.get<ShoppingBasketRepository>(),
       ),
     );
+
+    _statusInit = true;
   }
 
 

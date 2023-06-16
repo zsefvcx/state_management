@@ -5,12 +5,9 @@ import 'package:furniture_store/domain/bloc/bloc.dart';
 import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
 import 'package:furniture_store/presentation/route_generator.dart';
 
-final MainBloc _mainBloc = BlocFactory.instance.get<MainBloc>();
-final FavoritesBloc _favoritesBloc = BlocFactory.instance.get<FavoritesBloc>();
-final ShoppingBasketBloc _shoppingBasketBloc = BlocFactory.instance.get<ShoppingBasketBloc>();
-final StateProvider mainBlocProvider = StateProvider<MainBloc>((ref) => _mainBloc);
-final StateProvider favoritesProvider = StateProvider<FavoritesBloc>((ref) => _favoritesBloc);
-final StateProvider shoppingBasketProvider = StateProvider<ShoppingBasketBloc>((ref) => _shoppingBasketBloc);
+final mainBlocProvider = StateNotifierProvider((ref) => BlocFactory.instance.get<MainBloc>());
+final favoritesProvider = StateNotifierProvider<FavoritesBloc ,Favorites>((ref) => BlocFactory.instance.get<FavoritesBloc>());
+final shoppingBasketProvider = StateNotifierProvider<ShoppingBasketBloc, ShoppingBasket>((ref) => BlocFactory.instance.get<ShoppingBasketBloc>());
 
 class StoreApp extends ConsumerWidget {
   const StoreApp({super.key});

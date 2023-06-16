@@ -2,10 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:furniture_store/domain/bloc/bloc.dart';
 import 'package:furniture_store/presentation/store_app.dart';
 import 'package:window_manager/window_manager.dart';
-
-import 'domain/bloc/bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +26,6 @@ Future<void> main() async {
       await windowManager.focus();
     });
   }
-
 
   BlocFactory.instance.initialize();
   runApp(const ProviderScope(child: StoreApp()));
