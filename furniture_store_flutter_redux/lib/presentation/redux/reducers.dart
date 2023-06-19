@@ -7,8 +7,6 @@ FavoritesAppState reducer(FavoritesAppState state, dynamic action){
     if(!(state.model == action.model)) {
       return state.copyWith(model: action.model);
     }
-  } else if (action is StatusFavAction){
-    return state.copyWith();
   } else if (action is AddFavAction){
     return state.copyWith();
   } else if (action is RemFavAction){

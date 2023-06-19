@@ -1,8 +1,10 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 
 class ReadFavAction {}
 
+@immutable
 class FavAction  extends Equatable{
   Map<int, FavoritesEntity> model;
 
@@ -13,12 +15,6 @@ class FavAction  extends Equatable{
 
   @override
   bool get stringify => true;
-}
-
-class StatusFavAction {
-  int id;
-
-  StatusFavAction({required this.id});
 }
 
 class AddFavAction {
@@ -32,3 +28,23 @@ class RemFavAction {
 
   RemFavAction({required this.id});
 }
+
+class ReadBasAction {}
+
+class BasAction{
+
+}
+
+class RemAction{
+  int id;
+  RemAction({required this.id});
+}
+
+class SetCountAction{
+  int id;
+  int value;
+
+  SetCountAction({required this.id, required this.value});
+
+}
+class RemAllAction{}
