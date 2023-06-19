@@ -3,31 +3,37 @@ import 'package:flutter/material.dart';
 import 'package:furniture_store/domain/bloc/bloc.dart';
 import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
 import 'package:furniture_store/presentation/route_generator.dart';
+import 'package:provider/provider.dart';
 
-// final mainBlocProvider = StateNotifierProvider<MainBloc, MainStatus>((ref) => BlocFactory.instance.get<MainBloc>());
-// final favoritesProvider = StateNotifierProvider<FavoritesBloc ,Favorites>((ref) => BlocFactory.instance.get<FavoritesBloc>());
-// final shoppingBasketProvider = StateNotifierProvider<ShoppingBasketBloc, ShoppingBasket>((ref) => BlocFactory.instance.get<ShoppingBasketBloc>());
-//https://habr.com/ru/articles/481624/
-enum Actions {
-  bas,
-  addBas,
-  remBas,
-  setCountBas,
-  remAll,
-  getCountBas,
-  statusBas,
-}
-
- int shoppingBasketReducer(int state, dynamic action) {
-   return action == Actions.Increment ? state + 1 : state;
- }
-
-class StoreApp extends StatelessWidget {
+class StoreApp extends StatefulWidget {
   const StoreApp({super.key});
 
   @override
+  State<StoreApp> createState() => _StoreAppState();
+}
+
+class _StoreAppState extends State<StoreApp> {
+  late final MainBloc _mainBloc;
+  late final ShoppingBasketBloc _shoppingBasketBloc;
+  @override
+  void initState() {
+    super.initState();
+    _mainBloc = BlocFactory.instance.get<MainBloc>();
+    _shoppingBasketBloc = BlocFactory.instance.get<ShoppingBasketBloc>();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<MainBloc>(
+            create: (_) =>
+            _mainBloc),
+        ChangeNotifierProvider<ShoppingBasketBloc>(
+            create: (_) =>
+            _shoppingBasketBloc),
+      ],
+      child: MaterialApp(
         title: 'Store Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -36,6 +42,7 @@ class StoreApp extends StatelessWidget {
         ),
         initialRoute: RouteGenerator.initialRoute,
         onGenerateRoute: (RouteSettings settings)=>RouteGenerator.generateRoute(settings),
+      ),
     );
   }
 }
