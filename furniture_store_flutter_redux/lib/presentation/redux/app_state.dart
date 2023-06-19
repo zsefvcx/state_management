@@ -6,20 +6,22 @@ import '../../domain/entities/entities.dart';
 class FavoritesAppState extends Equatable{
   final Map<int, FavoritesEntity> model;
   final bool isLoaded;
+  final List<bool> isFav;
 
-  bool statusFav(int id) => model[id]!=null;
+  const FavoritesAppState({required this.model, required this.isLoaded, required this.isFav});
 
-  const FavoritesAppState({required this.model, required this.isLoaded});
-
-  factory FavoritesAppState.initial() => const FavoritesAppState(model: {}, isLoaded: false);
+  factory FavoritesAppState.initial() => const FavoritesAppState(model: {}, isLoaded: false, isFav: []);
 
   FavoritesAppState copyWith({
     Map<int, FavoritesEntity>? model,
     bool? isLoaded,
+    List<bool>? isFav,
   }) {
     return FavoritesAppState(
       model: model ?? this.model,
       isLoaded: isLoaded ?? this.isLoaded,
+      isFav: isFav ?? this.isFav,
+
     );
   }
 

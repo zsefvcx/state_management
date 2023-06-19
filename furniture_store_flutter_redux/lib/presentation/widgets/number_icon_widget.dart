@@ -16,7 +16,7 @@ class NumberIconWidget<T> extends StatelessWidget {
       int num = 0;
       if (bloc is MyBloc) {
         if(bloc is ShoppingBasketBloc){
-          num = bloc.model.fold(0, (previousValue, element) => previousValue + element.count);
+          num = bloc.model.values.toSet().toList().fold(0, (previousValue, element) => previousValue + element.count);
         } else{
           num = bloc.model.length;
         }

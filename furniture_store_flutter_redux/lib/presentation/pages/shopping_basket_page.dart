@@ -84,9 +84,9 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
                         itemCount: shoppingBasketBloc.model.length,
                         itemBuilder: (_, index) {
                             return CardProductWidget(productEntity: mainBloc.lpAll[
-                              shoppingBasketBloc.model.toList()[index].id
+                              shoppingBasketBloc.model.values.toSet().toList()[index].id
                             ],
-                            type: 1, count: shoppingBasketBloc.model.toList()[index].count,);
+                            type: 1, count: shoppingBasketBloc.model.values.toSet().toList()[index].count,);
                       });                          //
                       },
                     ),

@@ -11,7 +11,7 @@ abstract class FeatureShoppingBasketDataSource {
 
   Future<void> rem(int id);
 
-  Future<Set<ShoppingBasketModel>> bas();
+  Future<Map<int, ShoppingBasketModel>> bas();
 
   bool status(int id);
 

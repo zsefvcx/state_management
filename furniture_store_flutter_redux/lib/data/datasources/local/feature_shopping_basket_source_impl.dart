@@ -23,8 +23,8 @@ class FeatureShoppingBasketDataSourceImp extends FeatureShoppingBasketDataSource
   }
 
   @override
-  Future<Set<ShoppingBasketModel>> bas() async {
-    return shoppingBasketModel.values.toSet();
+  Future<Map<int, ShoppingBasketModel>> bas() async {
+    return shoppingBasketModel;
   }
 
   @override

@@ -10,6 +10,6 @@ abstract class FavoritesRepository {
 
   bool status(int id);
 
-  Future<Set<FavoritesEntity>> fav();
+  Future<Map<int, FavoritesEntity>> fav();
 
 }

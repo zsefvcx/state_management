@@ -6,6 +6,6 @@ export 'favorites_bloc.dart';
 
 abstract class MyBloc<T> with ChangeNotifier{
 
-  Set<T> model = {};
+  Map<int, T> model = {};
 
 }
