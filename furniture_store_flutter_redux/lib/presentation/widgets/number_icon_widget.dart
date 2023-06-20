@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:furniture_store/domain/bloc/bloc.dart';
-import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:furniture_store/presentation/redux/app_state.dart';
 
 class NumberIconWidget<T> extends StatelessWidget {
   const NumberIconWidget({
@@ -12,13 +11,15 @@ class NumberIconWidget<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<T>(builder: (_, bloc, __){
+    return StoreConnector<T,T>(
+        converter: (store) => store.state,
+        builder: (context, vm) {
       int num = 0;
-      if (bloc is MyBloc) {
-        if(bloc is ShoppingBasketBloc){
-          num = bloc.model.values.toSet().toList().fold(0, (previousValue, element) => previousValue + element.count);
+      if (vm is AppState) {
+        if(vm is ShoppingBasketAppState){
+          num = vm.model.values.toSet().toList().fold(0, (previousValue, element) => previousValue + element.count);
         } else{
-          num = bloc.model.length;
+          num = vm.model.length;
         }
 
       }
@@ -35,5 +36,5 @@ class NumberIconWidget<T> extends StatelessWidget {
         ),
       ),]);
     });
-  }
+   }
 }

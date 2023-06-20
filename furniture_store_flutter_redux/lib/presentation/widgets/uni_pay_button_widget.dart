@@ -1,11 +1,12 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 import 'package:furniture_store/presentation/pages/store_home_page.dart';
+import 'package:furniture_store/presentation/redux/action_shopping_basket.dart';
+import 'package:furniture_store/presentation/redux/app_state.dart';
 import 'package:furniture_store/presentation/route_generator.dart';
-import 'package:provider/provider.dart';
+
 
 class UniPayButtonWidget extends StatelessWidget {
   const UniPayButtonWidget({
@@ -19,10 +20,18 @@ class UniPayButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ShoppingBasketBloc>(builder: (_, shoppingBasketBloc, __) {
+    var action = StoreProvider.of<ShoppingBasketAppState>(context);
+    action.dispatch(ReadBasAction());
+    return StoreConnector<ShoppingBasketAppState,ShoppingBasketAppState>(
+        converter: (store) => store.state,
+        builder: (context, vm) {
       final TextEditingController controller = TextEditingController();
-      bool status = shoppingBasketBloc.statusBas(_productEntity.id);
-      controller.value = TextEditingValue(text: shoppingBasketBloc.getCountBas(_productEntity.id).toString());
+
+      bool status = vm.model.keys.contains(_productEntity.id);
+      var model = vm.model[_productEntity.id];
+      var count = model==null?0:model.count;
+
+      controller.value = TextEditingValue(text: count.toString());
       return Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: status?MainAxisAlignment.spaceBetween:MainAxisAlignment.end,
@@ -50,12 +59,14 @@ class UniPayButtonWidget extends StatelessWidget {
                     if(value > 999) value = 0;
                     if(value <= 0){
                       value = 0;
-                      await shoppingBasketBloc.remBas(_productEntity.id);
+                      action.dispatch(RemBasAction(id: _productEntity.id));
                     } else {
                       controller.value =
                           TextEditingValue(text: value.toString());
-                      await shoppingBasketBloc.setCountBas(
-                          _productEntity.id, value);
+                       action.dispatch(SetCountBasAction(
+                           id: _productEntity.id,
+                        value: value
+                       ));
                     }
                   },
                   textAlign: TextAlign.center,
@@ -71,12 +82,14 @@ class UniPayButtonWidget extends StatelessWidget {
                     value--;
                     if(value <= 0) {
                       value = 0;
-                      await shoppingBasketBloc.remBas(_productEntity.id);
+                      action.dispatch(RemBasAction(id: _productEntity.id));
                     } else {
                       controller.value = TextEditingValue(
                           text: value.toString());
-                      await shoppingBasketBloc.setCountBas(
-                          _productEntity.id, value);
+                      action.dispatch(SetCountBasAction(
+                           id: _productEntity.id,
+                           value: value
+                      ));
                     }
                   }, icon: const Icon(Icons.remove),
                 ),
@@ -90,7 +103,10 @@ class UniPayButtonWidget extends StatelessWidget {
                     value++;
                     if(value > 999) value = 999;
                     controller.value = TextEditingValue(text: value.toString());
-                    await shoppingBasketBloc.setCountBas(_productEntity.id, value);
+                      action.dispatch(SetCountBasAction(
+                         id: _productEntity.id,
+                         value: value
+                      ));
                   }, icon: const Icon(Icons.add),
                 ),
               ),
@@ -116,7 +132,7 @@ class UniPayButtonWidget extends StatelessWidget {
                       ElevatedButton(
                         child: const Text('Ok'),
                         onPressed: () {
-                          shoppingBasketBloc.remBas(_productEntity.id);
+                          action.dispatch(RemBasAction(id: _productEntity.id));
                           RouteGenerator.currentIndex.index = 0;
                           Navigator.of(context).
                           pushReplacementNamed(StoreHomePage.routeName,
@@ -137,8 +153,8 @@ class UniPayButtonWidget extends StatelessWidget {
                 },
               );
               } else {
-                status? shoppingBasketBloc.remBas(_productEntity.id):
-                shoppingBasketBloc.addBas(_productEntity.id);
+                status? action.dispatch(RemBasAction(id: _productEntity.id)):
+                action.dispatch(AddBasAction(id: _productEntity.id));
               }
             },
             child: Row(

@@ -1,11 +1,9 @@
 
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
-import 'package:furniture_store/domain/bloc/bloc.dart';
-import 'package:furniture_store/domain/bloc/favorites_bloc.dart';
-import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
 import 'package:furniture_store/presentation/pages/shopping_basket_page.dart';
 import 'package:furniture_store/presentation/pages/store_home_page.dart';
+import 'package:furniture_store/presentation/redux/app_state.dart';
 import 'package:furniture_store/presentation/route_generator.dart';
 import 'package:furniture_store/presentation/widgets/number_icon_widget.dart';
 
@@ -94,8 +92,8 @@ class _NavigatorWidgetState extends State<NavigatorWidget> {
         items: [
           ..._tabItemsBar.map((e) => BottomNavigationBarItem(
               icon:  e.id == 2?
-              NumberIconWidget<ShoppingBasketBloc>(icon: e.icon,)
-              :e.id == 1?NumberIconWidget<FavoritesBloc>(icon: e.icon,):e.icon,
+              NumberIconWidget<ShoppingBasketAppState>(icon: e.icon,)
+              :e.id == 1?NumberIconWidget<FavoritesAppState>(icon: e.icon,):e.icon,
               label: e.title,
               backgroundColor: e.color,
               activeIcon: e.iconActivation,

@@ -1,17 +1,30 @@
+import 'package:furniture_store/presentation/redux/action_favorites.dart';
+import 'package:furniture_store/presentation/redux/action_main.dart';
+import 'package:furniture_store/presentation/redux/action_shopping_basket.dart';
 import 'package:furniture_store/presentation/redux/app_state.dart';
 
-import 'action.dart';
 
-FavoritesAppState reducer(FavoritesAppState state, dynamic action){
+FavoritesAppState reducerFav(FavoritesAppState state, dynamic action){
   if(action is FavAction){
-    if(!(state.model == action.model)) {
       return state.copyWith(model: action.model);
-    }
-  } else if (action is AddFavAction){
-    return state.copyWith();
-  } else if (action is RemFavAction){
-    return state.copyWith();
   }
-
  return state;
+}
+
+ShoppingBasketAppState reducerBas(ShoppingBasketAppState state, dynamic action){
+  if(action is BasAction){
+      return state.copyWith(model: action.model);
+  }
+  return state;
+}
+
+MainAppState reducerMain(MainAppState state, dynamic action){
+  if(action is ReadAllProductsAction){
+     return state.copyWith(
+       lpAll: action.lpAll,
+       isTimeOut: action.isTimeOut,
+       isError: action.isError,
+     );
+  }
+  return state;
 }

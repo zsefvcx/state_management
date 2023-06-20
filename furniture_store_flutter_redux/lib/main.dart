@@ -34,7 +34,7 @@ Future<void> main() async {
 
   BlocFactory.instance.initialize();
 
- final Store<FavoritesAppState> store = Store(reducer,
+ final Store<FavoritesAppState> storeFavorites = Store(reducerFav,
    middleware: [
      loaderMiddleWare
    ],
@@ -42,5 +42,24 @@ Future<void> main() async {
 
  );
 
-  runApp(StoreProvider(store: store, child: const StoreApp()));
+  final Store<ShoppingBasketAppState> storeShoppingBasket= Store(reducerBas,
+    middleware: [
+      loaderMiddleWare
+    ],
+    initialState: ShoppingBasketAppState.initial(),
+
+  );
+
+  final Store<MainAppState> storeMain= Store(reducerMain,
+    middleware: [
+      loaderMiddleWareMain
+    ],
+    initialState: MainAppState.initial(),
+
+  );
+  runApp(
+      StoreProvider(             store: storeMain,
+        child: StoreProvider(    store: storeShoppingBasket,
+            child: StoreProvider(store: storeFavorites, child: const StoreApp())),
+      ));
 }

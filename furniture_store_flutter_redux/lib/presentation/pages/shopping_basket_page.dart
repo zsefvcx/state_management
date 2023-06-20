@@ -1,14 +1,14 @@
 import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:furniture_store/domain/bloc/main_bloc.dart';
-import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:furniture_store/presentation/pages/store_home_page.dart';
+import 'package:furniture_store/presentation/redux/action_main.dart';
+import 'package:furniture_store/presentation/redux/action_shopping_basket.dart';
+import 'package:furniture_store/presentation/redux/app_state.dart';
 import 'package:furniture_store/presentation/route_generator.dart';
 import 'package:furniture_store/presentation/widgets/navigator_widget.dart';
 import 'package:furniture_store/presentation/widgets/widgets.dart';
-import 'package:provider/provider.dart';
 
 class ShoppingBasketPage extends StatefulWidget {
   static const routeName = '/shopping_basket_page';
@@ -26,6 +26,7 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
 
   @override
   Widget build(BuildContext context) {
+    var action = StoreProvider.of<MainAppState>(context);
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -36,7 +37,9 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
       ),
       //Использовать Visibility
       body:SafeArea(
-        child: Consumer<MainBloc>(builder: (_, mainBloc, __) {
+        child: StoreConnector<MainAppState,MainAppState>(
+            converter: (store) => store.state,
+            builder: (context, mainBloc) {
           if (mainBloc.isTimeOut || mainBloc.isError){
             return Center(child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -44,11 +47,11 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
               children: [
                 Text('isTimeOut  :${mainBloc.isTimeOut.toString()}'),
                 Text('isError    :${mainBloc.isError.toString()}'),
-                Text('isErrorType:${mainBloc.e.runtimeType}'),
+                Text('isErrorType:${mainBloc.e}'),
                 const SizedBox(height: 50,),
                 TextButton(
                     onPressed: () {
-                      mainBloc.getAllProducts(0);
+                      action.dispatch(GetAllProductsAction(page: 0));
                       setState(() {
                       });
                     },
@@ -61,7 +64,9 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
           } else {
             return
               RefreshIndicator(
-                onRefresh: () async => await mainBloc.getAllProducts(0),
+                onRefresh: () async {
+                  action.dispatch(GetAllProductsAction(page: 0));
+                },
                 child: ScrollConfiguration(// + windows
                   behavior: ScrollConfiguration.of(context).copyWith(
                     dragDevices: {
@@ -71,7 +76,10 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Consumer<ShoppingBasketBloc>(builder: (_, shoppingBasketBloc, __) {
+                    child: StoreConnector<ShoppingBasketAppState,ShoppingBasketAppState>(
+                      converter: (store) => store.state,
+                      builder: (context, vm) {
+                        var model = vm.model.values.toSet().toList();
                       return GridView.builder(
                         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: 550,
@@ -81,12 +89,12 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
                           childAspectRatio: 1,
                         ),
                         //padding: const EdgeInsets.only(top: 16),
-                        itemCount: shoppingBasketBloc.model.length,
+                        itemCount: model.length,
                         itemBuilder: (_, index) {
                             return CardProductWidget(productEntity: mainBloc.lpAll[
-                              shoppingBasketBloc.model.values.toSet().toList()[index].id
+                              model[index].id
                             ],
-                            type: 1, count: shoppingBasketBloc.model.values.toSet().toList()[index].count,);
+                            type: 1, count: model[index].count,);
                       });                          //
                       },
                     ),
@@ -112,7 +120,7 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
     BuildContext? contextGlobal = _scaffoldKey.currentContext;
 
     if(contextGlobal != null) {
-      int cont = Provider.of<ShoppingBasketBloc>(context, listen: false).model.length;
+      int cont =  StoreProvider.of<ShoppingBasketAppState>(context).state.model.length;
       if(cont == 0) return;
       showDialog(// flutter defined function
       context: contextGlobal,
@@ -125,7 +133,7 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
             ElevatedButton(
               child: const Text('Ok'),
               onPressed: () {
-                Provider.of<ShoppingBasketBloc>(context, listen: false).remAll();
+                StoreProvider.of<ShoppingBasketAppState>(context).dispatch(RemAllAction());
                 RouteGenerator.currentIndex.index = 0;
                 Navigator.of(context).
                 pushReplacementNamed(StoreHomePage.routeName,

@@ -40,16 +40,16 @@ class CardProductWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Expanded(
-              flex: 5,
-              child: ImageProductWidget(productEntity: _productEntity),
+               flex: 5,
+               child: ImageProductWidget(productEntity: _productEntity),
             ),
             Expanded(
-              flex: 2,
-              child: DetailProductEntityWidget(productEntity: _productEntity, count: _count,),
+               flex: 2,
+               child: DetailProductEntityWidget(productEntity: _productEntity, count: _count,),
             ),
             Expanded(
-              flex: 2,
-              child: UniPayButtonWidget(productEntity: _productEntity, type: _type),
+               flex: 2,
+               child: UniPayButtonWidget(productEntity: _productEntity, type: _type),
             ),
           ],
         ),

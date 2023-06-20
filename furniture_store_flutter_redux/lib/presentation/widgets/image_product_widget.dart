@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
-import 'package:furniture_store/presentation/redux/action.dart';
+import 'package:furniture_store/presentation/redux/action_favorites.dart';
 import 'package:furniture_store/presentation/redux/app_state.dart';
 
 class ImageProductWidget extends StatelessWidget {

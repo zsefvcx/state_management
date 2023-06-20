@@ -3,7 +3,10 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:furniture_store/domain/bloc/main_bloc.dart';
+import 'package:furniture_store/presentation/redux/action_main.dart';
+import 'package:furniture_store/presentation/redux/app_state.dart';
 import 'package:furniture_store/presentation/widgets/navigator_widget.dart';
 import 'package:furniture_store/presentation/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +25,7 @@ class StoreHomePage extends StatefulWidget {
 class _StoreHomePageState extends State<StoreHomePage> {
   @override
   Widget build(BuildContext context) {
+    var action = StoreProvider.of<MainAppState>(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -31,7 +35,9 @@ class _StoreHomePageState extends State<StoreHomePage> {
       ),
       //Использовать Visibility
       body:SafeArea(
-        child: Consumer<MainBloc>(builder: (_, mainBloc, __) {
+        child: StoreConnector<MainAppState,MainAppState>(
+            converter: (store) => store.state,
+            builder: (context, mainBloc){
         if (mainBloc.isTimeOut || mainBloc.isError){
           return Center(child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -39,11 +45,11 @@ class _StoreHomePageState extends State<StoreHomePage> {
             children: [
               Text('isTimeOut  :${mainBloc.isTimeOut.toString()}'),
               Text('isError    :${mainBloc.isError.toString()}'),
-              Text('isErrorType:${mainBloc.e.runtimeType}'),
+              Text('isErrorType:${mainBloc.e}'),
               const SizedBox(height: 50,),
               TextButton(
                   onPressed: () {
-                    mainBloc.getAllProducts(0);
+                    action.dispatch(GetAllProductsAction(page: 0));
                     setState(() {
                     });
                   },
@@ -56,7 +62,9 @@ class _StoreHomePageState extends State<StoreHomePage> {
         } else {
           return
             RefreshIndicator(
-              onRefresh: () async => await mainBloc.getAllProducts(0),
+              onRefresh: () async {
+                action.dispatch(GetAllProductsAction(page: 0));
+              },
               child: ScrollConfiguration(// + windows
                 behavior: ScrollConfiguration.of(context).copyWith(
                   dragDevices: {
