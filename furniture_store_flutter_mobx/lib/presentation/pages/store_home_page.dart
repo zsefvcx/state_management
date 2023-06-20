@@ -1,7 +1,6 @@
 
 import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture_store/domain/bloc/main_bloc.dart';
 import 'package:furniture_store/presentation/widgets/navigator_widget.dart';
@@ -22,6 +21,8 @@ class StoreHomePage extends StatefulWidget {
 class _StoreHomePageState extends State<StoreHomePage> {
   @override
   Widget build(BuildContext context) {
+    final mainBloc = Provider.of<MainBloc>(context);
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,

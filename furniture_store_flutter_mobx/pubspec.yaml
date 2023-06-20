@@ -22,6 +22,7 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   get_it: ^7.6.0
   provider: ^6.0.5
+  flutter_mobx: ^2.0.6+5
   window_manager: ^0.3.4
 
 dev_dependencies:
