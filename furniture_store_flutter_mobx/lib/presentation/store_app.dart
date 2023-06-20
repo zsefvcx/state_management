@@ -33,10 +33,10 @@ class _StoreAppState extends State<StoreApp> {
         ChangeNotifierProvider<MainBloc>(
             create: (_) =>
             _mainBloc),
-        ChangeNotifierProvider<FavoritesBloc>(
+        Provider<FavoritesBloc>(
             create: (_) =>
             _favoritesBloc),
-        ChangeNotifierProvider<ShoppingBasketBloc>(
+        Provider<ShoppingBasketBloc>(
             create: (_) =>
             _shoppingBasketBloc),
       ],

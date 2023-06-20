@@ -3,47 +3,49 @@ import 'package:furniture_store/domain/bloc/bloc.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 import 'package:furniture_store/domain/repositories/repositories.dart';
 
-class ShoppingBasketBloc  extends MyBloc<ShoppingBasketEntity>{
+class ShoppingBasketBloc {
 
   final ShoppingBasketRepository _shoppingBasketRepository;
+
+  Set<ShoppingBasketEntity> model = {};
 
   ShoppingBasketBloc({
     required ShoppingBasketRepository shoppingBasketRepository,
   }) : _shoppingBasketRepository= shoppingBasketRepository{
-    bas();
+    init();
   }
 
-  Future<void> bas() async {
+
+  Future<void> init() async {
     model = await _shoppingBasketRepository.bas();
-    notifyListeners();
   }
 
-  bool statusBas(int id) => _shoppingBasketRepository.status(id);
 
-  Future<void> addBas(int id) async {
+  bool status(int id) => _shoppingBasketRepository.status(id);
+
+
+  Future<void> addSingle(int id) async {
     await _shoppingBasketRepository.add(id);
-    await bas();
-    notifyListeners();
+    await init();
   }
 
-  Future<void> remBas(int id) async {
+
+  Future<void> remSingle(int id) async {
     await _shoppingBasketRepository.rem(id);
-    await bas();
-    notifyListeners();
+    await init();
   }
 
-  Future<void> setCountBas(int id, int value) async {
+  Future<void> setCount(int id, int value) async {
     await _shoppingBasketRepository.setCountBas(id, value);
-    await bas();
-    notifyListeners();
+    await init();
   }
 
   Future<void> remAll() async {
     await _shoppingBasketRepository.remAll();
-    await bas();
-    notifyListeners();
+    await init();
   }
 
-  int getCountBas(int id) => _shoppingBasketRepository.getCountBas(id);
+
+  int getCount(int id) => _shoppingBasketRepository.getCountBas(id);
 
 }

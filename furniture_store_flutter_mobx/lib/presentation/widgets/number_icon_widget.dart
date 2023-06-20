@@ -14,14 +14,14 @@ class NumberIconWidget<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<T>(builder: (_, bloc, __){
       int num = 0;
-      if (bloc is MyBloc) {
-        if(bloc is ShoppingBasketBloc){
-          num = bloc.model.fold(0, (previousValue, element) => previousValue + element.count);
-        } else{
-          num = bloc.model.length;
-        }
-
-      }
+      // if (bloc is MyBloc) {
+      //   if(bloc is ShoppingBasketBloc){
+      //     num = bloc.model.fold(0, (previousValue, element) => previousValue + element.count);
+      //   } else{
+      //     num = bloc.model.length;
+      //   }
+      //
+      // }
       return Stack(children: [Padding(
         padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
         child: _icon,

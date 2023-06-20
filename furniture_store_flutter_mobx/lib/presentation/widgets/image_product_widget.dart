@@ -1,6 +1,6 @@
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 import 'package:provider/provider.dart';
 
@@ -16,18 +16,19 @@ class ImageProductWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final favoritesBloc = Provider.of<FavoritesBloc>(context);
 
     return Center(
       child: SizedBox(
         width: 200,
         child: Stack(children: [
           const Placeholder(),
-          Consumer<FavoritesBloc>(builder: (_, favoritesBloc, __) {
-            bool status = favoritesBloc.statusFav(_productEntity.id);
+          Observer(builder: (_) {
+            bool status = favoritesBloc.status(_productEntity.id);
             return IconButton(
               onPressed: () async {
-                status? await favoritesBloc.remFav(_productEntity.id):
-                await favoritesBloc.addFav(_productEntity.id);
+                status? await favoritesBloc.remSingle(_productEntity.id):
+                await favoritesBloc.addSingle(_productEntity.id);
               },
               icon: Icon(status?Icons.favorite:Icons.favorite_border,
                 color: Colors.blue,

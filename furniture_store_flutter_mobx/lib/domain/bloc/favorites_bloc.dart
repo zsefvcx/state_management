@@ -1,37 +1,49 @@
-
-import 'package:furniture_store/domain/bloc/bloc.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 import 'package:furniture_store/domain/repositories/repositories.dart';
 
-class FavoritesBloc extends MyBloc<FavoritesEntity> {
+import 'package:mobx/mobx.dart';
+
+class FavoritesBloc {
 
   final FavoritesRepository _favoritesRepository;
 
+  Set<FavoritesEntity> model = {};
 
   FavoritesBloc({
     required FavoritesRepository favoritesRepository,
   }) : _favoritesRepository= favoritesRepository{
-    fav();
+    init();
   }
 
-  Future<void> fav() async {
+  Future<void> init() async {
     model = await _favoritesRepository.fav();
-    notifyListeners();
   }
 
-  bool statusFav(int id) => _favoritesRepository.status(id);
+  bool status(int id) => _favoritesRepository.status(id);
 
-  Future<void> addFav(int id) async {
+  Future<void> addSingle(int id) async {
     await _favoritesRepository.add(id);
-    await fav();
-    notifyListeners();
+    await init();
   }
 
-  Future<void> remFav(int id) async {
+  Future<void> remSingle(int id) async {
     await _favoritesRepository.rem(id);
-    await fav();
-    notifyListeners();
+    await init();
   }
 
+  int getCount(int id) {
+    // TODO: implement getCount
+    throw UnimplementedError();
+  }
+
+  Future<void> remAll() {
+    // TODO: implement remAll
+    throw UnimplementedError();
+  }
+
+  Future<void> setCount(int id, int value) {
+    // TODO: implement setCount
+    throw UnimplementedError();
+  }
 
 }
