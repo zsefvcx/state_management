@@ -37,7 +37,7 @@ class FavoritesBlocState with _$FavoritesBlocState{
 
 @freezed
 class FavoritesBlocEvent with _$FavoritesBlocEvent{
-  const factory FavoritesBlocEvent.fav() = _FavEvent;
+  const factory FavoritesBlocEvent.init() = _initEvent;
   const factory FavoritesBlocEvent.addFav({required int id}) = _AddFavSetEvent;
   const factory FavoritesBlocEvent.remFav({required int id}) = _RemFavSetEvent;
 }
@@ -57,9 +57,10 @@ class FavoritesBloc{
   FavoritesBloc({
     required FavoritesRepository favoritesRepository,
   }) : _favoritesRepository= favoritesRepository{
+    _initial();
     _eventsController.stream.listen((event) {
       event.map<void>(
-        fav: (_) async {
+        init: (_) async {
            _stateController.add(const FavoritesBlocState.loading());
            _stateController.add(FavoritesBlocState.loaded(
              model: model = model.copyWith(model: await _favoritesRepository.fav()),
@@ -80,6 +81,10 @@ class FavoritesBloc{
         },
       );
     });
+  }
+
+  void _initial() async {
+    model = model.copyWith(model: await _favoritesRepository.fav());
   }
 
   void add(FavoritesBlocEvent event){

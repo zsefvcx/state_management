@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:furniture_store/domain/bloc/bloc.dart';
 import 'package:furniture_store/domain/bloc/main_bloc.dart';
 import 'package:furniture_store/presentation/widgets/navigator_widget.dart';
 import 'package:furniture_store/presentation/widgets/widgets.dart';
@@ -87,6 +88,11 @@ class _StoreHomePageState extends State<StoreHomePage> {
         }),
       ),
       bottomNavigationBar: const NavigatorWidget(),
+    floatingActionButton: FloatingActionButton(
+      onPressed: (){
+        context.read<FavoritesBloc>().add(const FavoritesBlocEvent.init());
+      },
+    ),
     );
   }
 }

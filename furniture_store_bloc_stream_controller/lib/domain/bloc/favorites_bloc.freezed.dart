@@ -314,21 +314,21 @@ abstract class _LoadedState implements FavoritesBlocState {
 mixin _$FavoritesBlocEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() fav,
+    required TResult Function() init,
     required TResult Function(int id) addFav,
     required TResult Function(int id) remFav,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fav,
+    TResult? Function()? init,
     TResult? Function(int id)? addFav,
     TResult? Function(int id)? remFav,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fav,
+    TResult Function()? init,
     TResult Function(int id)? addFav,
     TResult Function(int id)? remFav,
     required TResult orElse(),
@@ -336,21 +336,21 @@ mixin _$FavoritesBlocEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_FavEvent value) fav,
+    required TResult Function(_initEvent value) init,
     required TResult Function(_AddFavSetEvent value) addFav,
     required TResult Function(_RemFavSetEvent value) remFav,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FavEvent value)? fav,
+    TResult? Function(_initEvent value)? init,
     TResult? Function(_AddFavSetEvent value)? addFav,
     TResult? Function(_RemFavSetEvent value)? remFav,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FavEvent value)? fav,
+    TResult Function(_initEvent value)? init,
     TResult Function(_AddFavSetEvent value)? addFav,
     TResult Function(_RemFavSetEvent value)? remFav,
     required TResult orElse(),
@@ -377,35 +377,35 @@ class _$FavoritesBlocEventCopyWithImpl<$Res, $Val extends FavoritesBlocEvent>
 }
 
 /// @nodoc
-abstract class _$$_FavEventCopyWith<$Res> {
-  factory _$$_FavEventCopyWith(
-          _$_FavEvent value, $Res Function(_$_FavEvent) then) =
-      __$$_FavEventCopyWithImpl<$Res>;
+abstract class _$$_initEventCopyWith<$Res> {
+  factory _$$_initEventCopyWith(
+          _$_initEvent value, $Res Function(_$_initEvent) then) =
+      __$$_initEventCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_FavEventCopyWithImpl<$Res>
-    extends _$FavoritesBlocEventCopyWithImpl<$Res, _$_FavEvent>
-    implements _$$_FavEventCopyWith<$Res> {
-  __$$_FavEventCopyWithImpl(
-      _$_FavEvent _value, $Res Function(_$_FavEvent) _then)
+class __$$_initEventCopyWithImpl<$Res>
+    extends _$FavoritesBlocEventCopyWithImpl<$Res, _$_initEvent>
+    implements _$$_initEventCopyWith<$Res> {
+  __$$_initEventCopyWithImpl(
+      _$_initEvent _value, $Res Function(_$_initEvent) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_FavEvent implements _FavEvent {
-  const _$_FavEvent();
+class _$_initEvent implements _initEvent {
+  const _$_initEvent();
 
   @override
   String toString() {
-    return 'FavoritesBlocEvent.fav()';
+    return 'FavoritesBlocEvent.init()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_FavEvent);
+        (other.runtimeType == runtimeType && other is _$_initEvent);
   }
 
   @override
@@ -414,33 +414,33 @@ class _$_FavEvent implements _FavEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() fav,
+    required TResult Function() init,
     required TResult Function(int id) addFav,
     required TResult Function(int id) remFav,
   }) {
-    return fav();
+    return init();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fav,
+    TResult? Function()? init,
     TResult? Function(int id)? addFav,
     TResult? Function(int id)? remFav,
   }) {
-    return fav?.call();
+    return init?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fav,
+    TResult Function()? init,
     TResult Function(int id)? addFav,
     TResult Function(int id)? remFav,
     required TResult orElse(),
   }) {
-    if (fav != null) {
-      return fav();
+    if (init != null) {
+      return init();
     }
     return orElse();
   }
@@ -448,40 +448,40 @@ class _$_FavEvent implements _FavEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_FavEvent value) fav,
+    required TResult Function(_initEvent value) init,
     required TResult Function(_AddFavSetEvent value) addFav,
     required TResult Function(_RemFavSetEvent value) remFav,
   }) {
-    return fav(this);
+    return init(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FavEvent value)? fav,
+    TResult? Function(_initEvent value)? init,
     TResult? Function(_AddFavSetEvent value)? addFav,
     TResult? Function(_RemFavSetEvent value)? remFav,
   }) {
-    return fav?.call(this);
+    return init?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FavEvent value)? fav,
+    TResult Function(_initEvent value)? init,
     TResult Function(_AddFavSetEvent value)? addFav,
     TResult Function(_RemFavSetEvent value)? remFav,
     required TResult orElse(),
   }) {
-    if (fav != null) {
-      return fav(this);
+    if (init != null) {
+      return init(this);
     }
     return orElse();
   }
 }
 
-abstract class _FavEvent implements FavoritesBlocEvent {
-  const factory _FavEvent() = _$_FavEvent;
+abstract class _initEvent implements FavoritesBlocEvent {
+  const factory _initEvent() = _$_initEvent;
 }
 
 /// @nodoc
@@ -548,7 +548,7 @@ class _$_AddFavSetEvent implements _AddFavSetEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() fav,
+    required TResult Function() init,
     required TResult Function(int id) addFav,
     required TResult Function(int id) remFav,
   }) {
@@ -558,7 +558,7 @@ class _$_AddFavSetEvent implements _AddFavSetEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fav,
+    TResult? Function()? init,
     TResult? Function(int id)? addFav,
     TResult? Function(int id)? remFav,
   }) {
@@ -568,7 +568,7 @@ class _$_AddFavSetEvent implements _AddFavSetEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fav,
+    TResult Function()? init,
     TResult Function(int id)? addFav,
     TResult Function(int id)? remFav,
     required TResult orElse(),
@@ -582,7 +582,7 @@ class _$_AddFavSetEvent implements _AddFavSetEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_FavEvent value) fav,
+    required TResult Function(_initEvent value) init,
     required TResult Function(_AddFavSetEvent value) addFav,
     required TResult Function(_RemFavSetEvent value) remFav,
   }) {
@@ -592,7 +592,7 @@ class _$_AddFavSetEvent implements _AddFavSetEvent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FavEvent value)? fav,
+    TResult? Function(_initEvent value)? init,
     TResult? Function(_AddFavSetEvent value)? addFav,
     TResult? Function(_RemFavSetEvent value)? remFav,
   }) {
@@ -602,7 +602,7 @@ class _$_AddFavSetEvent implements _AddFavSetEvent {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FavEvent value)? fav,
+    TResult Function(_initEvent value)? init,
     TResult Function(_AddFavSetEvent value)? addFav,
     TResult Function(_RemFavSetEvent value)? remFav,
     required TResult orElse(),
@@ -687,7 +687,7 @@ class _$_RemFavSetEvent implements _RemFavSetEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() fav,
+    required TResult Function() init,
     required TResult Function(int id) addFav,
     required TResult Function(int id) remFav,
   }) {
@@ -697,7 +697,7 @@ class _$_RemFavSetEvent implements _RemFavSetEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? fav,
+    TResult? Function()? init,
     TResult? Function(int id)? addFav,
     TResult? Function(int id)? remFav,
   }) {
@@ -707,7 +707,7 @@ class _$_RemFavSetEvent implements _RemFavSetEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? fav,
+    TResult Function()? init,
     TResult Function(int id)? addFav,
     TResult Function(int id)? remFav,
     required TResult orElse(),
@@ -721,7 +721,7 @@ class _$_RemFavSetEvent implements _RemFavSetEvent {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_FavEvent value) fav,
+    required TResult Function(_initEvent value) init,
     required TResult Function(_AddFavSetEvent value) addFav,
     required TResult Function(_RemFavSetEvent value) remFav,
   }) {
@@ -731,7 +731,7 @@ class _$_RemFavSetEvent implements _RemFavSetEvent {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_FavEvent value)? fav,
+    TResult? Function(_initEvent value)? init,
     TResult? Function(_AddFavSetEvent value)? addFav,
     TResult? Function(_RemFavSetEvent value)? remFav,
   }) {
@@ -741,7 +741,7 @@ class _$_RemFavSetEvent implements _RemFavSetEvent {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_FavEvent value)? fav,
+    TResult Function(_initEvent value)? init,
     TResult Function(_AddFavSetEvent value)? addFav,
     TResult Function(_RemFavSetEvent value)? remFav,
     required TResult orElse(),

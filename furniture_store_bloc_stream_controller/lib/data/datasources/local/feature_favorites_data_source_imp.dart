@@ -11,6 +11,7 @@ class FeatureFavoritesDataSourceImp extends FeatureFavoritesDataSource{
 
   @override
   Future<void> add(int id) async {
+    await Future<void>.delayed(const Duration(seconds: 5));
     favoritesModel.putIfAbsent(id, () => FavoritesModel(id: id));
     // if(favoritesModel[id] == null) {
     //   favoritesModel[id] = FavoritesModel(id: id);
@@ -19,11 +20,13 @@ class FeatureFavoritesDataSourceImp extends FeatureFavoritesDataSource{
 
   @override
   Future<Map<int, FavoritesModel>> fav() async {
+    await Future<void>.delayed(const Duration(seconds: 5));
     return favoritesModel;
   }
 
   @override
   Future<void> rem(int id) async {
+    await Future<void>.delayed(const Duration(seconds: 5));
     favoritesModel.remove(id);
   }
 

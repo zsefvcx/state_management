@@ -34,7 +34,9 @@ class FavoritesRepositoryImpl extends FavoritesRepository {
   @override
   bool isBusy() {
     // TODO: implement isBusy
-    throw UnimplementedError();
+    return false;
+    //3
+    // 3throw UnimplementedError();
   }
 
 
