@@ -1,49 +1,61 @@
-import 'package:furniture_store/domain/entities/entities.dart';
+import 'package:furniture_store/data/models/favorites_model.dart';
 import 'package:furniture_store/domain/repositories/repositories.dart';
 
 import 'package:mobx/mobx.dart';
 
-class FavoritesBloc {
+part 'favorites_bloc.g.dart';
 
-  final FavoritesRepository _favoritesRepository;
+class FavoritesBloc = FavoritesBlocBase with _$FavoritesBloc;
 
-  Set<FavoritesEntity> model = {};
+class MapFavoritesModel {
+  final Map<int, FavoritesModel> model;
 
-  FavoritesBloc({
-    required FavoritesRepository favoritesRepository,
-  }) : _favoritesRepository= favoritesRepository{
+   const MapFavoritesModel({
+    required this.model,
+  });
+
+  bool getStatus({required int id}) => model[id]!=null?true:false;
+  int getLength() => model.length;
+
+  MapFavoritesModel copyWith({
+    required Map<int, FavoritesModel>? model,
+  }){
+    return MapFavoritesModel(
+      model: model ?? this.model,
+    );
+  }
+}
+
+
+abstract class FavoritesBlocBase with Store {
+
+  @observable
+  FavoritesRepository favoritesRepository;
+
+  @observable
+  MapFavoritesModel model = const MapFavoritesModel(model: {});
+
+  FavoritesBlocBase({
+    required this.favoritesRepository,
+  }){
     init();
   }
 
+  @action
   Future<void> init() async {
-    model = await _favoritesRepository.fav();
+    model = model.copyWith(model: await favoritesRepository.fav());
   }
 
-  bool status(int id) => _favoritesRepository.status(id);
-
+  @action
   Future<void> addSingle(int id) async {
-    await _favoritesRepository.add(id);
+    await favoritesRepository.add(id);
     await init();
   }
 
+  @action
   Future<void> remSingle(int id) async {
-    await _favoritesRepository.rem(id);
+    await favoritesRepository.rem(id);
     await init();
-  }
-
-  int getCount(int id) {
-    // TODO: implement getCount
-    throw UnimplementedError();
-  }
-
-  Future<void> remAll() {
-    // TODO: implement remAll
-    throw UnimplementedError();
-  }
-
-  Future<void> setCount(int id, int value) {
-    // TODO: implement setCount
-    throw UnimplementedError();
   }
 
 }

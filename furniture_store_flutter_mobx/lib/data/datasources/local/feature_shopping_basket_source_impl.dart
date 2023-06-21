@@ -1,6 +1,7 @@
 
 import 'package:furniture_store/data/datasources/local/feature_shopping_basket_source.dart';
 import 'package:furniture_store/data/models/shopping_basket_model.dart';
+import 'package:furniture_store/domain/entities/entities.dart';
 
 class FeatureShoppingBasketDataSourceImp extends FeatureShoppingBasketDataSource{
 
@@ -23,8 +24,8 @@ class FeatureShoppingBasketDataSourceImp extends FeatureShoppingBasketDataSource
   }
 
   @override
-  Future<Set<ShoppingBasketModel>> bas() async {
-    return shoppingBasketModel.values.toSet();
+  Future<Map<int, ShoppingBasketEntity>> bas() async {
+    return shoppingBasketModel;
   }
 
   @override

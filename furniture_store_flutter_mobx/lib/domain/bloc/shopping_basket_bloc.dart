@@ -1,51 +1,77 @@
 
-import 'package:furniture_store/domain/bloc/bloc.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 import 'package:furniture_store/domain/repositories/repositories.dart';
 
-class ShoppingBasketBloc {
+import 'package:mobx/mobx.dart';
 
-  final ShoppingBasketRepository _shoppingBasketRepository;
+part 'shopping_basket_bloc.g.dart';
 
-  Set<ShoppingBasketEntity> model = {};
+class ShoppingBasketBloc = ShoppingBasketBlocBase with _$ShoppingBasketBloc;
 
-  ShoppingBasketBloc({
-    required ShoppingBasketRepository shoppingBasketRepository,
-  }) : _shoppingBasketRepository= shoppingBasketRepository{
+class ShoppingBasketModel {
+  final Map<int, ShoppingBasketEntity> model;
+
+  const ShoppingBasketModel({
+    required this.model,
+  });
+
+  bool getStatus({required int id}) => model[id]!=null?true:false;
+  int  getCount({required int id}) {
+    var m = model[id];
+    return m!=null?m.count:0;
+  }
+  int  getAllCount() => model.values.fold(0, (p, e) => p + e.count);
+  int  getLength() => model.length;
+
+  ShoppingBasketModel copyWith({
+    required Map<int, ShoppingBasketEntity>? model,
+  }){
+    return ShoppingBasketModel(
+      model: model ?? this.model,
+    );
+  }
+}
+
+abstract class ShoppingBasketBlocBase with Store {
+
+  @observable
+  ShoppingBasketRepository shoppingBasketRepository;
+
+  @observable
+  ShoppingBasketModel model = const ShoppingBasketModel(model: {});
+
+  ShoppingBasketBlocBase({
+    required this.shoppingBasketRepository,
+  }) {
     init();
   }
 
-
   Future<void> init() async {
-    model = await _shoppingBasketRepository.bas();
+    model = model.copyWith(model: await shoppingBasketRepository.bas());
   }
 
-
-  bool status(int id) => _shoppingBasketRepository.status(id);
-
-
+  @action
   Future<void> addSingle(int id) async {
-    await _shoppingBasketRepository.add(id);
+    await shoppingBasketRepository.add(id);
     await init();
   }
 
-
+  @action
   Future<void> remSingle(int id) async {
-    await _shoppingBasketRepository.rem(id);
+    await shoppingBasketRepository.rem(id);
     await init();
   }
 
+  @action
   Future<void> setCount(int id, int value) async {
-    await _shoppingBasketRepository.setCountBas(id, value);
+    await shoppingBasketRepository.setCountBas(id, value);
     await init();
   }
 
+  @action
   Future<void> remAll() async {
-    await _shoppingBasketRepository.remAll();
+    await shoppingBasketRepository.remAll();
     await init();
   }
-
-
-  int getCount(int id) => _shoppingBasketRepository.getCountBas(id);
 
 }

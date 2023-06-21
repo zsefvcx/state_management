@@ -1,6 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 import 'package:furniture_store/presentation/pages/store_home_page.dart';
@@ -19,10 +19,11 @@ class UniPayButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ShoppingBasketBloc>(builder: (_, shoppingBasketBloc, __) {
+    return Observer(builder: (context) {
+      final shoppingBasketBloc = Provider.of<ShoppingBasketBloc>(context);
       final TextEditingController controller = TextEditingController();
-      bool status = shoppingBasketBloc.status(_productEntity.id);
-      controller.value = TextEditingValue(text: shoppingBasketBloc.getCount(_productEntity.id).toString());
+      bool status = shoppingBasketBloc.model.getStatus(id: _productEntity.id);
+      controller.value = TextEditingValue(text: shoppingBasketBloc.model.getCount(id: _productEntity.id).toString());
       return Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: status?MainAxisAlignment.spaceBetween:MainAxisAlignment.end,

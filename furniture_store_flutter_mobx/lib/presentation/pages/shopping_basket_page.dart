@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:furniture_store/domain/bloc/main_bloc.dart';
 import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
 import 'package:furniture_store/presentation/pages/store_home_page.dart';
@@ -71,7 +71,8 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Consumer<ShoppingBasketBloc>(builder: (_, shoppingBasketBloc, __) {
+                    child: Observer(builder: (context) {
+                      final shoppingBasketBloc = Provider.of<ShoppingBasketBloc>(context);
                       return GridView.builder(
                         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                           maxCrossAxisExtent: 550,
@@ -81,12 +82,12 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
                           childAspectRatio: 1,
                         ),
                         //padding: const EdgeInsets.only(top: 16),
-                        itemCount: shoppingBasketBloc.model.length,
+                        itemCount: shoppingBasketBloc.model.model.length,
                         itemBuilder: (_, index) {
                             return CardProductWidget(productEntity: mainBloc.lpAll[
-                              shoppingBasketBloc.model.toList()[index].id
+                              shoppingBasketBloc.model.model.values.toList()[index].id
                             ],
-                            type: 1, count: shoppingBasketBloc.model.toList()[index].count,);
+                            type: 1, count: shoppingBasketBloc.model.getLength(),);
                       });                          //
                       },
                     ),
@@ -112,7 +113,7 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
     BuildContext? contextGlobal = _scaffoldKey.currentContext;
 
     if(contextGlobal != null) {
-      int cont = Provider.of<ShoppingBasketBloc>(context, listen: false).model.length;
+      int cont = Provider.of<ShoppingBasketBloc>(context, listen: false).model.getLength();
       if(cont == 0) return;
       showDialog(// flutter defined function
       context: contextGlobal,

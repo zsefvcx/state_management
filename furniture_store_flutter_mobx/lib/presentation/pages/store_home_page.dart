@@ -21,7 +21,7 @@ class StoreHomePage extends StatefulWidget {
 class _StoreHomePageState extends State<StoreHomePage> {
   @override
   Widget build(BuildContext context) {
-    final mainBloc = Provider.of<MainBloc>(context);
+    //final mainBloc = Provider.of<MainBloc>(context);
 
     return Scaffold(
       appBar: AppBar(

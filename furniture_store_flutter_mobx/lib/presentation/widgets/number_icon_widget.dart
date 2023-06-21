@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:furniture_store/domain/bloc/bloc.dart';
-import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+
+import '../../domain/bloc/bloc.dart';
 
 class NumberIconWidget<T> extends StatelessWidget {
   const NumberIconWidget({
@@ -12,16 +13,14 @@ class NumberIconWidget<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<T>(builder: (_, bloc, __){
+    return Observer(builder: (context) {
+      final bloc = Provider.of<T>(context);
       int num = 0;
-      // if (bloc is MyBloc) {
-      //   if(bloc is ShoppingBasketBloc){
-      //     num = bloc.model.fold(0, (previousValue, element) => previousValue + element.count);
-      //   } else{
-      //     num = bloc.model.length;
-      //   }
-      //
-      // }
+        if(bloc is ShoppingBasketBloc){
+          num = bloc.model.getAllCount();
+        } else if(bloc is FavoritesBloc){
+          num = bloc.model.getLength();
+        }
       return Stack(children: [Padding(
         padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
         child: _icon,
