@@ -22,7 +22,7 @@ class ImageProductWidget extends StatelessWidget {
         child: Stack(children: [
           const Placeholder(),
           Consumer<FavoritesBloc>(builder: (_, favoritesBloc, __) {
-            bool status = favoritesBloc.statusFav(_productEntity.id);
+            bool status = favoritesBloc.model.getStatus(id: _productEntity.id);
             return IconButton(
               onPressed: () async {
                 status? await favoritesBloc.remFav(_productEntity.id):

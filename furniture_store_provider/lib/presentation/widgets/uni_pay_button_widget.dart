@@ -21,8 +21,8 @@ class UniPayButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<ShoppingBasketBloc>(builder: (_, shoppingBasketBloc, __) {
       final TextEditingController controller = TextEditingController();
-      bool status = shoppingBasketBloc.statusBas(_productEntity.id);
-      controller.value = TextEditingValue(text: shoppingBasketBloc.getCountBas(_productEntity.id).toString());
+      bool status = shoppingBasketBloc.model.getStatus(id: _productEntity.id);
+      controller.value = TextEditingValue(text: shoppingBasketBloc.model.getCount(id: _productEntity.id).toString());
       return Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: status?MainAxisAlignment.spaceBetween:MainAxisAlignment.end,

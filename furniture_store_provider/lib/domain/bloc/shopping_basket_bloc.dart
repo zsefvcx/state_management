@@ -1,11 +1,39 @@
 
-import 'package:furniture_store/domain/bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 import 'package:furniture_store/domain/repositories/repositories.dart';
 
-class ShoppingBasketBloc  extends MyBloc<ShoppingBasketEntity>{
+class ShoppingBasketModel {
+  final Map<int, ShoppingBasketEntity> model;
+
+  const ShoppingBasketModel({
+    required this.model,
+  });
+
+  bool getStatus({required int id}) => model[id]!=null?true:false;
+  int  getCount({required int id}) {
+    var m = model[id];
+    return m!=null?m.count:0;
+  }
+  int get getAllCount => model.values.fold(0, (p, e) => p + e.count);
+  int get getLength => model.length;
+  List<ShoppingBasketEntity> get getList => model.values.toList();
+
+  ShoppingBasketModel copyWith({
+    required Map<int, ShoppingBasketEntity>? model,
+  }){
+    return ShoppingBasketModel(
+      model: model ?? this.model,
+    );
+  }
+}
+
+
+class ShoppingBasketBloc with ChangeNotifier{
 
   final ShoppingBasketRepository _shoppingBasketRepository;
+
+  ShoppingBasketModel model = const ShoppingBasketModel(model: {});
 
   ShoppingBasketBloc({
     required ShoppingBasketRepository shoppingBasketRepository,
@@ -14,11 +42,9 @@ class ShoppingBasketBloc  extends MyBloc<ShoppingBasketEntity>{
   }
 
   Future<void> bas() async {
-    model = await _shoppingBasketRepository.bas();
+    model = model.copyWith(model: await _shoppingBasketRepository.bas());
     notifyListeners();
   }
-
-  bool statusBas(int id) => _shoppingBasketRepository.status(id);
 
   Future<void> addBas(int id) async {
     await _shoppingBasketRepository.add(id);
@@ -43,7 +69,4 @@ class ShoppingBasketBloc  extends MyBloc<ShoppingBasketEntity>{
     await bas();
     notifyListeners();
   }
-
-  int getCountBas(int id) => _shoppingBasketRepository.getCountBas(id);
-
 }

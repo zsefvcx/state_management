@@ -18,8 +18,8 @@ class FeatureFavoritesDataSourceImp extends FeatureFavoritesDataSource{
   }
 
   @override
-  Future<Set<FavoritesModel>> fav() async {
-    return favoritesModel.values.toSet();
+  Future<Map<int, FavoritesModel>> fav() async {
+    return favoritesModel;
   }
 
   @override

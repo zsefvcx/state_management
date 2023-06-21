@@ -1,7 +1,7 @@
 
 
 import 'package:furniture_store/data/datasources/local/feature_favorites_data_source.dart';
-import 'package:furniture_store/domain/entities/favorites.dart';
+import 'package:furniture_store/data/models/favorites_model.dart';
 import 'package:furniture_store/domain/repositories/repositories.dart';
 
 class FavoritesRepositoryImpl extends FavoritesRepository {
@@ -17,7 +17,7 @@ class FavoritesRepositoryImpl extends FavoritesRepository {
   }
 
   @override
-  Future<Set<FavoritesEntity>> fav() async {
+  Future<Map<int, FavoritesModel>> fav() async {
     return await featureFavoritesDataSource.fav();
   }
 

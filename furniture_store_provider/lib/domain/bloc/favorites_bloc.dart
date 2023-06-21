@@ -1,12 +1,32 @@
 
-import 'package:furniture_store/domain/bloc/bloc.dart';
-import 'package:furniture_store/domain/entities/entities.dart';
+import 'package:flutter/foundation.dart';
+import 'package:furniture_store/data/models/favorites_model.dart';
 import 'package:furniture_store/domain/repositories/repositories.dart';
 
-class FavoritesBloc extends MyBloc<FavoritesEntity> {
+class MapFavoritesModel {
+  final Map<int, FavoritesModel> model;
+
+  const MapFavoritesModel({
+    required this.model,
+  });
+
+  bool getStatus({required int id}) => model[id]!=null?true:false;
+  int getLength() => model.length;
+
+  MapFavoritesModel copyWith({
+    required Map<int, FavoritesModel>? model,
+  }){
+    return MapFavoritesModel(
+      model: model ?? this.model,
+    );
+  }
+}
+
+class FavoritesBloc with ChangeNotifier{
 
   final FavoritesRepository _favoritesRepository;
 
+  MapFavoritesModel model = const MapFavoritesModel(model: {});
 
   FavoritesBloc({
     required FavoritesRepository favoritesRepository,
@@ -15,11 +35,9 @@ class FavoritesBloc extends MyBloc<FavoritesEntity> {
   }
 
   Future<void> fav() async {
-    model = await _favoritesRepository.fav();
+    model = model.copyWith(model: await _favoritesRepository.fav());
     notifyListeners();
   }
-
-  bool statusFav(int id) => _favoritesRepository.status(id);
 
   Future<void> addFav(int id) async {
     await _favoritesRepository.add(id);

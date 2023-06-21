@@ -1,6 +1,6 @@
 
 
-import 'package:furniture_store/domain/entities/entities.dart';
+import 'package:furniture_store/data/models/favorites_model.dart';
 
 abstract class FavoritesRepository {
 
@@ -10,6 +10,6 @@ abstract class FavoritesRepository {
 
   bool status(int id);
 
-  Future<Set<FavoritesEntity>> fav();
+  Future<Map<int, FavoritesModel>> fav();
 
 }

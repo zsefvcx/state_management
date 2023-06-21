@@ -16,7 +16,7 @@ class ShoppingBasketRepositoryImpl extends ShoppingBasketRepository {
   }
 
   @override
-  Future<Set<ShoppingBasketEntity>> bas() async {
+  Future<Map<int, ShoppingBasketEntity>> bas() async {
     return await featureShoppingBasketDataSource.bas();
   }
 

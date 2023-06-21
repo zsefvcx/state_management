@@ -1,7 +1,6 @@
 
 import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:furniture_store/domain/bloc/main_bloc.dart';
 import 'package:furniture_store/presentation/widgets/navigator_widget.dart';
@@ -32,14 +31,14 @@ class _StoreHomePageState extends State<StoreHomePage> {
       //Использовать Visibility
       body:SafeArea(
         child: Consumer<MainBloc>(builder: (_, mainBloc, __) {
-        if (mainBloc.isTimeOut || mainBloc.isError){
+        if (mainBloc.mainModel.isTimeOut || mainBloc.mainModel.isError){
           return Center(child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text('isTimeOut  :${mainBloc.isTimeOut.toString()}'),
-              Text('isError    :${mainBloc.isError.toString()}'),
-              Text('isErrorType:${mainBloc.e.runtimeType}'),
+              Text('isTimeOut  :${mainBloc.mainModel.isTimeOut.toString()}'),
+              Text('isError    :${mainBloc.mainModel.isError.toString()}'),
+              Text('isErrorType:${mainBloc.mainModel.e.runtimeType}'),
               const SizedBox(height: 50,),
               TextButton(
                   onPressed: () {
@@ -51,7 +50,7 @@ class _StoreHomePageState extends State<StoreHomePage> {
               ),
             ],
           ));
-        } if (!mainBloc.isLoaded) {
+        } if (!mainBloc.mainModel.isLoaded) {
           return const Center(child: CircularProgressIndicator());
         } else {
           return
@@ -75,9 +74,9 @@ class _StoreHomePageState extends State<StoreHomePage> {
                       childAspectRatio: 1,
                     ),
                   //padding: const EdgeInsets.only(top: 16),
-                  itemCount: mainBloc.lpAll.length,
+                  itemCount: mainBloc.mainModel.lpAll.length,
                   itemBuilder: (_, index) {
-                    return CardProductWidget(productEntity: mainBloc.lpAll[index],
+                    return CardProductWidget(productEntity: mainBloc.mainModel.lpAll[index],
                       type: 0, count: 1,);
                   },
               ),

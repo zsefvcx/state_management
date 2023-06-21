@@ -1,7 +1,5 @@
 
-
-
-import 'package:furniture_store/data/models/shopping_basket_model.dart';
+import 'package:furniture_store/domain/entities/entities.dart';
 
 abstract class FeatureShoppingBasketDataSource {
 
@@ -11,7 +9,7 @@ abstract class FeatureShoppingBasketDataSource {
 
   Future<void> rem(int id);
 
-  Future<Set<ShoppingBasketModel>> bas();
+  Future<Map<int, ShoppingBasketEntity>> bas();
 
   bool status(int id);
 

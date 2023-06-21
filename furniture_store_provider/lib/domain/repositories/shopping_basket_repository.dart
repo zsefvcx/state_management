@@ -8,7 +8,7 @@ abstract class ShoppingBasketRepository {
 
   bool status(int id);
 
-  Future<Set<ShoppingBasketEntity>> bas();
+  Future<Map<int, ShoppingBasketEntity>> bas();
 
   Future<void> setCountBas(int id, int value);
 

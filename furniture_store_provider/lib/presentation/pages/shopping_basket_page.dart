@@ -37,14 +37,14 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
       //Использовать Visibility
       body:SafeArea(
         child: Consumer<MainBloc>(builder: (_, mainBloc, __) {
-          if (mainBloc.isTimeOut || mainBloc.isError){
+          if (mainBloc.mainModel.isTimeOut || mainBloc.mainModel.isError){
             return Center(child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('isTimeOut  :${mainBloc.isTimeOut.toString()}'),
-                Text('isError    :${mainBloc.isError.toString()}'),
-                Text('isErrorType:${mainBloc.e.runtimeType}'),
+                Text('isTimeOut  :${mainBloc.mainModel.isTimeOut.toString()}'),
+                Text('isError    :${mainBloc.mainModel.isError.toString()}'),
+                Text('isErrorType:${mainBloc.mainModel.e.runtimeType}'),
                 const SizedBox(height: 50,),
                 TextButton(
                     onPressed: () {
@@ -56,7 +56,7 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
                 ),
               ],
             ));
-          } if (!mainBloc.isLoaded) {
+          } if (!mainBloc.mainModel.isLoaded) {
             return const Center(child: CircularProgressIndicator());
           } else {
             return
@@ -81,12 +81,12 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
                           childAspectRatio: 1,
                         ),
                         //padding: const EdgeInsets.only(top: 16),
-                        itemCount: shoppingBasketBloc.model.length,
+                        itemCount: shoppingBasketBloc.model.getLength,
                         itemBuilder: (_, index) {
-                            return CardProductWidget(productEntity: mainBloc.lpAll[
-                              shoppingBasketBloc.model.toList()[index].id
+                            return CardProductWidget(productEntity: mainBloc.mainModel.lpAll[
+                              shoppingBasketBloc.model.getList[index].id
                             ],
-                            type: 1, count: shoppingBasketBloc.model.toList()[index].count,);
+                            type: 1, count: shoppingBasketBloc.model.getList[index].count,);
                       });                          //
                       },
                     ),
@@ -112,7 +112,7 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
     BuildContext? contextGlobal = _scaffoldKey.currentContext;
 
     if(contextGlobal != null) {
-      int cont = Provider.of<ShoppingBasketBloc>(context, listen: false).model.length;
+      int cont = Provider.of<ShoppingBasketBloc>(context, listen: false).model.getLength;
       if(cont == 0) return;
       showDialog(// flutter defined function
       context: contextGlobal,
