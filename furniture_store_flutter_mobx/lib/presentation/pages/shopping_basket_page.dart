@@ -84,10 +84,10 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
                           childAspectRatio: 1,
                         ),
                         //padding: const EdgeInsets.only(top: 16),
-                        itemCount: shoppingBasketBloc.model.model.length,
+                        itemCount: shoppingBasketBloc.model.getLength,
                         itemBuilder: (_, index) {
                             return CardProductWidget(productEntity: mainBloc.mainModel.lpAll[
-                              shoppingBasketBloc.model.model.values.toList()[index].id
+                              shoppingBasketBloc.model.getList[index].id
                             ],
                             type: 1, count: shoppingBasketBloc.model.getLength,);
                       });                          //
