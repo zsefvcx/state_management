@@ -86,9 +86,11 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
                         //padding: const EdgeInsets.only(top: 16),
                         itemCount: shoppingBasketBloc.model.getLength,
                         itemBuilder: (_, index) {
-                            return CardProductWidget(productEntity: mainBloc.mainModel.lpAll[
-                              shoppingBasketBloc.model.getList[index].id
-                            ],
+                          var productEntity =  mainBloc.mainModel.lpAll[
+                          shoppingBasketBloc.model.getList[index].id
+                          ];
+                          print('7 DetailProductEntityWidget ${productEntity.price} ${shoppingBasketBloc.model.getLength}');
+                            return CardProductWidget(productEntity: productEntity,
                             type: 1, count: shoppingBasketBloc.model.getLength,);
                       });                          //
                       },

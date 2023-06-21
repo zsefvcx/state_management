@@ -14,6 +14,7 @@ class DetailProductEntityWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('9 DetailProductEntityWidget ${_productEntity.price} $_count');
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

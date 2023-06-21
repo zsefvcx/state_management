@@ -35,7 +35,8 @@ class FavoritesBloc with ChangeNotifier{
   }
 
   Future<void> fav() async {
-    model = model.copyWith(model: await _favoritesRepository.fav());
+    var model = await _favoritesRepository.fav();
+    this.model = this.model.copyWith(model: model);
     notifyListeners();
   }
 

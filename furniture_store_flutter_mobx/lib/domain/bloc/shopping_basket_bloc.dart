@@ -48,7 +48,8 @@ abstract class ShoppingBasketBlocBase with Store {
   }
 
   Future<void> init() async {
-    model = model.copyWith(model: await shoppingBasketRepository.bas());
+    var model = await shoppingBasketRepository.bas();
+    this.model = this.model.copyWith(model: model);
   }
 
   @action

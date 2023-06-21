@@ -43,7 +43,8 @@ abstract class FavoritesBlocBase with Store {
 
   @action
   Future<void> init() async {
-    model = model.copyWith(model: await favoritesRepository.fav());
+    var model = await favoritesRepository.fav();
+    this.model = this.model.copyWith(model: model);
   }
 
   @action

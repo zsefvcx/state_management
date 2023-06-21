@@ -42,7 +42,8 @@ class ShoppingBasketBloc with ChangeNotifier{
   }
 
   Future<void> bas() async {
-    model = model.copyWith(model: await _shoppingBasketRepository.bas());
+    var model = await _shoppingBasketRepository.bas();
+    this.model = this.model.copyWith(model: model);
     notifyListeners();
   }
 

@@ -17,6 +17,7 @@ class CardProductWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('8 DetailProductEntityWidget ${_productEntity.price} $_count');
     return Container(
       margin: const EdgeInsets.fromLTRB(5, 5, 5, 5),
       padding: const EdgeInsets.all(10.0),
