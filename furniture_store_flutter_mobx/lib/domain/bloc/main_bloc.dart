@@ -87,6 +87,7 @@ abstract class MainBlocBase with Store {
   @action
   Future<(Failure?, List<ProductEntity>?, bool)> _getProduct(Future<(Failure?, List<ProductEntity>?)> Function() getProducts) async {
     try {
+      mainModel = mainModel.copyWith(e: '', timeOut: false, error: false, lpSingle: [], lpAll: []);
       bool timeOut = false;
       var (Failure? e, List<ProductEntity>? lp) = await getProducts()
          .timeout(const Duration(seconds: 5),

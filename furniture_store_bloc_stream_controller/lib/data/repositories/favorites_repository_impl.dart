@@ -31,5 +31,11 @@ class FavoritesRepositoryImpl extends FavoritesRepository {
     return featureFavoritesDataSource.status(id);
   }
 
+  @override
+  bool isBusy() {
+    // TODO: implement isBusy
+    throw UnimplementedError();
+  }
+
 
 }

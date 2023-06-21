@@ -16,9 +16,10 @@ class NumberIconWidget<T> extends StatelessWidget {
       int num = 0;
         if(bloc is ShoppingBasketBloc){
           num = bloc.model.getAllCount;
-        } else if(bloc is FavoritesBloc){
-          num = bloc.model.getLength();
-        }
+         }
+        //else if(bloc is FavoritesBloc){
+        //   num = 0;//bloc.model.getLength();
+        // }
       return Stack(children: [Padding(
         padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
         child: _icon,

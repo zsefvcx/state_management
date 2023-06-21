@@ -12,4 +12,6 @@ abstract class FavoritesRepository {
 
   Future<Map<int, FavoritesModel>> fav();
 
+  bool isBusy();
+
 }
