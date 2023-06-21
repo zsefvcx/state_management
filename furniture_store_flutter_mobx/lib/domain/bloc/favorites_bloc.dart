@@ -15,7 +15,7 @@ class MapFavoritesModel {
   });
 
   bool getStatus({required int id}) => model[id]!=null?true:false;
-  int getLength() => model.length;
+  int get getLength => model.length;
 
   MapFavoritesModel copyWith({
     required Map<int, FavoritesModel>? model,

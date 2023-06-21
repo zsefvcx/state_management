@@ -89,7 +89,7 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
                             return CardProductWidget(productEntity: mainBloc.mainModel.lpAll[
                               shoppingBasketBloc.model.model.values.toList()[index].id
                             ],
-                            type: 1, count: shoppingBasketBloc.model.getLength(),);
+                            type: 1, count: shoppingBasketBloc.model.getLength,);
                       });                          //
                       },
                     ),
@@ -115,7 +115,7 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
     BuildContext? contextGlobal = _scaffoldKey.currentContext;
 
     if(contextGlobal != null) {
-      int cont = Provider.of<ShoppingBasketBloc>(context, listen: false).model.getLength();
+      int cont = Provider.of<ShoppingBasketBloc>(context, listen: false).model.getLength;
       if(cont == 0) return;
       showDialog(// flutter defined function
       context: contextGlobal,

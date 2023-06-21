@@ -20,8 +20,9 @@ class ShoppingBasketModel {
     var m = model[id];
     return m!=null?m.count:0;
   }
-  int  getAllCount() => model.values.fold(0, (p, e) => p + e.count);
-  int  getLength() => model.length;
+  int get getAllCount => model.values.fold(0, (p, e) => p + e.count);
+  int get getLength => model.length;
+  List<ShoppingBasketEntity> get getList => model.values.toList();
 
   ShoppingBasketModel copyWith({
     required Map<int, ShoppingBasketEntity>? model,
