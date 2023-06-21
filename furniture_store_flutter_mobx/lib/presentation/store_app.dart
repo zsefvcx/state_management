@@ -29,7 +29,7 @@ class _StoreAppState extends State<StoreApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<MainBloc>(
+        Provider<MainBloc>(
             create: (_) =>
             _mainBloc),
         Provider<FavoritesBloc>(

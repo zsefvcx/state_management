@@ -36,15 +36,17 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
       ),
       //Использовать Visibility
       body:SafeArea(
-        child: Consumer<MainBloc>(builder: (_, mainBloc, __) {
-          if (mainBloc.isTimeOut || mainBloc.isError){
+        child: Observer(builder: (context) {
+          final mainBloc = Provider.of<MainBloc>(context);
+
+          if (mainBloc.mainModel.isTimeOut || mainBloc.mainModel.isError){
             return Center(child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('isTimeOut  :${mainBloc.isTimeOut.toString()}'),
-                Text('isError    :${mainBloc.isError.toString()}'),
-                Text('isErrorType:${mainBloc.e.runtimeType}'),
+                Text('isTimeOut  :${mainBloc.mainModel.isTimeOut.toString()}'),
+                Text('isError    :${mainBloc.mainModel.isError.toString()}'),
+                Text('isErrorType:${mainBloc.mainModel.e.runtimeType}'),
                 const SizedBox(height: 50,),
                 TextButton(
                     onPressed: () {
@@ -56,7 +58,7 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
                 ),
               ],
             ));
-          } if (!mainBloc.isLoaded) {
+          } if (!mainBloc.mainModel.isLoaded) {
             return const Center(child: CircularProgressIndicator());
           } else {
             return
@@ -84,7 +86,7 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
                         //padding: const EdgeInsets.only(top: 16),
                         itemCount: shoppingBasketBloc.model.model.length,
                         itemBuilder: (_, index) {
-                            return CardProductWidget(productEntity: mainBloc.lpAll[
+                            return CardProductWidget(productEntity: mainBloc.mainModel.lpAll[
                               shoppingBasketBloc.model.model.values.toList()[index].id
                             ],
                             type: 1, count: shoppingBasketBloc.model.getLength(),);
