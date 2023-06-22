@@ -1,15 +1,12 @@
 
 import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:furniture_store/domain/bloc/main_bloc.dart';
 import 'package:furniture_store/presentation/redux/action_main.dart';
 import 'package:furniture_store/presentation/redux/app_state.dart';
 import 'package:furniture_store/presentation/widgets/navigator_widget.dart';
 import 'package:furniture_store/presentation/widgets/widgets.dart';
-import 'package:provider/provider.dart';
 
 class StoreHomePage extends StatefulWidget {
   static const routeName = '/';

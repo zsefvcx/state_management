@@ -1,5 +1,4 @@
 
-import 'package:furniture_store/core/error/failure.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 
 class ReadAllProductsAction{

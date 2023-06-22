@@ -1,5 +1,3 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 
 class ReadFavAction {}

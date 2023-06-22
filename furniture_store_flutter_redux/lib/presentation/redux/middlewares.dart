@@ -1,6 +1,5 @@
 
 import 'package:furniture_store/domain/bloc/bloc.dart';
-import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
 import 'package:furniture_store/presentation/redux/action_favorites.dart';
 import 'package:furniture_store/presentation/redux/action_main.dart';
 import 'package:furniture_store/presentation/redux/action_shopping_basket.dart';
