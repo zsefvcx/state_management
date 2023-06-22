@@ -22,9 +22,10 @@ class _StoreAppState extends State<StoreApp> {
   void initState() {
     super.initState();
     _mainBloc = BlocFactory.instance.get<MainBloc>();
+    _shoppingBasketBloc = BlocFactory.instance.get<ShoppingBasketBloc>();
     _favoritesBloc = BlocFactory.instance.get<FavoritesBloc>();
     //_favoritesBloc.add(const FavoritesBlocEvent.init());
-    _shoppingBasketBloc = BlocFactory.instance.get<ShoppingBasketBloc>();
+
   }
 
 
@@ -44,7 +45,7 @@ class _StoreAppState extends State<StoreApp> {
         Provider<FavoritesBloc>(
             create: (_) =>
             _favoritesBloc),
-        ChangeNotifierProvider<ShoppingBasketBloc>(
+        Provider<ShoppingBasketBloc>(
             create: (_) =>
             _shoppingBasketBloc),
       ],

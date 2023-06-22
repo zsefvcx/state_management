@@ -41,6 +41,13 @@ class ShoppingBasketRepositoryImpl extends ShoppingBasketRepository {
     await featureShoppingBasketDataSource.remAll();
   }
 
+  @override
+  bool isBusy() {
+    // TODO: implement isBusy
+    return false;
+    //throw UnimplementedError();
+  }
+
 
 
 

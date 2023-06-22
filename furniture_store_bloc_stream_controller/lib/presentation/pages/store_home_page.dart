@@ -54,8 +54,9 @@ class _StoreHomePageState extends State<StoreHomePage> {
         } if (!mainBloc.mainModel.isLoaded) {
           return const Center(child: CircularProgressIndicator());
         } else {
-          return
-            RefreshIndicator(
+          context.read<FavoritesBloc>().add(const FavoritesBlocEvent.init());
+          context.read<ShoppingBasketBloc>().add(const FavoritesBlocEvent.init());
+          return RefreshIndicator(
               onRefresh: () async => await mainBloc.getAllProducts(0),
               child: ScrollConfiguration(// + windows
                 behavior: ScrollConfiguration.of(context).copyWith(
@@ -88,11 +89,6 @@ class _StoreHomePageState extends State<StoreHomePage> {
         }),
       ),
       bottomNavigationBar: const NavigatorWidget(),
-    floatingActionButton: FloatingActionButton(
-      onPressed: (){
-        context.read<FavoritesBloc>().add(const FavoritesBlocEvent.init());
-      },
-    ),
     );
   }
 }

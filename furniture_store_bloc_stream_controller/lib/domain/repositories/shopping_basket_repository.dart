@@ -15,4 +15,6 @@ abstract class ShoppingBasketRepository {
   int getCountBas(int id);
 
   Future<void> remAll();
+
+  bool isBusy();
 }

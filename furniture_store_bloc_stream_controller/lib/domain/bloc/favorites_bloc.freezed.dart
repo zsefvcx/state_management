@@ -38,19 +38,19 @@ mixin _$FavoritesBlocState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_loadingState value) loading,
-    required TResult Function(_LoadedState value) loaded,
+    required TResult Function(_loadedState value) loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_loadingState value)? loading,
-    TResult? Function(_LoadedState value)? loaded,
+    TResult? Function(_loadedState value)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_loadingState value)? loading,
-    TResult Function(_LoadedState value)? loaded,
+    TResult Function(_loadedState value)? loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -144,7 +144,7 @@ class _$_loadingState implements _loadingState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_loadingState value) loading,
-    required TResult Function(_LoadedState value) loaded,
+    required TResult Function(_loadedState value) loaded,
   }) {
     return loading(this);
   }
@@ -153,7 +153,7 @@ class _$_loadingState implements _loadingState {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_loadingState value)? loading,
-    TResult? Function(_LoadedState value)? loaded,
+    TResult? Function(_loadedState value)? loaded,
   }) {
     return loading?.call(this);
   }
@@ -162,7 +162,7 @@ class _$_loadingState implements _loadingState {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_loadingState value)? loading,
-    TResult Function(_LoadedState value)? loaded,
+    TResult Function(_loadedState value)? loaded,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -177,20 +177,20 @@ abstract class _loadingState implements FavoritesBlocState {
 }
 
 /// @nodoc
-abstract class _$$_LoadedStateCopyWith<$Res> {
-  factory _$$_LoadedStateCopyWith(
-          _$_LoadedState value, $Res Function(_$_LoadedState) then) =
-      __$$_LoadedStateCopyWithImpl<$Res>;
+abstract class _$$_loadedStateCopyWith<$Res> {
+  factory _$$_loadedStateCopyWith(
+          _$_loadedState value, $Res Function(_$_loadedState) then) =
+      __$$_loadedStateCopyWithImpl<$Res>;
   @useResult
   $Res call({MapFavoritesModel model});
 }
 
 /// @nodoc
-class __$$_LoadedStateCopyWithImpl<$Res>
-    extends _$FavoritesBlocStateCopyWithImpl<$Res, _$_LoadedState>
-    implements _$$_LoadedStateCopyWith<$Res> {
-  __$$_LoadedStateCopyWithImpl(
-      _$_LoadedState _value, $Res Function(_$_LoadedState) _then)
+class __$$_loadedStateCopyWithImpl<$Res>
+    extends _$FavoritesBlocStateCopyWithImpl<$Res, _$_loadedState>
+    implements _$$_loadedStateCopyWith<$Res> {
+  __$$_loadedStateCopyWithImpl(
+      _$_loadedState _value, $Res Function(_$_loadedState) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -198,7 +198,7 @@ class __$$_LoadedStateCopyWithImpl<$Res>
   $Res call({
     Object? model = null,
   }) {
-    return _then(_$_LoadedState(
+    return _then(_$_loadedState(
       model: null == model
           ? _value.model
           : model // ignore: cast_nullable_to_non_nullable
@@ -209,8 +209,8 @@ class __$$_LoadedStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_LoadedState implements _LoadedState {
-  const _$_LoadedState({required this.model});
+class _$_loadedState implements _loadedState {
+  const _$_loadedState({required this.model});
 
   @override
   final MapFavoritesModel model;
@@ -224,7 +224,7 @@ class _$_LoadedState implements _LoadedState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_LoadedState &&
+            other is _$_loadedState &&
             (identical(other.model, model) || other.model == model));
   }
 
@@ -234,8 +234,8 @@ class _$_LoadedState implements _LoadedState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
-      __$$_LoadedStateCopyWithImpl<_$_LoadedState>(this, _$identity);
+  _$$_loadedStateCopyWith<_$_loadedState> get copyWith =>
+      __$$_loadedStateCopyWithImpl<_$_loadedState>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -272,7 +272,7 @@ class _$_LoadedState implements _LoadedState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_loadingState value) loading,
-    required TResult Function(_LoadedState value) loaded,
+    required TResult Function(_loadedState value) loaded,
   }) {
     return loaded(this);
   }
@@ -281,7 +281,7 @@ class _$_LoadedState implements _LoadedState {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_loadingState value)? loading,
-    TResult? Function(_LoadedState value)? loaded,
+    TResult? Function(_loadedState value)? loaded,
   }) {
     return loaded?.call(this);
   }
@@ -290,7 +290,7 @@ class _$_LoadedState implements _LoadedState {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_loadingState value)? loading,
-    TResult Function(_LoadedState value)? loaded,
+    TResult Function(_loadedState value)? loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -300,13 +300,13 @@ class _$_LoadedState implements _LoadedState {
   }
 }
 
-abstract class _LoadedState implements FavoritesBlocState {
-  const factory _LoadedState({required final MapFavoritesModel model}) =
-      _$_LoadedState;
+abstract class _loadedState implements FavoritesBlocState {
+  const factory _loadedState({required final MapFavoritesModel model}) =
+      _$_loadedState;
 
   MapFavoritesModel get model;
   @JsonKey(ignore: true)
-  _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
+  _$$_loadedStateCopyWith<_$_loadedState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -337,22 +337,22 @@ mixin _$FavoritesBlocEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_initEvent value) init,
-    required TResult Function(_AddFavSetEvent value) addFav,
-    required TResult Function(_RemFavSetEvent value) remFav,
+    required TResult Function(_addFavSetEvent value) addFav,
+    required TResult Function(_remFavSetEvent value) remFav,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_initEvent value)? init,
-    TResult? Function(_AddFavSetEvent value)? addFav,
-    TResult? Function(_RemFavSetEvent value)? remFav,
+    TResult? Function(_addFavSetEvent value)? addFav,
+    TResult? Function(_remFavSetEvent value)? remFav,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_initEvent value)? init,
-    TResult Function(_AddFavSetEvent value)? addFav,
-    TResult Function(_RemFavSetEvent value)? remFav,
+    TResult Function(_addFavSetEvent value)? addFav,
+    TResult Function(_remFavSetEvent value)? remFav,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -449,8 +449,8 @@ class _$_initEvent implements _initEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_initEvent value) init,
-    required TResult Function(_AddFavSetEvent value) addFav,
-    required TResult Function(_RemFavSetEvent value) remFav,
+    required TResult Function(_addFavSetEvent value) addFav,
+    required TResult Function(_remFavSetEvent value) remFav,
   }) {
     return init(this);
   }
@@ -459,8 +459,8 @@ class _$_initEvent implements _initEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_initEvent value)? init,
-    TResult? Function(_AddFavSetEvent value)? addFav,
-    TResult? Function(_RemFavSetEvent value)? remFav,
+    TResult? Function(_addFavSetEvent value)? addFav,
+    TResult? Function(_remFavSetEvent value)? remFav,
   }) {
     return init?.call(this);
   }
@@ -469,8 +469,8 @@ class _$_initEvent implements _initEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_initEvent value)? init,
-    TResult Function(_AddFavSetEvent value)? addFav,
-    TResult Function(_RemFavSetEvent value)? remFav,
+    TResult Function(_addFavSetEvent value)? addFav,
+    TResult Function(_remFavSetEvent value)? remFav,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -485,20 +485,20 @@ abstract class _initEvent implements FavoritesBlocEvent {
 }
 
 /// @nodoc
-abstract class _$$_AddFavSetEventCopyWith<$Res> {
-  factory _$$_AddFavSetEventCopyWith(
-          _$_AddFavSetEvent value, $Res Function(_$_AddFavSetEvent) then) =
-      __$$_AddFavSetEventCopyWithImpl<$Res>;
+abstract class _$$_addFavSetEventCopyWith<$Res> {
+  factory _$$_addFavSetEventCopyWith(
+          _$_addFavSetEvent value, $Res Function(_$_addFavSetEvent) then) =
+      __$$_addFavSetEventCopyWithImpl<$Res>;
   @useResult
   $Res call({int id});
 }
 
 /// @nodoc
-class __$$_AddFavSetEventCopyWithImpl<$Res>
-    extends _$FavoritesBlocEventCopyWithImpl<$Res, _$_AddFavSetEvent>
-    implements _$$_AddFavSetEventCopyWith<$Res> {
-  __$$_AddFavSetEventCopyWithImpl(
-      _$_AddFavSetEvent _value, $Res Function(_$_AddFavSetEvent) _then)
+class __$$_addFavSetEventCopyWithImpl<$Res>
+    extends _$FavoritesBlocEventCopyWithImpl<$Res, _$_addFavSetEvent>
+    implements _$$_addFavSetEventCopyWith<$Res> {
+  __$$_addFavSetEventCopyWithImpl(
+      _$_addFavSetEvent _value, $Res Function(_$_addFavSetEvent) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -506,7 +506,7 @@ class __$$_AddFavSetEventCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
   }) {
-    return _then(_$_AddFavSetEvent(
+    return _then(_$_addFavSetEvent(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -517,8 +517,8 @@ class __$$_AddFavSetEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AddFavSetEvent implements _AddFavSetEvent {
-  const _$_AddFavSetEvent({required this.id});
+class _$_addFavSetEvent implements _addFavSetEvent {
+  const _$_addFavSetEvent({required this.id});
 
   @override
   final int id;
@@ -532,7 +532,7 @@ class _$_AddFavSetEvent implements _AddFavSetEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AddFavSetEvent &&
+            other is _$_addFavSetEvent &&
             (identical(other.id, id) || other.id == id));
   }
 
@@ -542,8 +542,8 @@ class _$_AddFavSetEvent implements _AddFavSetEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AddFavSetEventCopyWith<_$_AddFavSetEvent> get copyWith =>
-      __$$_AddFavSetEventCopyWithImpl<_$_AddFavSetEvent>(this, _$identity);
+  _$$_addFavSetEventCopyWith<_$_addFavSetEvent> get copyWith =>
+      __$$_addFavSetEventCopyWithImpl<_$_addFavSetEvent>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -583,8 +583,8 @@ class _$_AddFavSetEvent implements _AddFavSetEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_initEvent value) init,
-    required TResult Function(_AddFavSetEvent value) addFav,
-    required TResult Function(_RemFavSetEvent value) remFav,
+    required TResult Function(_addFavSetEvent value) addFav,
+    required TResult Function(_remFavSetEvent value) remFav,
   }) {
     return addFav(this);
   }
@@ -593,8 +593,8 @@ class _$_AddFavSetEvent implements _AddFavSetEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_initEvent value)? init,
-    TResult? Function(_AddFavSetEvent value)? addFav,
-    TResult? Function(_RemFavSetEvent value)? remFav,
+    TResult? Function(_addFavSetEvent value)? addFav,
+    TResult? Function(_remFavSetEvent value)? remFav,
   }) {
     return addFav?.call(this);
   }
@@ -603,8 +603,8 @@ class _$_AddFavSetEvent implements _AddFavSetEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_initEvent value)? init,
-    TResult Function(_AddFavSetEvent value)? addFav,
-    TResult Function(_RemFavSetEvent value)? remFav,
+    TResult Function(_addFavSetEvent value)? addFav,
+    TResult Function(_remFavSetEvent value)? remFav,
     required TResult orElse(),
   }) {
     if (addFav != null) {
@@ -614,30 +614,30 @@ class _$_AddFavSetEvent implements _AddFavSetEvent {
   }
 }
 
-abstract class _AddFavSetEvent implements FavoritesBlocEvent {
-  const factory _AddFavSetEvent({required final int id}) = _$_AddFavSetEvent;
+abstract class _addFavSetEvent implements FavoritesBlocEvent {
+  const factory _addFavSetEvent({required final int id}) = _$_addFavSetEvent;
 
   int get id;
   @JsonKey(ignore: true)
-  _$$_AddFavSetEventCopyWith<_$_AddFavSetEvent> get copyWith =>
+  _$$_addFavSetEventCopyWith<_$_addFavSetEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_RemFavSetEventCopyWith<$Res> {
-  factory _$$_RemFavSetEventCopyWith(
-          _$_RemFavSetEvent value, $Res Function(_$_RemFavSetEvent) then) =
-      __$$_RemFavSetEventCopyWithImpl<$Res>;
+abstract class _$$_remFavSetEventCopyWith<$Res> {
+  factory _$$_remFavSetEventCopyWith(
+          _$_remFavSetEvent value, $Res Function(_$_remFavSetEvent) then) =
+      __$$_remFavSetEventCopyWithImpl<$Res>;
   @useResult
   $Res call({int id});
 }
 
 /// @nodoc
-class __$$_RemFavSetEventCopyWithImpl<$Res>
-    extends _$FavoritesBlocEventCopyWithImpl<$Res, _$_RemFavSetEvent>
-    implements _$$_RemFavSetEventCopyWith<$Res> {
-  __$$_RemFavSetEventCopyWithImpl(
-      _$_RemFavSetEvent _value, $Res Function(_$_RemFavSetEvent) _then)
+class __$$_remFavSetEventCopyWithImpl<$Res>
+    extends _$FavoritesBlocEventCopyWithImpl<$Res, _$_remFavSetEvent>
+    implements _$$_remFavSetEventCopyWith<$Res> {
+  __$$_remFavSetEventCopyWithImpl(
+      _$_remFavSetEvent _value, $Res Function(_$_remFavSetEvent) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -645,7 +645,7 @@ class __$$_RemFavSetEventCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
   }) {
-    return _then(_$_RemFavSetEvent(
+    return _then(_$_remFavSetEvent(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -656,8 +656,8 @@ class __$$_RemFavSetEventCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_RemFavSetEvent implements _RemFavSetEvent {
-  const _$_RemFavSetEvent({required this.id});
+class _$_remFavSetEvent implements _remFavSetEvent {
+  const _$_remFavSetEvent({required this.id});
 
   @override
   final int id;
@@ -671,7 +671,7 @@ class _$_RemFavSetEvent implements _RemFavSetEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RemFavSetEvent &&
+            other is _$_remFavSetEvent &&
             (identical(other.id, id) || other.id == id));
   }
 
@@ -681,8 +681,8 @@ class _$_RemFavSetEvent implements _RemFavSetEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RemFavSetEventCopyWith<_$_RemFavSetEvent> get copyWith =>
-      __$$_RemFavSetEventCopyWithImpl<_$_RemFavSetEvent>(this, _$identity);
+  _$$_remFavSetEventCopyWith<_$_remFavSetEvent> get copyWith =>
+      __$$_remFavSetEventCopyWithImpl<_$_remFavSetEvent>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -722,8 +722,8 @@ class _$_RemFavSetEvent implements _RemFavSetEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_initEvent value) init,
-    required TResult Function(_AddFavSetEvent value) addFav,
-    required TResult Function(_RemFavSetEvent value) remFav,
+    required TResult Function(_addFavSetEvent value) addFav,
+    required TResult Function(_remFavSetEvent value) remFav,
   }) {
     return remFav(this);
   }
@@ -732,8 +732,8 @@ class _$_RemFavSetEvent implements _RemFavSetEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_initEvent value)? init,
-    TResult? Function(_AddFavSetEvent value)? addFav,
-    TResult? Function(_RemFavSetEvent value)? remFav,
+    TResult? Function(_addFavSetEvent value)? addFav,
+    TResult? Function(_remFavSetEvent value)? remFav,
   }) {
     return remFav?.call(this);
   }
@@ -742,8 +742,8 @@ class _$_RemFavSetEvent implements _RemFavSetEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_initEvent value)? init,
-    TResult Function(_AddFavSetEvent value)? addFav,
-    TResult Function(_RemFavSetEvent value)? remFav,
+    TResult Function(_addFavSetEvent value)? addFav,
+    TResult Function(_remFavSetEvent value)? remFav,
     required TResult orElse(),
   }) {
     if (remFav != null) {
@@ -753,11 +753,11 @@ class _$_RemFavSetEvent implements _RemFavSetEvent {
   }
 }
 
-abstract class _RemFavSetEvent implements FavoritesBlocEvent {
-  const factory _RemFavSetEvent({required final int id}) = _$_RemFavSetEvent;
+abstract class _remFavSetEvent implements FavoritesBlocEvent {
+  const factory _remFavSetEvent({required final int id}) = _$_remFavSetEvent;
 
   int get id;
   @JsonKey(ignore: true)
-  _$$_RemFavSetEventCopyWith<_$_RemFavSetEvent> get copyWith =>
+  _$$_remFavSetEventCopyWith<_$_remFavSetEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
