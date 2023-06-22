@@ -7,8 +7,6 @@ import 'package:furniture_store/domain/repositories/repositories.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
-import 'bloc.dart';
-
 part 'favorites_bloc.freezed.dart';
 
 @injectable
@@ -45,7 +43,7 @@ class FavoritesBlocEvent with _$FavoritesBlocEvent{
 }
 
 @injectable
-class FavoritesBloc extends LocalBloc<FavoritesBlocState>{
+class FavoritesBloc {
 
   final FavoritesRepository _favoritesRepository;
 
@@ -54,7 +52,6 @@ class FavoritesBloc extends LocalBloc<FavoritesBlocState>{
   final StreamController<FavoritesBlocEvent> _eventsController = StreamController();
   final StreamController<FavoritesBlocState> _stateController = StreamController.broadcast();
 
-  @override
   Stream<FavoritesBlocState> get state => _stateController.stream;
 
   FavoritesBloc({

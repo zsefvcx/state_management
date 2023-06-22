@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:furniture_store/presentation/pages/shopping_basket_page.dart';
 import 'package:furniture_store/presentation/pages/store_home_page.dart';
 
+import '../domain/bloc/bloc.dart';
 import 'widgets/widgets.dart';
 
 class CurrentIndex{

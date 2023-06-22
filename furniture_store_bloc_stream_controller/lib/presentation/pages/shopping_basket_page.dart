@@ -57,6 +57,8 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
           } if (!mainBloc.mainModel.isLoaded) {
             return const Center(child: CircularProgressIndicator());
           } else {
+            context.read<FavoritesBloc>().add(const FavoritesBlocEvent.init());
+            context.read<ShoppingBasketBloc>().add(const ShoppingBasketBlocEvent.init());
             return RefreshIndicator(
                 onRefresh: () async => await mainBloc.getAllProducts(0),
                 child: ScrollConfiguration(// + windows

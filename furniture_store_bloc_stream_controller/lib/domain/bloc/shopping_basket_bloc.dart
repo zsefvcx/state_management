@@ -2,11 +2,8 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
-import 'package:furniture_store/domain/bloc/bloc.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 import 'package:furniture_store/domain/repositories/repositories.dart';
-
-
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -55,7 +52,7 @@ class ShoppingBasketBlocEvent with _$ShoppingBasketBlocEvent{
 }
 
 @injectable
-class ShoppingBasketBloc extends LocalBloc<ShoppingBasketBlocState>{
+class ShoppingBasketBloc {
 
   final ShoppingBasketRepository _shoppingBasketRepository;
 
@@ -64,7 +61,6 @@ class ShoppingBasketBloc extends LocalBloc<ShoppingBasketBlocState>{
   final StreamController<ShoppingBasketBlocEvent> _eventsController = StreamController();
   final StreamController<ShoppingBasketBlocState> _stateController = StreamController.broadcast();
 
-  @override
   Stream<ShoppingBasketBlocState> get state => _stateController.stream;
 
 
