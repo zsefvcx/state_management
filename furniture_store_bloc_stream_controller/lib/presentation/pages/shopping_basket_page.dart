@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:furniture_store/domain/bloc/bloc.dart';
 import 'package:furniture_store/presentation/pages/store_home_page.dart';
 import 'package:furniture_store/presentation/pages/widget/error_time_out_widget.dart';
+import 'package:furniture_store/presentation/pages/widget/grid_view_widget.dart';
 import 'package:furniture_store/presentation/route_generator.dart';
 import 'package:furniture_store/presentation/widgets/navigator_widget.dart';
 import 'package:furniture_store/presentation/widgets/widgets.dart';
@@ -133,7 +134,6 @@ class StoreHomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var mainBloc = context.read<MainBloc>();
     return RefreshIndicator(
       onRefresh: () async => context
           .read<MainBloc>()
@@ -151,40 +151,18 @@ class StoreHomeWidget extends StatelessWidget {
           child: StreamBuilder<ShoppingBasketBlocState>(
             stream: context.read<ShoppingBasketBloc>().state,
             builder: (context, snapshot) {
+              var model = context.read<ShoppingBasketBloc>().model;
               if (snapshot.hasData) {
                 final state = snapshot.data;
                 if (state != null) {
-                  return state.map(loading: (value) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
+                  state.map(loading: (value) {
+                    //ничего не делаем, зачем что то делать
                   }, loaded: (value) {
-                    return GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 550,
-                          mainAxisExtent:
-                              200, // here set custom Height You Want
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          childAspectRatio: 1,
-                        ),
-                        //padding: const EdgeInsets.only(top: 16),
-                        itemCount: value.model.getLength,
-                        itemBuilder: (_, index) {
-                          return CardProductWidget(
-                            productEntity: mainBloc
-                                .mainModel.lpAll[value.model.getList[index].id],
-                            type: 1,
-                            count: value.model.getList[index].count,
-                          );
-                        });
+                    model = value.model;
                   });
                 }
               }
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return GridViewWidget(model: model);
             },
           ),
         ),
@@ -192,3 +170,4 @@ class StoreHomeWidget extends StatelessWidget {
     );
   }
 }
+

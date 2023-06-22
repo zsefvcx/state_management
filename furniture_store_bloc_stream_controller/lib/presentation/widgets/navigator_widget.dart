@@ -5,8 +5,6 @@ import 'package:furniture_store/presentation/pages/store_home_page.dart';
 import 'package:furniture_store/presentation/route_generator.dart';
 import 'package:furniture_store/presentation/widgets/number_icon_widget.dart';
 
-import '../../domain/bloc/bloc.dart';
-
 class TabItem {
   int id;
   String routeName;
