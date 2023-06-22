@@ -3,7 +3,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:furniture_store/domain/bloc/bloc.dart';
-import 'package:furniture_store/domain/bloc/main_bloc.dart';
 import 'package:furniture_store/presentation/widgets/navigator_widget.dart';
 import 'package:furniture_store/presentation/widgets/widgets.dart';
 import 'package:provider/provider.dart';
@@ -54,8 +53,6 @@ class _StoreHomePageState extends State<StoreHomePage> {
         } if (!mainBloc.mainModel.isLoaded) {
           return const Center(child: CircularProgressIndicator());
         } else {
-          context.read<FavoritesBloc>().add(const FavoritesBlocEvent.init());
-          context.read<ShoppingBasketBloc>().add(const FavoritesBlocEvent.init());
           return RefreshIndicator(
               onRefresh: () async => await mainBloc.getAllProducts(0),
               child: ScrollConfiguration(// + windows

@@ -2,8 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:furniture_store/domain/bloc/bloc.dart';
-import 'package:furniture_store/domain/bloc/main_bloc.dart';
-import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
 import 'package:furniture_store/presentation/pages/store_home_page.dart';
 import 'package:furniture_store/presentation/route_generator.dart';
 import 'package:furniture_store/presentation/widgets/navigator_widget.dart';
@@ -59,7 +57,6 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
           } if (!mainBloc.mainModel.isLoaded) {
             return const Center(child: CircularProgressIndicator());
           } else {
-            context.read<FavoritesBloc>().add(const FavoritesBlocEvent.init());
             return RefreshIndicator(
                 onRefresh: () async => await mainBloc.getAllProducts(0),
                 child: ScrollConfiguration(// + windows
@@ -71,23 +68,36 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: Consumer<ShoppingBasketBloc>(builder: (_, shoppingBasketBloc, __) {
-                      return GridView.builder(
-                        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 550,
-                          mainAxisExtent: 200, // here set custom Height You Want
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          childAspectRatio: 1,
-                        ),
-                        //padding: const EdgeInsets.only(top: 16),
-                        itemCount: shoppingBasketBloc.model.getLength,
-                        itemBuilder: (_, index) {
-                            return CardProductWidget(productEntity: mainBloc.mainModel.lpAll[
-                              shoppingBasketBloc.model.getList[index].id
-                            ],
-                            type: 1, count: shoppingBasketBloc.model.getList[index].count,);
-                      });                          //
+                    child: StreamBuilder<ShoppingBasketBlocState>(
+                       stream: context.read<ShoppingBasketBloc>().state,
+                       builder: (context, snapshot) {
+                         if (snapshot.hasData) {
+                            final state = snapshot.data;
+                              if (state != null) {
+                                return state.map(loading: ( value) {
+                                  return const Center(child: CircularProgressIndicator(),);
+                                }, loaded: (value) {
+                                  return GridView.builder(
+                                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                                      maxCrossAxisExtent: 550,
+                                      mainAxisExtent: 200, // here set custom Height You Want
+                                      crossAxisSpacing: 10,
+                                      mainAxisSpacing: 10,
+                                      childAspectRatio: 1,
+                                    ),
+                                    //padding: const EdgeInsets.only(top: 16),
+                                    itemCount: value.model.getLength,
+                                    itemBuilder: (_, index) {
+                                        return CardProductWidget(productEntity: mainBloc.mainModel.lpAll[
+                                        value.model.getList[index].id
+                                        ],
+                                        type: 1, count: value.model.getList[index].count,);
+                                  });
+                                }
+                                );
+                              }
+                         }
+                         return const Center(child: CircularProgressIndicator(),);
                       },
                     ),
                   ),
@@ -125,7 +135,7 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
             ElevatedButton(
               child: const Text('Ok'),
               onPressed: () {
-                Provider.of<ShoppingBasketBloc>(context, listen: false).remAll();
+                context.read<ShoppingBasketBloc>().add(const ShoppingBasketBlocEvent.remAll());
                 RouteGenerator.currentIndex.index = 0;
                 Navigator.of(context).
                 pushReplacementNamed(StoreHomePage.routeName,

@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:furniture_store/domain/bloc/bloc.dart';
-import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
 import 'package:furniture_store/presentation/route_generator.dart';
 import 'package:provider/provider.dart';
 
@@ -24,8 +23,16 @@ class _StoreAppState extends State<StoreApp> {
     _mainBloc = BlocFactory.instance.get<MainBloc>();
     _shoppingBasketBloc = BlocFactory.instance.get<ShoppingBasketBloc>();
     _favoritesBloc = BlocFactory.instance.get<FavoritesBloc>();
-    //_favoritesBloc.add(const FavoritesBlocEvent.init());
+    initBloc();
+  }
 
+  Future<void> initBloc() async {//Ожидаем пока прогрузиться основной поток связаный с основной базой
+    //по идее это должно быть в грубине, но не сейчас
+    await Future<void>.delayed(const Duration(seconds: 6),
+      () {
+        _favoritesBloc.add(const FavoritesBlocEvent.init());
+        _shoppingBasketBloc.add(const ShoppingBasketBlocEvent.init());
+      },);
   }
 
 
@@ -33,6 +40,7 @@ class _StoreAppState extends State<StoreApp> {
   void dispose() {
     super.dispose();
     _favoritesBloc.dispose();
+    _shoppingBasketBloc.dispose();
   }
 
   @override
