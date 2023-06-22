@@ -1,12 +1,9 @@
 
-
 import 'package:flutter/material.dart';
-import 'package:furniture_store/domain/bloc/bloc.dart';
 import 'package:furniture_store/presentation/pages/shopping_basket_page.dart';
 import 'package:furniture_store/presentation/pages/store_home_page.dart';
 
 import 'widgets/widgets.dart';
-import 'package:provider/provider.dart';
 
 class CurrentIndex{
   int index;

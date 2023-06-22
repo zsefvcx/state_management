@@ -28,11 +28,12 @@ class _StoreAppState extends State<StoreApp> {
 
   Future<void> initBloc() async {//Ожидаем пока прогрузиться основной поток связаный с основной базой
     //по идее это должно быть в грубине, но не сейчас
-    // await Future<void>.delayed(const Duration(seconds: 6),
-    //   () {
-    //     _favoritesBloc.add(const FavoritesBlocEvent.init());
-    //     _shoppingBasketBloc.add(const ShoppingBasketBlocEvent.init());
-    //   },);
+    _mainBloc.add(const MainBlocEvent.init());
+    await Future<void>.delayed(const Duration(seconds: 6),
+      () {
+        _favoritesBloc.add(const FavoritesBlocEvent.init());
+        _shoppingBasketBloc.add(const ShoppingBasketBlocEvent.init());
+      },);
   }
 
 
@@ -47,7 +48,7 @@ class _StoreAppState extends State<StoreApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<MainBloc>(
+        Provider<MainBloc>(
             create: (_) =>
             _mainBloc),
         Provider<FavoritesBloc>(

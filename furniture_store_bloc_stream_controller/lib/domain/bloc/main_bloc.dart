@@ -1,9 +1,16 @@
 
-import 'package:flutter/material.dart';
+import 'dart:async';
+
 import 'package:furniture_store/core/error/failure.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 import 'package:furniture_store/domain/repositories/repositories.dart';
 
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
+
+part 'main_bloc.freezed.dart';
+
+@injectable
 class MainModel {
 
   final bool timeOut;
@@ -42,8 +49,23 @@ class MainModel {
   }
 }
 
+@freezed
+class MainBlocState with _$MainBlocState{
+  const factory MainBlocState.loading() = _loadingState;
+  const factory MainBlocState.loaded({required MainModel model}) = _loadedState;
+  const factory MainBlocState.error() = _errorState;
+  const factory MainBlocState.timeOut() = _timeOut;
+}
 
-class MainBloc  with ChangeNotifier{
+@freezed
+class MainBlocEvent with _$MainBlocEvent{
+  const factory MainBlocEvent.init() = _initEvent;
+  const factory MainBlocEvent.getAllProducts({required int page}) = _getAllProductsEvent;
+  const factory MainBlocEvent.searchProduct({required int id}) = _searchProductEvent;
+}
+
+@injectable
+class MainBloc {
   final FeatureRepository featureRepository;
 
   MainModel mainModel = const MainModel(
@@ -54,24 +76,80 @@ class MainBloc  with ChangeNotifier{
     error: false,
   );
 
+  bool _busy = false;
+
+  bool get isBusy => _busy;
+
+  final StreamController<MainBlocEvent> _eventsController = StreamController();
+  final StreamController<MainBlocState> _stateController = StreamController.broadcast();
+
+  Stream<MainBlocState> get state => _stateController.stream;
+
   MainBloc({
     required this.featureRepository,
   }) {
-    getAllProducts(0);
+    _eventsController.stream.listen((event) {
+      _busy = true;
+      event.map<void>(
+          init: (value) async {
+
+            _stateController.add(const MainBlocState.loading());
+            await _getAllProducts(0);
+            _stateController.add(MainBlocState.loaded(model: mainModel));
+          },
+          getAllProducts: (value) async {
+            if(featureRepository.isBusy()) return;
+            _stateController.add(const MainBlocState.loading());
+            await _getAllProducts(value.page);
+            if (mainModel.isTimeOut){
+              _stateController.add(const MainBlocState.timeOut());
+            } else if (mainModel.isError){
+              _stateController.add(const MainBlocState.error());
+            } else {
+              _stateController.add(MainBlocState.loaded(model: mainModel));
+            }
+
+          },
+          searchProduct: ( value) async {
+            if(featureRepository.isBusy()) return;
+            _stateController.add(const MainBlocState.loading());
+            await _searchProduct(value.id);
+            if (mainModel.isTimeOut){
+              _stateController.add(const MainBlocState.timeOut());
+            } else if (mainModel.isError){
+              _stateController.add(const MainBlocState.error());
+            } else {
+              _stateController.add(MainBlocState.loaded(model: mainModel));
+            }
+          }
+      );
+      _busy = false;
+    });
   }
 
-  Future<void> getAllProducts(int page) async {
+
+  void add(MainBlocEvent event){
+    if(_eventsController.isClosed) return;
+    _eventsController.add(event);
+  }
+
+  void dispose(){
+    _eventsController.close();
+    _stateController.close();
+  }
+
+  Future<void> _getAllProducts(int page) async {
     var(Failure? e , List<ProductEntity>? lp, bool timeOut) = await _getProduct(() => featureRepository.getAllProducts(page));
-    if(lp!=null){mainModel = mainModel.copyWith(error: false, timeOut: false,   e: '', lpAll: lp,);notifyListeners();return;}
-    if(e !=null){mainModel = mainModel.copyWith(error: true,  timeOut: timeOut,e: e.runtimeType.toString());notifyListeners();
+    if(lp!=null){mainModel = mainModel.copyWith(error: false, timeOut: false,   e: '', lpAll: lp,); return;}
+    if(e !=null){mainModel = mainModel.copyWith(error: true,  timeOut: timeOut,e: e.runtimeType.toString());
     return;
     }
   }
 
-  Future<void> searchProduct(int id) async {
+  Future<void> _searchProduct(int id) async {
     var(Failure? e , List<ProductEntity>? lp, bool timeOut) = await _getProduct(() => featureRepository.searchProduct(id));
-    if(lp!=null){mainModel = mainModel.copyWith(error: false, timeOut: false,   e: '', lpSingle: lp,);notifyListeners();return;}
-    if(e!=null){mainModel = mainModel.copyWith(error: true,  timeOut: timeOut,e: e.runtimeType.toString());notifyListeners();
+    if(lp!=null){mainModel = mainModel.copyWith(error: false, timeOut: false,   e: '', lpSingle: lp,);return;}
+    if(e!=null){mainModel = mainModel.copyWith(error: true,  timeOut: timeOut,e: e.runtimeType.toString());
     return;
     }
   }

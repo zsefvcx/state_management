@@ -47,5 +47,10 @@ class FeatureRepositoryImpl extends FeatureRepository {
     }
   }
 
+  @override
+  bool isBusy() {
+    return false;
+  }
+
 
 }
