@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:furniture_store/domain/bloc/bloc.dart';
-import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
 import 'package:furniture_store/presentation/route_generator.dart';
 
 final mainBlocProvider = StateNotifierProvider<MainBloc, MainStatus>((ref) => BlocFactory.instance.get<MainBloc>());
