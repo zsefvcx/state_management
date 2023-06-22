@@ -22,20 +22,23 @@ class UniPayButtonWidget extends StatelessWidget {
     return StreamBuilder<ShoppingBasketBlocState>(
       stream: context.read<ShoppingBasketBloc>().state,
       builder: (context, snapshot) {
+        bool status = context.read<ShoppingBasketBloc>().model.getStatus(id: _productEntity.id);
+        final TextEditingController controller = TextEditingController();
+        controller.value = TextEditingValue(text: context.read<ShoppingBasketBloc>().model.getCount(id: _productEntity.id).toString());
         if (snapshot.hasData) {
           final state = snapshot.data;
           if (state != null) {
-            return state.map(loading: ( value) {
-              return const Center(child: CircularProgressIndicator(),);
+            state.map(loading: ( value) {
+              //ничего не делаем, зачем что то делать
             }, loaded: (value) {
-              final TextEditingController controller = TextEditingController();
+              //Загружено читаем статус и значение
               bool status = value.model.getStatus(id: _productEntity.id);
               controller.value = TextEditingValue(text: value.model.getCount(id: _productEntity.id).toString());
-              return RowLocalWidget(status: status, controller: controller, productEntity: _productEntity, type: _type);
+
             });
           }
         }
-        return const Center(child: CircularProgressIndicator(),);
+        return RowLocalWidget(status: status, controller: controller, productEntity: _productEntity, type: _type);
       },
     );
   }

@@ -1,14 +1,12 @@
 
+import 'package:furniture_store/core/data/generate_shopping_basket.dart';
 import 'package:furniture_store/data/datasources/local/feature_shopping_basket_source.dart';
 import 'package:furniture_store/data/models/shopping_basket_model.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 
 class FeatureShoppingBasketDataSourceImp extends FeatureShoppingBasketDataSource{
 
-  Map<int, ShoppingBasketModel> shoppingBasketModel = {
-    1:ShoppingBasketModel(id: 1),
-    4:ShoppingBasketModel(id: 4, count: 10),
-  };
+  Map<int, ShoppingBasketModel> shoppingBasketModel = GenerateShoppingBasket.instance.shoppingBasketModel;
 
   @override
   Future<void> add(int id) async {

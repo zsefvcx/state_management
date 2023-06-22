@@ -1,13 +1,11 @@
 
+import 'package:furniture_store/core/data/generate_favorites.dart';
 import 'package:furniture_store/data/datasources/local/feature_favorites_data_source.dart';
 import 'package:furniture_store/data/models/favorites_model.dart';
 
 class FeatureFavoritesDataSourceImp extends FeatureFavoritesDataSource{
 
-  Map<int, FavoritesModel> favoritesModel = {
-    0:FavoritesModel(id: 0),
-    3:FavoritesModel(id: 3),
-  };
+  Map<int, FavoritesModel> favoritesModel = GenerateFavorites.instance.favoritesModel;
 
   @override
   Future<void> add(int id) async {
