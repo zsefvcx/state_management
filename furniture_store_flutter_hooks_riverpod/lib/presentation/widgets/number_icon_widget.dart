@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:furniture_store/domain/bloc/bloc.dart';
-import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../store_app.dart';
