@@ -89,7 +89,6 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
                           var productEntity =  mainBloc.mainModel.lpAll[
                           shoppingBasketBloc.model.getList[index].id
                           ];
-                          print('7 DetailProductEntityWidget ${productEntity.price} ${shoppingBasketBloc.model.getLength}');
                             return CardProductWidget(productEntity: productEntity,
                             type: 1, count: shoppingBasketBloc.model.getLength,);
                       });                          //
