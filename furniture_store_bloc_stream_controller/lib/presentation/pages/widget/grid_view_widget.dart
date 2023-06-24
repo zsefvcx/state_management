@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:furniture_store/domain/bloc/bloc.dart';
+import 'package:furniture_store/presentation/settings.dart';
 import 'package:furniture_store/presentation/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +17,8 @@ class GridViewWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var mainBloc = context.read<MainBloc>();
     return GridView.builder(
+      controller: Settings.instance.controller,
+        key: Settings.instance.basketKey,
         gridDelegate:
         const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 550,

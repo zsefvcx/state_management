@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:furniture_store/domain/bloc/bloc.dart';
+import 'package:furniture_store/presentation/settings.dart';
 import 'package:furniture_store/presentation/widgets/card_product_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -28,6 +29,8 @@ class StoreHomeWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: GridView.builder(
+            controller: Settings.instance.controller,
+            key: Settings.instance.shoppingKey,
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 550,
               mainAxisExtent: 200, // here set custom Height You Want
