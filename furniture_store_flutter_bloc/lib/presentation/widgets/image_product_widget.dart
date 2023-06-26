@@ -26,7 +26,6 @@ class ImageProductWidget extends StatelessWidget {
                 context.read<FavoritesBloc>().add(FavoritesBlocEvent.addFav(id: _productEntity.id));
               },
               icon: BlocBuilder<FavoritesBloc, FavoritesBlocState>(
-                //stream: context.read<FavoritesBloc>().state,
                 builder: (context, state) {
                   status = context.read<FavoritesBloc>().model.getStatus(id: _productEntity.id);
                       state.map(loading: ( value) {

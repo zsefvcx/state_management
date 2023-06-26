@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_store/domain/bloc/bloc.dart';
 import 'package:provider/provider.dart';
 
@@ -54,13 +55,9 @@ class NumberIconWidget extends StatelessWidget {
               return _icon;
             }
         );
-    } else if (state is Stream<FavoritesBlocState>){
-      return StreamBuilder<FavoritesBlocState>(
-          stream: state,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final state = snapshot.data;
-              if (state != null) {
+    } else {
+      return BlocBuilder<FavoritesBloc, FavoritesBlocState>(
+          builder: (context, state) {
                 return state.map(
                     loading: (value) {
                       return _icon;
@@ -87,9 +84,6 @@ class NumberIconWidget extends StatelessWidget {
                       ),]);
 
                     });
-              }
-            }
-            return _icon;
           }
       );
     }
