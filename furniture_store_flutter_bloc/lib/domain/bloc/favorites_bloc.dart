@@ -63,15 +63,21 @@ class FavoritesBloc extends Bloc<FavoritesBlocEvent, FavoritesBlocState>{
         event.map<void>(
           init: (_) async {
             emit(const FavoritesBlocState.loading());
-            _init().whenComplete(() => emit(FavoritesBlocState.loaded(model: model)));
+            await _init().whenComplete(() =>
+                emit(FavoritesBlocState.loaded(model: model))
+            );
           },
           addFav: (value) async {
             if(_favoritesRepository.isBusy()) return;
-             await _addFav(value.id).whenComplete(() => emit(FavoritesBlocState.loaded(model: model)));
+             await _addFav(value.id).whenComplete(() =>
+                 emit(FavoritesBlocState.loaded(model: model))
+             );
           },
           remFav: (value) async {
             if(_favoritesRepository.isBusy()) return;
-            await _remFav(value.id).whenComplete(() => emit(FavoritesBlocState.loaded(model: model)));
+            await _remFav(value.id).whenComplete(() =>
+                emit(FavoritesBlocState.loaded(model: model))
+            );
           },
         );
     },);
