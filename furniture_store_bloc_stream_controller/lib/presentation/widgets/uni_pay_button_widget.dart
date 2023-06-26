@@ -32,7 +32,7 @@ class UniPayButtonWidget extends StatelessWidget {
               //ничего не делаем, зачем что то делать
             }, loaded: (value) {
               //Загружено читаем статус и значение
-              bool status = value.model.getStatus(id: _productEntity.id);
+              status = value.model.getStatus(id: _productEntity.id);
               controller.value = TextEditingValue(text: value.model.getCount(id: _productEntity.id).toString());
 
             });

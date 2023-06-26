@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:furniture_store/domain/bloc/bloc.dart';
-import 'package:furniture_store/presentation/settings.dart';
 import 'package:furniture_store/presentation/widgets/card_product_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -15,9 +14,13 @@ class StoreHomeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     var mainBloc = context.read<MainBloc>();
     return RefreshIndicator(
-      onRefresh: () async => context
-          .read<MainBloc>()
-          .add(const MainBlocEvent.getAllProducts(page: 0)),
+      onRefresh: () async {
+        context.read<MainBloc>().add(const MainBlocEvent.getAllProducts(page: 0));
+        // await Future.doWhile(() async {
+        //   await Future.delayed(const Duration(seconds: 1));
+        //   return context.read<MainBloc>().isBusy;
+        // }).timeout(const Duration(seconds: 5));
+      },
       child: ScrollConfiguration(
         // + windows
         behavior: ScrollConfiguration.of(context).copyWith(
