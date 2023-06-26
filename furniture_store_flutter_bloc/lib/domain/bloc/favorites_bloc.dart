@@ -63,25 +63,32 @@ class FavoritesBloc extends Bloc<FavoritesBlocEvent, FavoritesBlocState>{
         event.map<void>(
           init: (_) async {
             emit(const FavoritesBlocState.loading());
-            emit(FavoritesBlocState.loaded(
-               model: model = model.copyWith(model: await _favoritesRepository.fav()),
-             ));
+            _init().whenComplete(() => emit(FavoritesBlocState.loaded(model: model)));
           },
           addFav: (value) async {
             if(_favoritesRepository.isBusy()) return;
-             await _favoritesRepository.add(value.id);
-             model = model.copyWith(model: await _favoritesRepository.fav());
-             emit(FavoritesBlocState.loaded(model: model));
+             await _addFav(value.id).whenComplete(() => emit(FavoritesBlocState.loaded(model: model)));
           },
           remFav: (value) async {
             if(_favoritesRepository.isBusy()) return;
-            await _favoritesRepository.rem(value.id);
-            emit(FavoritesBlocState.loaded(
-              model: model = model.copyWith(model: await _favoritesRepository.fav()),
-            ));
+            await _remFav(value.id).whenComplete(() => emit(FavoritesBlocState.loaded(model: model)));
           },
         );
     },);
+  }
+
+  Future<void> _init() async {
+    model = model.copyWith(model: await _favoritesRepository.fav());
+  }
+
+  Future<void> _addFav(int id) async {
+    await _favoritesRepository.add(id);
+    model = model.copyWith(model: await _favoritesRepository.fav());
+  }
+
+  Future<void> _remFav(int id) async {
+    await _favoritesRepository.rem(id);
+    model = model.copyWith(model: await _favoritesRepository.fav());
   }
 
   // void add(FavoritesBlocEvent event){
