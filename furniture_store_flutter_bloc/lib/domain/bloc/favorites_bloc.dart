@@ -66,12 +66,12 @@ class FavoritesBloc extends Bloc<FavoritesBlocEvent, FavoritesBlocState>{
             emit(FavoritesBlocState.loaded(
                model: model = model.copyWith(model: await _favoritesRepository.fav()),
              ));
-          }, addFav: (value) async {
+          },
+          addFav: (value) async {
             if(_favoritesRepository.isBusy()) return;
              await _favoritesRepository.add(value.id);
-            emit(FavoritesBlocState.loaded(
-               model: model = model.copyWith(model: await _favoritesRepository.fav()),
-             ));
+             model = model.copyWith(model: await _favoritesRepository.fav());
+             emit(FavoritesBlocState.loaded(model: model));
           },
           remFav: (value) async {
             if(_favoritesRepository.isBusy()) return;
