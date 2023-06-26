@@ -59,8 +59,8 @@ class FavoritesBloc extends Bloc<FavoritesBlocEvent, FavoritesBlocState>{
     required FavoritesRepository favoritesRepository,
   }) : _favoritesRepository= favoritesRepository, super(const FavoritesBlocState.loading())
   {
-    on<FavoritesBlocEvent>((event, emit) {
-        event.map<void>(
+    on<FavoritesBlocEvent>((event, emit) async {
+      await event.map<FutureOr<void>>(
           init: (_) async {
             emit(const FavoritesBlocState.loading());
             await _init().whenComplete(() =>
