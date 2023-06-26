@@ -14,16 +14,12 @@ class NumberIconWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var state = _type==0?context.read<ShoppingBasketBloc>().state:
-    context.read<FavoritesBloc>().state;
+    var state = _type==0?context.read<ShoppingBasketBloc>():
+    context.read<FavoritesBloc>();
 
-    if (state is Stream<ShoppingBasketBlocState>){
-      return StreamBuilder<ShoppingBasketBlocState>(
-            stream: state,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                final state = snapshot.data;
-                if (state != null) {
+    if (state is ShoppingBasketBloc){
+      return BlocBuilder<ShoppingBasketBloc, ShoppingBasketBlocState>(
+          builder: (context, state) {
                   return state.map(
                       loading: (value) {
                         return _icon;
@@ -51,11 +47,8 @@ class NumberIconWidget extends StatelessWidget {
 
                       });
                 }
-              }
-              return _icon;
-            }
         );
-    } else {
+    } else if (state is FavoritesBloc){
       return BlocBuilder<FavoritesBloc, FavoritesBlocState>(
           builder: (context, state) {
                 return state.map(

@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 import 'package:furniture_store/domain/repositories/repositories.dart';
 
@@ -52,68 +53,68 @@ class ShoppingBasketBlocEvent with _$ShoppingBasketBlocEvent{
 }
 
 @injectable
-class ShoppingBasketBloc {
+class ShoppingBasketBloc  extends Bloc<ShoppingBasketBlocEvent, ShoppingBasketBlocState>{
 
   final ShoppingBasketRepository _shoppingBasketRepository;
 
   ShoppingBasketModel model = const ShoppingBasketModel(model: {});
 
-  final StreamController<ShoppingBasketBlocEvent> _eventsController = StreamController();
-  final StreamController<ShoppingBasketBlocState> _stateController = StreamController.broadcast();
-
-  Stream<ShoppingBasketBlocState> get state => _stateController.stream;
-
-
   ShoppingBasketBloc({
     required ShoppingBasketRepository shoppingBasketRepository,
-  }) : _shoppingBasketRepository= shoppingBasketRepository{
-    _eventsController.stream.listen((event) {
-      event.map<void>(
+  }) : _shoppingBasketRepository= shoppingBasketRepository, super(const ShoppingBasketBlocState.loading())
+  {
+    on<ShoppingBasketBlocEvent>((event, emit) async {
+      await event.map<FutureOr<void>>(
         init: (_) async {
-          _stateController.add(const ShoppingBasketBlocState.loading());
-          _stateController.add(ShoppingBasketBlocState.loaded(
-            model: model = model.copyWith(model: await _shoppingBasketRepository.bas()),
-          ));
+          emit(const ShoppingBasketBlocState.loading());
+          await _init().whenComplete(() =>
+              emit(ShoppingBasketBlocState.loaded(model: model = model)));
         },
         addBas: (value) async {
         if(_shoppingBasketRepository.isBusy()) return;
-        await _shoppingBasketRepository.add(value.id);
-        _stateController.add(ShoppingBasketBlocState.loaded(
-          model: model = model.copyWith(model: await _shoppingBasketRepository.bas()),
-        ));
+        await _addBas(value.id).whenComplete(() =>
+            emit(ShoppingBasketBlocState.loaded(model: model)));
         },
         remBas: (value) async {
           if(_shoppingBasketRepository.isBusy()) return;
-          await _shoppingBasketRepository.rem(value.id);
-          _stateController.add(ShoppingBasketBlocState.loaded(
-            model: model = model.copyWith(model: await _shoppingBasketRepository.bas()),
-          ));
+          await _remBas(value.id).whenComplete(() =>
+              emit(ShoppingBasketBlocState.loaded(model: model)));
         },
-        remAll: (_remAllEvent value) async {
+        remAll: (_) async {
           if(_shoppingBasketRepository.isBusy()) return;
-          await _shoppingBasketRepository.remAll();
-          _stateController.add(ShoppingBasketBlocState.loaded(
-              model: model = model.copyWith(model: await _shoppingBasketRepository.bas()),
-          ));
-        }, setCountBas: (_setCountBas value) async {
+          await _remAll().whenComplete(() =>
+              emit(ShoppingBasketBlocState.loaded(model: model)));
+        },
+        setCountBas: (value) async {
           if(_shoppingBasketRepository.isBusy()) return;
-          await _shoppingBasketRepository.setCountBas(value.id, value.value);
-          _stateController.add(ShoppingBasketBlocState.loaded(
-              model: model = model.copyWith(model: await _shoppingBasketRepository.bas()),
-          ));
+          await _setCountBas(value.id, value.value).whenComplete(() =>
+              emit(ShoppingBasketBlocState.loaded(model: model)));
         },
     );
   });
-}
-
-  void add(ShoppingBasketBlocEvent event){
-    if(_eventsController.isClosed) return;
-    _eventsController.add(event);
   }
 
-  void dispose(){
-    _eventsController.close();
-    _stateController.close();
-  }
+    Future<void> _init() async {
+      model = model.copyWith(model: await _shoppingBasketRepository.bas());
+    }
 
+    Future<void> _addBas(int id)  async {
+      await _shoppingBasketRepository.add(id);
+      model = model.copyWith(model: await _shoppingBasketRepository.bas());
+    }
+
+    Future<void> _remBas(int id) async {
+      await _shoppingBasketRepository.rem(id);
+      model = model.copyWith(model: await _shoppingBasketRepository.bas());
+    }
+
+    Future<void> _remAll() async {
+      await _shoppingBasketRepository.remAll();
+      model = model.copyWith(model: await _shoppingBasketRepository.bas());
+    }
+
+    Future<void> _setCountBas(int id, int value) async {
+      await _shoppingBasketRepository.setCountBas(id, value);
+      model = model.copyWith(model: await _shoppingBasketRepository.bas());
+    }
 }

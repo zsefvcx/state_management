@@ -42,7 +42,6 @@ class _StoreAppState extends State<StoreApp> {
   void dispose() {
     super.dispose();
     _favoritesBloc.dispose();
-    _shoppingBasketBloc.dispose();
   }
 
   @override

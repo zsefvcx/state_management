@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_store/domain/bloc/bloc.dart';
 import 'package:furniture_store/presentation/pages/store_home_page.dart';
 import 'package:furniture_store/presentation/pages/widget/error_time_out_widget.dart';
@@ -148,20 +149,14 @@ class StoreHomeWidget extends StatelessWidget {
         ),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: StreamBuilder<ShoppingBasketBlocState>(
-            stream: context.read<ShoppingBasketBloc>().state,
-            builder: (context, snapshot) {
+          child: BlocBuilder<ShoppingBasketBloc, ShoppingBasketBlocState>(
+            builder: (context, state) {
               var model = context.read<ShoppingBasketBloc>().model;
-              if (snapshot.hasData) {
-                final state = snapshot.data;
-                if (state != null) {
                   state.map(loading: (value) {
                     //ничего не делаем, зачем что то делать
                   }, loaded: (value) {
                     model = value.model;
                   });
-                }
-              }
               return GridViewWidget(model: model);
             },
           ),

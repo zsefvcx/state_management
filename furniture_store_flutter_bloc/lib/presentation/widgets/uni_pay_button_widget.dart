@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 import 'package:furniture_store/presentation/pages/store_home_page.dart';
@@ -19,15 +20,12 @@ class UniPayButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<ShoppingBasketBlocState>(
-      stream: context.read<ShoppingBasketBloc>().state,
-      builder: (context, snapshot) {
+    return BlocBuilder<ShoppingBasketBloc, ShoppingBasketBlocState>(
+      builder: (context, state) {
         bool status = context.read<ShoppingBasketBloc>().model.getStatus(id: _productEntity.id);
         final TextEditingController controller = TextEditingController();
         controller.value = TextEditingValue(text: context.read<ShoppingBasketBloc>().model.getCount(id: _productEntity.id).toString());
-        if (snapshot.hasData) {
-          final state = snapshot.data;
-          if (state != null) {
+
             state.map(loading: ( value) {
               //ничего не делаем, зачем что то делать
             }, loaded: (value) {
@@ -36,8 +34,8 @@ class UniPayButtonWidget extends StatelessWidget {
               controller.value = TextEditingValue(text: value.model.getCount(id: _productEntity.id).toString());
 
             });
-          }
-        }
+
+
         return RowLocalWidget(status: status, controller: controller, productEntity: _productEntity, type: _type);
       },
     );

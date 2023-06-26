@@ -50,11 +50,6 @@ class FavoritesBloc extends Bloc<FavoritesBlocEvent, FavoritesBlocState>{
 
   MapFavoritesModel model = const MapFavoritesModel(model: {});
 
-  // final StreamController<FavoritesBlocEvent> _eventsController = StreamController();
-  // final StreamController<FavoritesBlocState> _stateController = StreamController.broadcast();
-  //
-  // Stream<FavoritesBlocState> get state => _stateController.stream;
-
   FavoritesBloc( {
     required FavoritesRepository favoritesRepository,
   }) : _favoritesRepository= favoritesRepository, super(const FavoritesBlocState.loading())
