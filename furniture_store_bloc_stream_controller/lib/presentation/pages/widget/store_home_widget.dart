@@ -29,8 +29,6 @@ class StoreHomeWidget extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: GridView.builder(
-            controller: Settings.instance.controller,
-            key: Settings.instance.shoppingKey,
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 550,
               mainAxisExtent: 200, // here set custom Height You Want

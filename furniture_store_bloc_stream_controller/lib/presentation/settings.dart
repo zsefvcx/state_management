@@ -1,11 +1,16 @@
-import 'package:flutter/cupertino.dart';
-
-class Settings {
-
-  final ScrollController controller = ScrollController();
-  final PageStorageKey shoppingKey = const PageStorageKey<String>('shoppingKey');
-  final PageStorageKey basketKey = const PageStorageKey<String>('basketKey');
-
-  static final instance = Settings();
-
-}
+// import 'package:flutter/cupertino.dart';
+//
+// class Settings {
+//
+//   ScrollController gridScrollController = ScrollController();
+//
+//   PageStorageKey shoppingKey = const PageStorageKey<String>('shoppingKey');
+//   PageStorageBucket bucket = PageStorageBucket();
+//   GlobalKey<State<StatefulWidget>> basketKey = GlobalKey();
+//
+//   static final instance = Settings();
+//
+//   Settings(){
+//     print('init Settings');
+//   }
+// }
