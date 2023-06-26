@@ -84,10 +84,10 @@ class FavoritesBloc extends Bloc<FavoritesBlocEvent, FavoritesBlocState>{
     },);
   }
 
-  void add(FavoritesBlocEvent event){
-    // if(_eventsController.isClosed) return;
-    // _eventsController.add(event);
-  }
+  // void add(FavoritesBlocEvent event){
+  //   // if(_eventsController.isClosed) return;
+  //   // _eventsController.add(event);
+  // }
 
   void dispose(){
 
