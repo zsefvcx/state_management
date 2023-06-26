@@ -9,7 +9,6 @@ import 'package:furniture_store/presentation/pages/widget/grid_view_widget.dart'
 import 'package:furniture_store/presentation/route_generator.dart';
 import 'package:furniture_store/presentation/widgets/navigator_widget.dart';
 import 'package:furniture_store/presentation/widgets/widgets.dart';
-import 'package:provider/provider.dart';
 
 class ShoppingBasketPage extends StatefulWidget {
   static const routeName = '/shopping_basket_page';
@@ -37,12 +36,8 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
       ),
       //Использовать Visibility
       body: SafeArea(
-        child: StreamBuilder<MainBlocState>(
-          stream: context.read<MainBloc>().state,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              final state = snapshot.data;
-              if (state != null) {
+        child: BlocBuilder<MainBloc, MainBlocState>(
+          builder: (context, state) {
                 return state.map(
                   loading: (value) {
                     return const Center(child: CircularProgressIndicator());
@@ -63,9 +58,6 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
                     return const StoreHomeWidget();
                   },
                 );
-              }
-            }
-            return const StoreHomeWidget();
           },
         ),
       ),

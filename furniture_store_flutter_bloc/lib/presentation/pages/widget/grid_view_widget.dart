@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:furniture_store/domain/bloc/bloc.dart';
-import 'package:furniture_store/presentation/settings.dart';
 import 'package:furniture_store/presentation/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 

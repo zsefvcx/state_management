@@ -6,7 +6,6 @@ import 'package:furniture_store/domain/bloc/shopping_basket_bloc.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 import 'package:furniture_store/presentation/pages/store_home_page.dart';
 import 'package:furniture_store/presentation/route_generator.dart';
-import 'package:provider/provider.dart';
 
 class UniPayButtonWidget extends StatelessWidget {
   const UniPayButtonWidget({
@@ -30,7 +29,7 @@ class UniPayButtonWidget extends StatelessWidget {
               //ничего не делаем, зачем что то делать
             }, loaded: (value) {
               //Загружено читаем статус и значение
-              bool status = value.model.getStatus(id: _productEntity.id);
+              status = value.model.getStatus(id: _productEntity.id);
               controller.value = TextEditingValue(text: value.model.getCount(id: _productEntity.id).toString());
 
             });

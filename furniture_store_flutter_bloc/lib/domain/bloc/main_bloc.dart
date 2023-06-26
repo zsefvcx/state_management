@@ -1,6 +1,7 @@
 
 import 'dart:async';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_store/core/error/failure.dart';
 import 'package:furniture_store/domain/entities/entities.dart';
 import 'package:furniture_store/domain/repositories/repositories.dart';
@@ -65,7 +66,7 @@ class MainBlocEvent with _$MainBlocEvent{
 }
 
 @injectable
-class MainBloc {
+class MainBloc extends Bloc<MainBlocEvent, MainBlocState>{
   final FeatureRepository featureRepository;
 
   MainModel mainModel = const MainModel(
@@ -80,62 +81,45 @@ class MainBloc {
 
   bool get isBusy => _busy;
 
-  final StreamController<MainBlocEvent> _eventsController = StreamController();
-  final StreamController<MainBlocState> _stateController = StreamController.broadcast();
-
-  Stream<MainBlocState> get state => _stateController.stream;
-
   MainBloc({
     required this.featureRepository,
-  }) {
-    _eventsController.stream.listen((event) {
+  }) : super(const MainBlocState.loading()){
+    on<MainBlocEvent>((event, emit) async {
       _busy = true;
-      event.map<void>(
+      await event.map<FutureOr<void>>(
           init: (value) async {
-
-            _stateController.add(const MainBlocState.loading());
-            await _getAllProducts(0);
-            _stateController.add(MainBlocState.loaded(model: mainModel));
+            emit(const MainBlocState.loading());
+            await _getAllProducts(0).whenComplete(() =>
+            emit(MainBlocState.loaded(model: mainModel)));
           },
           getAllProducts: (value) async {
             if(featureRepository.isBusy()) return;
-            _stateController.add(const MainBlocState.loading());
-            await _getAllProducts(value.page);
-            if (mainModel.isTimeOut){
-              _stateController.add(const MainBlocState.timeOut());
-            } else if (mainModel.isError){
-              _stateController.add(const MainBlocState.error());
-            } else {
-              _stateController.add(MainBlocState.loaded(model: mainModel));
-            }
-
+            emit(const MainBlocState.loading());
+            await _getAllProducts(value.page).whenComplete(() {
+              if (mainModel.isTimeOut) {
+                emit(const MainBlocState.timeOut());
+              } else if (mainModel.isError) {
+                emit(const MainBlocState.error());
+              } else {
+                emit(MainBlocState.loaded(model: mainModel));
+              }
+            });
           },
           searchProduct: ( value) async {
-            if(featureRepository.isBusy()) return;
-            _stateController.add(const MainBlocState.loading());
-            await _searchProduct(value.id);
-            if (mainModel.isTimeOut){
-              _stateController.add(const MainBlocState.timeOut());
-            } else if (mainModel.isError){
-              _stateController.add(const MainBlocState.error());
-            } else {
-              _stateController.add(MainBlocState.loaded(model: mainModel));
-            }
-          }
-      );
+            if (featureRepository.isBusy()) return;
+            emit(const MainBlocState.loading());
+            await _searchProduct(value.id).whenComplete(() {
+              if (mainModel.isTimeOut) {
+                emit(const MainBlocState.timeOut());
+              } else if (mainModel.isError) {
+                emit(const MainBlocState.error());
+              } else {
+                emit(MainBlocState.loaded(model: mainModel));
+              }
+            });
+          });
       _busy = false;
     });
-  }
-
-
-  void add(MainBlocEvent event){
-    if(_eventsController.isClosed) return;
-    _eventsController.add(event);
-  }
-
-  void dispose(){
-    _eventsController.close();
-    _stateController.close();
   }
 
   Future<void> _getAllProducts(int page) async {

@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:furniture_store/domain/bloc/bloc.dart';
 import 'package:furniture_store/presentation/pages/widget/store_home_widget.dart';
 import 'package:furniture_store/presentation/widgets/navigator_widget.dart';
@@ -36,12 +37,8 @@ class _StoreHomePageState extends State<StoreHomePage> {
       ),
       //Использовать Visibility
       body: SafeArea(
-        child: StreamBuilder<MainBlocState>(
-          stream: context.read<MainBloc>().state,
-          builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final state = snapshot.data;
-            if (state != null) {
+        child: BlocBuilder<MainBloc, MainBlocState>(
+          builder: (context, state) {
               return state.map(
                 loading: (value) {
                   return const Center(child: CircularProgressIndicator());
@@ -62,9 +59,6 @@ class _StoreHomePageState extends State<StoreHomePage> {
                   return const StoreHomeWidget();
                 },
               );
-            }
-          }
-          return const StoreHomeWidget();
         },
        )
       ),

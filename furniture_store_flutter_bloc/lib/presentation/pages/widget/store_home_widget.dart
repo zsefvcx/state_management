@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:furniture_store/domain/bloc/bloc.dart';
-import 'package:furniture_store/presentation/settings.dart';
 import 'package:furniture_store/presentation/widgets/card_product_widget.dart';
 import 'package:provider/provider.dart';
 
