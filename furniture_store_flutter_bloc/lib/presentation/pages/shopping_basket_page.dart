@@ -26,6 +26,8 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
 
   @override
   Widget build(BuildContext context) {
+    context.read<FavoritesBloc>().add(const FavoritesBlocEvent.init());
+    context.read<ShoppingBasketBloc>().add(const ShoppingBasketBlocEvent.init());
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(

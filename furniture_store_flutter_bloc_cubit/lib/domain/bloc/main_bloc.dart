@@ -58,15 +58,8 @@ class MainBlocState with _$MainBlocState{
   const factory MainBlocState.timeOut() = _timeOut;
 }
 
-@freezed
-class MainBlocEvent with _$MainBlocEvent{
-  const factory MainBlocEvent.init() = _initEvent;
-  const factory MainBlocEvent.getAllProducts({required int page}) = _getAllProductsEvent;
-  const factory MainBlocEvent.searchProduct({required int id}) = _searchProductEvent;
-}
-
 @injectable
-class MainBloc extends Bloc<MainBlocEvent, MainBlocState>{
+class MainBloc extends BlocBase<MainBlocState>{
   final FeatureRepository featureRepository;
 
   MainModel mainModel = const MainModel(
@@ -77,52 +70,52 @@ class MainBloc extends Bloc<MainBlocEvent, MainBlocState>{
     error: false,
   );
 
-  bool _busy = false;
-
-  bool get isBusy => _busy;
-
   MainBloc({
     required this.featureRepository,
-  }) : super(const MainBlocState.loading()){
-    on<MainBlocEvent>((event, emit) async {
-      _busy = true;
-      await event.map<FutureOr<void>>(
-          init: (value) async {
-            emit(const MainBlocState.loading());
-            await _getAllProducts(0).whenComplete(() =>
-            emit(MainBlocState.loaded(model: mainModel)));
-          },
-          getAllProducts: (value) async {
-            if(featureRepository.isBusy()) return;
-            //emit(const MainBlocState.loading());
-            await _getAllProducts(value.page).whenComplete(() {
-              if (mainModel.isTimeOut) {
-                emit(const MainBlocState.timeOut());
-              } else if (mainModel.isError) {
-                emit(const MainBlocState.error());
-              } else {
-                emit(MainBlocState.loaded(model: mainModel));
-              }
-            });
-          },
-          searchProduct: ( value) async {
-            if (featureRepository.isBusy()) return;
-            //emit(const MainBlocState.loading());
-            await _searchProduct(value.id).whenComplete(() {
-              if (mainModel.isTimeOut) {
-                emit(const MainBlocState.timeOut());
-              } else if (mainModel.isError) {
-                emit(const MainBlocState.error());
-              } else {
-                emit(MainBlocState.loaded(model: mainModel));
-              }
-            });
-          });
-      _busy = false;
+  }) : super(const MainBlocState.loading());
+
+  Future<void> init() async {
+    emit(const MainBlocState.loading());
+    await _getAllProducts0(0).whenComplete(() {
+      if (mainModel.isTimeOut) {
+        emit(const MainBlocState.timeOut());
+      } else if (mainModel.isError) {
+        emit(const MainBlocState.error());
+      } else {
+        emit(MainBlocState.loaded(model: mainModel));
+      }
     });
   }
 
-  Future<void> _getAllProducts(int page) async {
+  Future<void> getAllProducts({required int page}) async {
+    if (featureRepository.isBusy()) return;
+    //emit(const MainBlocState.loading());
+    await _getAllProducts0(page).whenComplete(() {
+      if (mainModel.isTimeOut) {
+        emit(const MainBlocState.timeOut());
+      } else if (mainModel.isError) {
+        emit(const MainBlocState.error());
+      } else {
+        emit(MainBlocState.loaded(model: mainModel));
+      }
+    });
+  }
+
+  Future<void> searchProduct({required int page}) async {
+    if (featureRepository.isBusy()) return;
+    //emit(const MainBlocState.loading());
+    await _searchProduct0(page).whenComplete(() {
+      if (mainModel.isTimeOut) {
+        emit(const MainBlocState.timeOut());
+      } else if (mainModel.isError) {
+        emit(const MainBlocState.error());
+      } else {
+        emit(MainBlocState.loaded(model: mainModel));
+      }
+    });
+  }
+
+  Future<void> _getAllProducts0(int page) async {
     var(Failure? e , List<ProductEntity>? lp, bool timeOut) = await _getProduct(() => featureRepository.getAllProducts(page));
     if(lp!=null){mainModel = mainModel.copyWith(error: false, timeOut: false,   e: '', lpAll: lp,); return;}
     if(e !=null){mainModel = mainModel.copyWith(error: true,  timeOut: timeOut,e: e.runtimeType.toString());
@@ -130,7 +123,7 @@ class MainBloc extends Bloc<MainBlocEvent, MainBlocState>{
     }
   }
 
-  Future<void> _searchProduct(int id) async {
+  Future<void> _searchProduct0(int id) async {
     var(Failure? e , List<ProductEntity>? lp, bool timeOut) = await _getProduct(() => featureRepository.searchProduct(id));
     if(lp!=null){mainModel = mainModel.copyWith(error: false, timeOut: false,   e: '', lpSingle: lp,);return;}
     if(e!=null){mainModel = mainModel.copyWith(error: true,  timeOut: timeOut,e: e.runtimeType.toString());

@@ -26,6 +26,8 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
 
   @override
   Widget build(BuildContext context) {
+    context.read<FavoritesBloc>().init();
+    context.read<ShoppingBasketBloc>().init();
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
@@ -94,9 +96,7 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
               ElevatedButton(
                 child: const Text('Ok'),
                 onPressed: () {
-                  context
-                      .read<ShoppingBasketBloc>()
-                      .add(const ShoppingBasketBlocEvent.remAll());
+                  context.read<ShoppingBasketBloc>().remAll();
                   RouteGenerator.currentIndex.index = 0;
                   Navigator.of(context).pushReplacementNamed(
                     StoreHomePage.routeName,
@@ -130,7 +130,7 @@ class StoreHomeWidget extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: () async {
         Future block = context.read<MainBloc>().stream.first;
-        context.read<MainBloc>().add(const MainBlocEvent.getAllProducts(page: 0));
+        context.read<MainBloc>().getAllProducts(page: 0);
         return await block;
       },
       child: ScrollConfiguration(

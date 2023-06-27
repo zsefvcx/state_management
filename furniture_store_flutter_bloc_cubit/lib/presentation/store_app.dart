@@ -28,12 +28,12 @@ class _StoreAppState extends State<StoreApp> {
   }
 
   Future<void> initBloc() async {//Ожидаем пока прогрузиться основной поток связаный с основной базой
-    //по идее это должно быть в грубине, но не сейчас
-    _mainBloc.add(const MainBlocEvent.init());
+    //по идее это должно быть в глубине, но не сейчас
+    _mainBloc.init();
     await Future<void>.delayed(const Duration(seconds: 6),
       () {
         _favoritesBloc.init();
-        _shoppingBasketBloc.add(const ShoppingBasketBlocEvent.init());
+        _shoppingBasketBloc.init();
       },);
   }
 

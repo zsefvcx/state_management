@@ -77,20 +77,22 @@ class MainBloc extends Bloc<MainBlocEvent, MainBlocState>{
     error: false,
   );
 
-  bool _busy = false;
-
-  bool get isBusy => _busy;
-
   MainBloc({
     required this.featureRepository,
   }) : super(const MainBlocState.loading()){
     on<MainBlocEvent>((event, emit) async {
-      _busy = true;
       await event.map<FutureOr<void>>(
           init: (value) async {
             emit(const MainBlocState.loading());
-            await _getAllProducts(0).whenComplete(() =>
-            emit(MainBlocState.loaded(model: mainModel)));
+            await _getAllProducts(0).whenComplete(() {
+              if (mainModel.isTimeOut) {
+                emit(const MainBlocState.timeOut());
+              } else if (mainModel.isError) {
+                emit(const MainBlocState.error());
+              } else {
+                emit(MainBlocState.loaded(model: mainModel));
+              }
+            });
           },
           getAllProducts: (value) async {
             if(featureRepository.isBusy()) return;
@@ -118,7 +120,6 @@ class MainBloc extends Bloc<MainBlocEvent, MainBlocState>{
               }
             });
           });
-      _busy = false;
     });
   }
 

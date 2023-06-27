@@ -91,15 +91,4 @@ class FavoritesBloc extends Bloc<FavoritesBlocEvent, FavoritesBlocState>{
     await _favoritesRepository.rem(id);
     model = model.copyWith(model: await _favoritesRepository.fav());
   }
-
-  // void add(FavoritesBlocEvent event){
-  //   // if(_eventsController.isClosed) return;
-  //   // _eventsController.add(event);
-  // }
-
-  void dispose(){
-
-    // _eventsController.close();
-    // _stateController.close();
-  }
 }

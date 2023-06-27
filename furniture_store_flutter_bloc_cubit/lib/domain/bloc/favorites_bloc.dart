@@ -36,13 +36,6 @@ class FavoritesBlocState with _$FavoritesBlocState{
   const factory FavoritesBlocState.loaded({required MapFavoritesModel model}) = _loadedState;
 }
 
-// @freezed
-// class FavoritesBlocEvent with _$FavoritesBlocEvent{
-//   const factory FavoritesBlocEvent.init() = _initEvent;
-//   const factory FavoritesBlocEvent.addFav({required int id}) = _addFavSetEvent;
-//   const factory FavoritesBlocEvent.remFav({required int id}) = _remFavSetEvent;
-// }
-
 @injectable
 class FavoritesBloc extends BlocBase<FavoritesBlocState>{
 
@@ -52,31 +45,7 @@ class FavoritesBloc extends BlocBase<FavoritesBlocState>{
 
   FavoritesBloc( {
     required FavoritesRepository favoritesRepository,
-  }) : _favoritesRepository= favoritesRepository, super(const FavoritesBlocState.loading())
-  {
-    // on<FavoritesBlocEvent>((event, emit) async {
-    //   await event.map<FutureOr<void>>(
-    //       init: (_) async {
-    //         emit(const FavoritesBlocState.loading());
-    //         await _init().whenComplete(() =>
-    //             emit(FavoritesBlocState.loaded(model: model))
-    //         );
-    //       },
-    //       addFav: (value) async {
-    //         if(_favoritesRepository.isBusy()) return;
-    //          await _addFav(value.id).whenComplete(() =>
-    //              emit(FavoritesBlocState.loaded(model: model))
-    //          );
-    //       },
-    //       remFav: (value) async {
-    //         if(_favoritesRepository.isBusy()) return;
-    //         await _remFav(value.id).whenComplete(() =>
-    //             emit(FavoritesBlocState.loaded(model: model))
-    //         );
-    //       },
-    //     );
-    // },);
-  }
+  }) : _favoritesRepository= favoritesRepository, super(const FavoritesBlocState.loading());
 
   Future<void> init() async {
            emit(const FavoritesBlocState.loading());

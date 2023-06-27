@@ -76,10 +76,6 @@ class MainBloc {
     error: false,
   );
 
-  bool _busy = false;
-
-  bool get isBusy => _busy;
-
   final StreamController<MainBlocEvent> _eventsController = StreamController();
   final StreamController<MainBlocState> _stateController = StreamController.broadcast();
 
@@ -89,13 +85,18 @@ class MainBloc {
     required this.featureRepository,
   }) {
     _eventsController.stream.listen((event) {
-      _busy = true;
       event.map<void>(
           init: (value) async {
             final completer = value.completer;
             _stateController.add(const MainBlocState.loading());
             await _getAllProducts(0);
-            _stateController.add(MainBlocState.loaded(model: mainModel));
+            if (mainModel.isTimeOut){
+              _stateController.add(const MainBlocState.timeOut());
+            } else if (mainModel.isError){
+              _stateController.add(const MainBlocState.error());
+            } else {
+              _stateController.add(MainBlocState.loaded(model: mainModel));
+            }
             if(completer!=null)completer.complete();
           },
           getAllProducts: (value) async {
@@ -127,7 +128,6 @@ class MainBloc {
             if(completer!=null)completer.complete();
           }
       );
-      _busy = false;
     });
   }
 

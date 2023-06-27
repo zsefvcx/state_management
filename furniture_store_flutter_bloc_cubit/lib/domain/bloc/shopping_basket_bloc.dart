@@ -43,17 +43,8 @@ class ShoppingBasketBlocState with _$ShoppingBasketBlocState{
   const factory ShoppingBasketBlocState.loaded({required ShoppingBasketModel model}) = _loadedState;
 }
 
-@freezed
-class ShoppingBasketBlocEvent with _$ShoppingBasketBlocEvent{
-  const factory ShoppingBasketBlocEvent.init() = _initEvent;
-  const factory ShoppingBasketBlocEvent.remAll() = _remAllEvent;
-  const factory ShoppingBasketBlocEvent.addBas({required int id}) = _addBasSetEvent;
-  const factory ShoppingBasketBlocEvent.remBas({required int id}) = _remBasSetEvent;
-  const factory ShoppingBasketBlocEvent.setCountBas({required int id, required , required int value}) = _setCountBas;
-}
-
 @injectable
-class ShoppingBasketBloc  extends Bloc<ShoppingBasketBlocEvent, ShoppingBasketBlocState>{
+class ShoppingBasketBloc  extends BlocBase<ShoppingBasketBlocState>{
 
   final ShoppingBasketRepository _shoppingBasketRepository;
 
@@ -61,59 +52,59 @@ class ShoppingBasketBloc  extends Bloc<ShoppingBasketBlocEvent, ShoppingBasketBl
 
   ShoppingBasketBloc({
     required ShoppingBasketRepository shoppingBasketRepository,
-  }) : _shoppingBasketRepository= shoppingBasketRepository, super(const ShoppingBasketBlocState.loading())
-  {
-    on<ShoppingBasketBlocEvent>((event, emit) async {
-      await event.map<FutureOr<void>>(
-        init: (_) async {
-          emit(const ShoppingBasketBlocState.loading());
-          await _init().whenComplete(() =>
-              emit(ShoppingBasketBlocState.loaded(model: model = model)));
-        },
-        addBas: (value) async {
-        if(_shoppingBasketRepository.isBusy()) return;
-        await _addBas(value.id).whenComplete(() =>
-            emit(ShoppingBasketBlocState.loaded(model: model)));
-        },
-        remBas: (value) async {
-          if(_shoppingBasketRepository.isBusy()) return;
-          await _remBas(value.id).whenComplete(() =>
-              emit(ShoppingBasketBlocState.loaded(model: model)));
-        },
-        remAll: (_) async {
-          if(_shoppingBasketRepository.isBusy()) return;
-          await _remAll().whenComplete(() =>
-              emit(ShoppingBasketBlocState.loaded(model: model)));
-        },
-        setCountBas: (value) async {
-          if(_shoppingBasketRepository.isBusy()) return;
-          await _setCountBas(value.id, value.value).whenComplete(() =>
-              emit(ShoppingBasketBlocState.loaded(model: model)));
-        },
-    );
-  });
+  }) : _shoppingBasketRepository= shoppingBasketRepository, super(const ShoppingBasketBlocState.loading());
+
+  Future<void> init() async {
+    emit(const ShoppingBasketBlocState.loading());
+    await _init0().whenComplete(() =>
+        emit(ShoppingBasketBlocState.loaded(model: model)));
   }
 
-    Future<void> _init() async {
+  Future<void> addBas({required int id}) async {
+    if (_shoppingBasketRepository.isBusy()) return;
+    await _addBas0(id).whenComplete(() =>
+        emit(ShoppingBasketBlocState.loaded(model: model)));
+  }
+
+  Future<void> remBas({required int id}) async {
+    if (_shoppingBasketRepository.isBusy()) return;
+    await _remBas0(id).whenComplete(() =>
+        emit(ShoppingBasketBlocState.loaded(model: model)));
+  }
+
+  Future<void> remAll() async {
+    if (_shoppingBasketRepository.isBusy()) return;
+    await _remAll0().whenComplete(() =>
+        emit(ShoppingBasketBlocState.loaded(model: model)));
+  }
+
+  Future<void> setCountBas({required int id, required int value}) async {
+    if (_shoppingBasketRepository.isBusy()) return;
+    await _setCountBas0(id, value).whenComplete(() =>
+        emit(ShoppingBasketBlocState.loaded(model: model)));
+  }
+
+
+    Future<void> _init0() async {
       model = model.copyWith(model: await _shoppingBasketRepository.bas());
     }
 
-    Future<void> _addBas(int id)  async {
+    Future<void> _addBas0(int id)  async {
       await _shoppingBasketRepository.add(id);
       model = model.copyWith(model: await _shoppingBasketRepository.bas());
     }
 
-    Future<void> _remBas(int id) async {
+    Future<void> _remBas0(int id) async {
       await _shoppingBasketRepository.rem(id);
       model = model.copyWith(model: await _shoppingBasketRepository.bas());
     }
 
-    Future<void> _remAll() async {
+    Future<void> _remAll0() async {
       await _shoppingBasketRepository.remAll();
       model = model.copyWith(model: await _shoppingBasketRepository.bas());
     }
 
-    Future<void> _setCountBas(int id, int value) async {
+    Future<void> _setCountBas0(int id, int value) async {
       await _shoppingBasketRepository.setCountBas(id, value);
       model = model.copyWith(model: await _shoppingBasketRepository.bas());
     }

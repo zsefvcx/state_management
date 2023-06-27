@@ -68,7 +68,7 @@ class ShoppingBasketBloc  extends Bloc<ShoppingBasketBlocEvent, ShoppingBasketBl
         init: (_) async {
           emit(const ShoppingBasketBlocState.loading());
           await _init().whenComplete(() =>
-              emit(ShoppingBasketBlocState.loaded(model: model = model)));
+              emit(ShoppingBasketBlocState.loaded(model: model)));
         },
         addBas: (value) async {
         if(_shoppingBasketRepository.isBusy()) return;

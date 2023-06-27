@@ -28,20 +28,13 @@ class _StoreAppState extends State<StoreApp> {
   }
 
   Future<void> initBloc() async {//Ожидаем пока прогрузиться основной поток связаный с основной базой
-    //по идее это должно быть в грубине, но не сейчас
+    //по идее это должно быть в глубине, но не сейчас
     _mainBloc.add(const MainBlocEvent.init());
     await Future<void>.delayed(const Duration(seconds: 6),
       () {
         _favoritesBloc.add(const FavoritesBlocEvent.init());
         _shoppingBasketBloc.add(const ShoppingBasketBlocEvent.init());
       },);
-  }
-
-
-  @override
-  void dispose() {
-    super.dispose();
-    _favoritesBloc.dispose();
   }
 
   @override

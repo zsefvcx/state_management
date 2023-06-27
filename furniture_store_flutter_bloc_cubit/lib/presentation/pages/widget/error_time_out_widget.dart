@@ -24,7 +24,7 @@ class ErrorTimeOutWidget extends StatelessWidget {
             ),
             TextButton(
                 onPressed: () {
-                  mainBloc.add(const MainBlocEvent.getAllProducts(page: 0));
+                  mainBloc.getAllProducts(page: 0);
                 },
                 child: const Text('Try again')),
           ],

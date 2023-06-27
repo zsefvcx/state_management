@@ -17,7 +17,7 @@ class StoreHomeWidget extends StatelessWidget {
     return RefreshIndicator(
       onRefresh: () async {
         Future block = context.read<MainBloc>().stream.first;
-        context.read<MainBloc>().add(const MainBlocEvent.getAllProducts(page: 0));
+        context.read<MainBloc>().getAllProducts(page: 0);
         return await block;
       },
       child: ScrollConfiguration(

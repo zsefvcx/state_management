@@ -84,11 +84,11 @@ class RowLocalWidget extends StatelessWidget {
                   if(value > 999) value = 0;
                   if(value <= 0){
                     value = 0;
-                    context.read<ShoppingBasketBloc>().add(ShoppingBasketBlocEvent.remBas(id: _productEntity.id));
+                    context.read<ShoppingBasketBloc>().remBas(id: _productEntity.id);
                   } else {
                     controller.value =
                         TextEditingValue(text: value.toString());
-                    context.read<ShoppingBasketBloc>().add(ShoppingBasketBlocEvent.setCountBas(id: _productEntity.id, value: value));
+                    context.read<ShoppingBasketBloc>().setCountBas(id: _productEntity.id, value: value);
                   }
                 },
                 textAlign: TextAlign.center,
@@ -104,11 +104,11 @@ class RowLocalWidget extends StatelessWidget {
                   value--;
                   if(value <= 0) {
                     value = 0;
-                    context.read<ShoppingBasketBloc>().add(ShoppingBasketBlocEvent.remBas(id: _productEntity.id));
+                    context.read<ShoppingBasketBloc>().remBas(id: _productEntity.id);
                   } else {
                     controller.value = TextEditingValue(
                         text: value.toString());
-                    context.read<ShoppingBasketBloc>().add(ShoppingBasketBlocEvent.setCountBas(id: _productEntity.id, value: value));
+                    context.read<ShoppingBasketBloc>().setCountBas(id: _productEntity.id, value: value);
                   }
                 }, icon: const Icon(Icons.remove),
               ),
@@ -122,7 +122,7 @@ class RowLocalWidget extends StatelessWidget {
                   value++;
                   if(value > 999) value = 999;
                   controller.value = TextEditingValue(text: value.toString());
-                  context.read<ShoppingBasketBloc>().add(ShoppingBasketBlocEvent.setCountBas(id: _productEntity.id, value: value));
+                  context.read<ShoppingBasketBloc>().setCountBas(id: _productEntity.id, value: value);
                 }, icon: const Icon(Icons.add),
               ),
             ),
@@ -148,7 +148,7 @@ class RowLocalWidget extends StatelessWidget {
                     ElevatedButton(
                       child: const Text('Ok'),
                       onPressed: () {
-                        context.read<ShoppingBasketBloc>().add(ShoppingBasketBlocEvent.remBas(id: _productEntity.id));
+                        context.read<ShoppingBasketBloc>().remBas(id: _productEntity.id);
                         RouteGenerator.currentIndex.index = 0;
                         Navigator.of(context).
                         pushReplacementNamed(StoreHomePage.routeName,
@@ -169,8 +169,8 @@ class RowLocalWidget extends StatelessWidget {
               },
             );
             } else {
-              status? context.read<ShoppingBasketBloc>().add(ShoppingBasketBlocEvent.remBas(id: _productEntity.id)):
-              context.read<ShoppingBasketBloc>().add(ShoppingBasketBlocEvent.addBas(id: _productEntity.id));
+              status? context.read<ShoppingBasketBloc>().remBas(id: _productEntity.id):
+              context.read<ShoppingBasketBloc>().addBas(id: _productEntity.id);
             }
           },
           child: Row(
