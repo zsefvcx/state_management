@@ -59,9 +59,9 @@ class MainBlocState with _$MainBlocState{
 
 @freezed
 class MainBlocEvent with _$MainBlocEvent{
-  const factory MainBlocEvent.init() = _initEvent;
-  const factory MainBlocEvent.getAllProducts({required int page}) = _getAllProductsEvent;
-  const factory MainBlocEvent.searchProduct({required int id}) = _searchProductEvent;
+  const factory MainBlocEvent.init({Completer? completer}) = _initEvent;
+  const factory MainBlocEvent.getAllProducts({required int page, Completer? completer}) = _getAllProductsEvent;
+  const factory MainBlocEvent.searchProduct({required int id, Completer? completer}) = _searchProductEvent;
 }
 
 @injectable
@@ -92,14 +92,16 @@ class MainBloc {
       _busy = true;
       event.map<void>(
           init: (value) async {
-
+            final completer = value.completer;
             _stateController.add(const MainBlocState.loading());
             await _getAllProducts(0);
             _stateController.add(MainBlocState.loaded(model: mainModel));
+            if(completer!=null)completer.complete();
           },
           getAllProducts: (value) async {
+            final completer = value.completer;
             if(featureRepository.isBusy()) return;
-            _stateController.add(const MainBlocState.loading());
+            //_stateController.add(const MainBlocState.loading());
             await _getAllProducts(value.page);
             if (mainModel.isTimeOut){
               _stateController.add(const MainBlocState.timeOut());
@@ -108,11 +110,12 @@ class MainBloc {
             } else {
               _stateController.add(MainBlocState.loaded(model: mainModel));
             }
-
+            if(completer!=null)completer.complete();
           },
           searchProduct: ( value) async {
+            final completer = value.completer;
             if(featureRepository.isBusy()) return;
-            _stateController.add(const MainBlocState.loading());
+            //_stateController.add(const MainBlocState.loading());
             await _searchProduct(value.id);
             if (mainModel.isTimeOut){
               _stateController.add(const MainBlocState.timeOut());
@@ -121,6 +124,7 @@ class MainBloc {
             } else {
               _stateController.add(MainBlocState.loaded(model: mainModel));
             }
+            if(completer!=null)completer.complete();
           }
       );
       _busy = false;

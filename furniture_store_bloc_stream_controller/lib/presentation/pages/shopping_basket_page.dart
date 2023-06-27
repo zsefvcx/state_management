@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -135,9 +136,11 @@ class StoreHomeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () async => context
-          .read<MainBloc>()
-          .add(const MainBlocEvent.getAllProducts(page: 0)),
+      onRefresh: () async {
+        final completer = Completer();
+        context.read<MainBloc>().add(MainBlocEvent.getAllProducts(page: 0, completer: completer));
+        return await completer.future;
+      },
       child: ScrollConfiguration(
         // + windows
         behavior: ScrollConfiguration.of(context).copyWith(

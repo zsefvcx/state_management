@@ -574,25 +574,28 @@ abstract class _timeOut implements MainBlocState {
 
 /// @nodoc
 mixin _$MainBlocEvent {
+  Completer<dynamic>? get completer => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() init,
-    required TResult Function(int page) getAllProducts,
-    required TResult Function(int id) searchProduct,
+    required TResult Function(Completer<dynamic>? completer) init,
+    required TResult Function(int page, Completer<dynamic>? completer)
+        getAllProducts,
+    required TResult Function(int id, Completer<dynamic>? completer)
+        searchProduct,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? init,
-    TResult? Function(int page)? getAllProducts,
-    TResult? Function(int id)? searchProduct,
+    TResult? Function(Completer<dynamic>? completer)? init,
+    TResult? Function(int page, Completer<dynamic>? completer)? getAllProducts,
+    TResult? Function(int id, Completer<dynamic>? completer)? searchProduct,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? init,
-    TResult Function(int page)? getAllProducts,
-    TResult Function(int id)? searchProduct,
+    TResult Function(Completer<dynamic>? completer)? init,
+    TResult Function(int page, Completer<dynamic>? completer)? getAllProducts,
+    TResult Function(int id, Completer<dynamic>? completer)? searchProduct,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -618,6 +621,10 @@ mixin _$MainBlocEvent {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $MainBlocEventCopyWith<MainBlocEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -625,6 +632,8 @@ abstract class $MainBlocEventCopyWith<$Res> {
   factory $MainBlocEventCopyWith(
           MainBlocEvent value, $Res Function(MainBlocEvent) then) =
       _$MainBlocEventCopyWithImpl<$Res, MainBlocEvent>;
+  @useResult
+  $Res call({Completer<dynamic>? completer});
 }
 
 /// @nodoc
@@ -636,13 +645,30 @@ class _$MainBlocEventCopyWithImpl<$Res, $Val extends MainBlocEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? completer = freezed,
+  }) {
+    return _then(_value.copyWith(
+      completer: freezed == completer
+          ? _value.completer
+          : completer // ignore: cast_nullable_to_non_nullable
+              as Completer<dynamic>?,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$_initEventCopyWith<$Res> {
+abstract class _$$_initEventCopyWith<$Res>
+    implements $MainBlocEventCopyWith<$Res> {
   factory _$$_initEventCopyWith(
           _$_initEvent value, $Res Function(_$_initEvent) then) =
       __$$_initEventCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({Completer<dynamic>? completer});
 }
 
 /// @nodoc
@@ -652,57 +678,84 @@ class __$$_initEventCopyWithImpl<$Res>
   __$$_initEventCopyWithImpl(
       _$_initEvent _value, $Res Function(_$_initEvent) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? completer = freezed,
+  }) {
+    return _then(_$_initEvent(
+      completer: freezed == completer
+          ? _value.completer
+          : completer // ignore: cast_nullable_to_non_nullable
+              as Completer<dynamic>?,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_initEvent implements _initEvent {
-  const _$_initEvent();
+  const _$_initEvent({this.completer});
+
+  @override
+  final Completer<dynamic>? completer;
 
   @override
   String toString() {
-    return 'MainBlocEvent.init()';
+    return 'MainBlocEvent.init(completer: $completer)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_initEvent);
+        (other.runtimeType == runtimeType &&
+            other is _$_initEvent &&
+            (identical(other.completer, completer) ||
+                other.completer == completer));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, completer);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_initEventCopyWith<_$_initEvent> get copyWith =>
+      __$$_initEventCopyWithImpl<_$_initEvent>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() init,
-    required TResult Function(int page) getAllProducts,
-    required TResult Function(int id) searchProduct,
+    required TResult Function(Completer<dynamic>? completer) init,
+    required TResult Function(int page, Completer<dynamic>? completer)
+        getAllProducts,
+    required TResult Function(int id, Completer<dynamic>? completer)
+        searchProduct,
   }) {
-    return init();
+    return init(completer);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? init,
-    TResult? Function(int page)? getAllProducts,
-    TResult? Function(int id)? searchProduct,
+    TResult? Function(Completer<dynamic>? completer)? init,
+    TResult? Function(int page, Completer<dynamic>? completer)? getAllProducts,
+    TResult? Function(int id, Completer<dynamic>? completer)? searchProduct,
   }) {
-    return init?.call();
+    return init?.call(completer);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? init,
-    TResult Function(int page)? getAllProducts,
-    TResult Function(int id)? searchProduct,
+    TResult Function(Completer<dynamic>? completer)? init,
+    TResult Function(int page, Completer<dynamic>? completer)? getAllProducts,
+    TResult Function(int id, Completer<dynamic>? completer)? searchProduct,
     required TResult orElse(),
   }) {
     if (init != null) {
-      return init();
+      return init(completer);
     }
     return orElse();
   }
@@ -743,16 +796,26 @@ class _$_initEvent implements _initEvent {
 }
 
 abstract class _initEvent implements MainBlocEvent {
-  const factory _initEvent() = _$_initEvent;
+  const factory _initEvent({final Completer<dynamic>? completer}) =
+      _$_initEvent;
+
+  @override
+  Completer<dynamic>? get completer;
+  @override
+  @JsonKey(ignore: true)
+  _$$_initEventCopyWith<_$_initEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_getAllProductsEventCopyWith<$Res> {
+abstract class _$$_getAllProductsEventCopyWith<$Res>
+    implements $MainBlocEventCopyWith<$Res> {
   factory _$$_getAllProductsEventCopyWith(_$_getAllProductsEvent value,
           $Res Function(_$_getAllProductsEvent) then) =
       __$$_getAllProductsEventCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({int page});
+  $Res call({int page, Completer<dynamic>? completer});
 }
 
 /// @nodoc
@@ -767,12 +830,17 @@ class __$$_getAllProductsEventCopyWithImpl<$Res>
   @override
   $Res call({
     Object? page = null,
+    Object? completer = freezed,
   }) {
     return _then(_$_getAllProductsEvent(
       page: null == page
           ? _value.page
           : page // ignore: cast_nullable_to_non_nullable
               as int,
+      completer: freezed == completer
+          ? _value.completer
+          : completer // ignore: cast_nullable_to_non_nullable
+              as Completer<dynamic>?,
     ));
   }
 }
@@ -780,14 +848,16 @@ class __$$_getAllProductsEventCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_getAllProductsEvent implements _getAllProductsEvent {
-  const _$_getAllProductsEvent({required this.page});
+  const _$_getAllProductsEvent({required this.page, this.completer});
 
   @override
   final int page;
+  @override
+  final Completer<dynamic>? completer;
 
   @override
   String toString() {
-    return 'MainBlocEvent.getAllProducts(page: $page)';
+    return 'MainBlocEvent.getAllProducts(page: $page, completer: $completer)';
   }
 
   @override
@@ -795,11 +865,13 @@ class _$_getAllProductsEvent implements _getAllProductsEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_getAllProductsEvent &&
-            (identical(other.page, page) || other.page == page));
+            (identical(other.page, page) || other.page == page) &&
+            (identical(other.completer, completer) ||
+                other.completer == completer));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, page);
+  int get hashCode => Object.hash(runtimeType, page, completer);
 
   @JsonKey(ignore: true)
   @override
@@ -811,33 +883,35 @@ class _$_getAllProductsEvent implements _getAllProductsEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() init,
-    required TResult Function(int page) getAllProducts,
-    required TResult Function(int id) searchProduct,
+    required TResult Function(Completer<dynamic>? completer) init,
+    required TResult Function(int page, Completer<dynamic>? completer)
+        getAllProducts,
+    required TResult Function(int id, Completer<dynamic>? completer)
+        searchProduct,
   }) {
-    return getAllProducts(page);
+    return getAllProducts(page, completer);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? init,
-    TResult? Function(int page)? getAllProducts,
-    TResult? Function(int id)? searchProduct,
+    TResult? Function(Completer<dynamic>? completer)? init,
+    TResult? Function(int page, Completer<dynamic>? completer)? getAllProducts,
+    TResult? Function(int id, Completer<dynamic>? completer)? searchProduct,
   }) {
-    return getAllProducts?.call(page);
+    return getAllProducts?.call(page, completer);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? init,
-    TResult Function(int page)? getAllProducts,
-    TResult Function(int id)? searchProduct,
+    TResult Function(Completer<dynamic>? completer)? init,
+    TResult Function(int page, Completer<dynamic>? completer)? getAllProducts,
+    TResult Function(int id, Completer<dynamic>? completer)? searchProduct,
     required TResult orElse(),
   }) {
     if (getAllProducts != null) {
-      return getAllProducts(page);
+      return getAllProducts(page, completer);
     }
     return orElse();
   }
@@ -878,22 +952,28 @@ class _$_getAllProductsEvent implements _getAllProductsEvent {
 }
 
 abstract class _getAllProductsEvent implements MainBlocEvent {
-  const factory _getAllProductsEvent({required final int page}) =
-      _$_getAllProductsEvent;
+  const factory _getAllProductsEvent(
+      {required final int page,
+      final Completer<dynamic>? completer}) = _$_getAllProductsEvent;
 
   int get page;
+  @override
+  Completer<dynamic>? get completer;
+  @override
   @JsonKey(ignore: true)
   _$$_getAllProductsEventCopyWith<_$_getAllProductsEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_searchProductEventCopyWith<$Res> {
+abstract class _$$_searchProductEventCopyWith<$Res>
+    implements $MainBlocEventCopyWith<$Res> {
   factory _$$_searchProductEventCopyWith(_$_searchProductEvent value,
           $Res Function(_$_searchProductEvent) then) =
       __$$_searchProductEventCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({int id});
+  $Res call({int id, Completer<dynamic>? completer});
 }
 
 /// @nodoc
@@ -908,12 +988,17 @@ class __$$_searchProductEventCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? completer = freezed,
   }) {
     return _then(_$_searchProductEvent(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      completer: freezed == completer
+          ? _value.completer
+          : completer // ignore: cast_nullable_to_non_nullable
+              as Completer<dynamic>?,
     ));
   }
 }
@@ -921,14 +1006,16 @@ class __$$_searchProductEventCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_searchProductEvent implements _searchProductEvent {
-  const _$_searchProductEvent({required this.id});
+  const _$_searchProductEvent({required this.id, this.completer});
 
   @override
   final int id;
+  @override
+  final Completer<dynamic>? completer;
 
   @override
   String toString() {
-    return 'MainBlocEvent.searchProduct(id: $id)';
+    return 'MainBlocEvent.searchProduct(id: $id, completer: $completer)';
   }
 
   @override
@@ -936,11 +1023,13 @@ class _$_searchProductEvent implements _searchProductEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_searchProductEvent &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.completer, completer) ||
+                other.completer == completer));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode => Object.hash(runtimeType, id, completer);
 
   @JsonKey(ignore: true)
   @override
@@ -952,33 +1041,35 @@ class _$_searchProductEvent implements _searchProductEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() init,
-    required TResult Function(int page) getAllProducts,
-    required TResult Function(int id) searchProduct,
+    required TResult Function(Completer<dynamic>? completer) init,
+    required TResult Function(int page, Completer<dynamic>? completer)
+        getAllProducts,
+    required TResult Function(int id, Completer<dynamic>? completer)
+        searchProduct,
   }) {
-    return searchProduct(id);
+    return searchProduct(id, completer);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? init,
-    TResult? Function(int page)? getAllProducts,
-    TResult? Function(int id)? searchProduct,
+    TResult? Function(Completer<dynamic>? completer)? init,
+    TResult? Function(int page, Completer<dynamic>? completer)? getAllProducts,
+    TResult? Function(int id, Completer<dynamic>? completer)? searchProduct,
   }) {
-    return searchProduct?.call(id);
+    return searchProduct?.call(id, completer);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? init,
-    TResult Function(int page)? getAllProducts,
-    TResult Function(int id)? searchProduct,
+    TResult Function(Completer<dynamic>? completer)? init,
+    TResult Function(int page, Completer<dynamic>? completer)? getAllProducts,
+    TResult Function(int id, Completer<dynamic>? completer)? searchProduct,
     required TResult orElse(),
   }) {
     if (searchProduct != null) {
-      return searchProduct(id);
+      return searchProduct(id, completer);
     }
     return orElse();
   }
@@ -1019,10 +1110,14 @@ class _$_searchProductEvent implements _searchProductEvent {
 }
 
 abstract class _searchProductEvent implements MainBlocEvent {
-  const factory _searchProductEvent({required final int id}) =
-      _$_searchProductEvent;
+  const factory _searchProductEvent(
+      {required final int id,
+      final Completer<dynamic>? completer}) = _$_searchProductEvent;
 
   int get id;
+  @override
+  Completer<dynamic>? get completer;
+  @override
   @JsonKey(ignore: true)
   _$$_searchProductEventCopyWith<_$_searchProductEvent> get copyWith =>
       throw _privateConstructorUsedError;

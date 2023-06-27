@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -15,11 +16,9 @@ class StoreHomeWidget extends StatelessWidget {
     var mainBloc = context.read<MainBloc>();
     return RefreshIndicator(
       onRefresh: () async {
-        context.read<MainBloc>().add(const MainBlocEvent.getAllProducts(page: 0));
-        // await Future.doWhile(() async {
-        //   await Future.delayed(const Duration(seconds: 1));
-        //   return context.read<MainBloc>().isBusy;
-        // }).timeout(const Duration(seconds: 5));
+        final completer = Completer();
+        context.read<MainBloc>().add(MainBlocEvent.getAllProducts(page: 0, completer: completer));
+        return completer.future;
       },
       child: ScrollConfiguration(
         // + windows
