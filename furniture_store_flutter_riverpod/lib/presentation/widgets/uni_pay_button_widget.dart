@@ -64,7 +64,7 @@ class UniPayButtonWidget extends ConsumerWidget {
                 ),
               ),
               Positioned(
-                top: -3,
+                top: -8,
                 left: 0,
                 child: IconButton(
                   onPressed: () async {
@@ -83,7 +83,7 @@ class UniPayButtonWidget extends ConsumerWidget {
                 ),
               ),
               Positioned(
-                top: -3,
+                top: -8,
                 right: 0,
                 child: IconButton(
                   onPressed: () async {

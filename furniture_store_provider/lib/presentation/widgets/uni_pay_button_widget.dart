@@ -31,7 +31,7 @@ class UniPayButtonWidget extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 6),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                 height: 30,
                 width: 90,
                 child: TextField(
@@ -63,7 +63,7 @@ class UniPayButtonWidget extends StatelessWidget {
                 ),
               ),
               Positioned(
-                top: -3,
+                top: -8,
                 left: 0,
                 child: IconButton(
                   onPressed: () async {
@@ -82,7 +82,7 @@ class UniPayButtonWidget extends StatelessWidget {
                 ),
               ),
               Positioned(
-                top: -3,
+                top: -8,
                 right: 0,
                 child: IconButton(
                   onPressed: () async {

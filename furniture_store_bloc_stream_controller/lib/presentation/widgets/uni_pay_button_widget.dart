@@ -99,7 +99,7 @@ class RowLocalWidget extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: -3,
+              top: -8,
               left: 0,
               child: IconButton(
                 onPressed: ()  {
@@ -117,7 +117,7 @@ class RowLocalWidget extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: -3,
+              top: -8,
               right: 0,
               child: IconButton(
                 onPressed: () {
