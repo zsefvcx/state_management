@@ -89,9 +89,9 @@ class FavoritesBloc extends BlocBase<FavoritesBlocState>{
     model = model.copyWith(model: await _favoritesRepository.fav());
   }
 
-  Future<void> addFav(value) async {
+  Future<void> addFav({required int id}) async {
     if (_favoritesRepository.isBusy()) return;
-    await _addFav0(value.id).whenComplete(() =>
+    await _addFav0(id).whenComplete(() =>
         emit(FavoritesBlocState.loaded(model: model))
     );
   }
@@ -101,9 +101,9 @@ class FavoritesBloc extends BlocBase<FavoritesBlocState>{
     model = model.copyWith(model: await _favoritesRepository.fav());
   }
 
-  Future<void> remFav(value) async {
+  Future<void> remFav({required int id}) async {
     if (_favoritesRepository.isBusy()) return;
-    await _remFav0(value.id).whenComplete(() =>
+    await _remFav0(id).whenComplete(() =>
         emit(FavoritesBlocState.loaded(model: model))
     );
   }

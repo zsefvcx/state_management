@@ -32,16 +32,9 @@ class _StoreAppState extends State<StoreApp> {
     _mainBloc.add(const MainBlocEvent.init());
     await Future<void>.delayed(const Duration(seconds: 6),
       () {
-        _favoritesBloc.add(const FavoritesBlocEvent.init());
+        _favoritesBloc.init();
         _shoppingBasketBloc.add(const ShoppingBasketBlocEvent.init());
       },);
-  }
-
-
-  @override
-  void dispose() {
-    super.dispose();
-    _favoritesBloc.dispose();
   }
 
   @override

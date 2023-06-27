@@ -23,9 +23,8 @@ class StoreHomePage extends StatefulWidget {
 class _StoreHomePageState extends State<StoreHomePage> {
   @override
   Widget build(BuildContext context) {
-    context.read<FavoritesBloc>().add(const FavoritesBlocEvent.init());
-    context
-        .read<ShoppingBasketBloc>()
+    context.read<FavoritesBloc>().init();
+    context.read<ShoppingBasketBloc>()
         .add(const ShoppingBasketBlocEvent.init());
     return Scaffold(
       appBar: AppBar(

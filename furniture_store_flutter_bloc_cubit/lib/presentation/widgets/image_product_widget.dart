@@ -22,8 +22,8 @@ class ImageProductWidget extends StatelessWidget {
           const Placeholder(),
           IconButton(
               onPressed: () async {
-                status? context.read<FavoritesBloc>().add(FavoritesBlocEvent.remFav(id: _productEntity.id)):
-                context.read<FavoritesBloc>().add(FavoritesBlocEvent.addFav(id: _productEntity.id));
+                status? context.read<FavoritesBloc>().remFav(id: _productEntity.id):
+                context.read<FavoritesBloc>().addFav(id: _productEntity.id);
               },
               icon: BlocBuilder<FavoritesBloc, FavoritesBlocState>(
                 builder: (context, state) {
