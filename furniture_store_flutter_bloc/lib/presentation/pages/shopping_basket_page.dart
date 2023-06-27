@@ -128,9 +128,11 @@ class StoreHomeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () async => context
-          .read<MainBloc>()
-          .add(const MainBlocEvent.getAllProducts(page: 0)),
+      onRefresh: () async {
+        Future block = context.read<MainBloc>().stream.first;
+        context.read<MainBloc>().add(const MainBlocEvent.getAllProducts(page: 0));
+        return await block;
+      },
       child: ScrollConfiguration(
         // + windows
         behavior: ScrollConfiguration.of(context).copyWith(

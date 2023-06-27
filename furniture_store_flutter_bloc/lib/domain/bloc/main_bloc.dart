@@ -94,7 +94,7 @@ class MainBloc extends Bloc<MainBlocEvent, MainBlocState>{
           },
           getAllProducts: (value) async {
             if(featureRepository.isBusy()) return;
-            emit(const MainBlocState.loading());
+            //emit(const MainBlocState.loading());
             await _getAllProducts(value.page).whenComplete(() {
               if (mainModel.isTimeOut) {
                 emit(const MainBlocState.timeOut());
@@ -107,7 +107,7 @@ class MainBloc extends Bloc<MainBlocEvent, MainBlocState>{
           },
           searchProduct: ( value) async {
             if (featureRepository.isBusy()) return;
-            emit(const MainBlocState.loading());
+            //emit(const MainBlocState.loading());
             await _searchProduct(value.id).whenComplete(() {
               if (mainModel.isTimeOut) {
                 emit(const MainBlocState.timeOut());

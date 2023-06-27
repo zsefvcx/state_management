@@ -6,7 +6,6 @@ import 'package:furniture_store/domain/bloc/bloc.dart';
 import 'package:furniture_store/presentation/pages/widget/store_home_widget.dart';
 import 'package:furniture_store/presentation/widgets/navigator_widget.dart';
 import 'package:furniture_store/presentation/widgets/widgets.dart';
-import 'package:provider/provider.dart';
 
 import 'widget/error_time_out_widget.dart';
 
