@@ -130,45 +130,59 @@ class _ShoppingBasketPageState extends State<ShoppingBasketPage> {
   }
 }
 
-class StoreHomeWidget extends StatelessWidget {
+
+final bucketGlobal = PageStorageBucket();
+
+class StoreHomeWidget extends StatefulWidget {
   const StoreHomeWidget({
     super.key,
   });
 
   @override
+  State<StoreHomeWidget> createState() => _StoreHomeWidgetState();
+}
+
+class _StoreHomeWidgetState extends State<StoreHomeWidget> {
+  @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: () async {
-        final completer = Completer();
-        context.read<MainBloc>().add(MainBlocEvent.getAllProducts(page: 0, completer: completer));
-        return await completer.future;
-      },
-      child: ScrollConfiguration(
-        // + windows
-        behavior: ScrollConfiguration.of(context).copyWith(
-          dragDevices: {
-            PointerDeviceKind.touch,
-            PointerDeviceKind.mouse,
-          },
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: StreamBuilder<ShoppingBasketBlocState>(
-            stream: context.read<ShoppingBasketBloc>().state,
-            builder: (context, snapshot) {
-              var model = context.read<ShoppingBasketBloc>().model;
-              if (snapshot.hasData) {
-                final state = snapshot.data;
-                if (state != null) {
-                  state.map(loading: (value) {
-                    //ничего не делаем, зачем что то делать
-                  }, loaded: (value) {
-                    model = value.model;
-                  });
-                }
-              }
-              return GridViewWidget(model: model);
+    return PageStorage(
+      bucket: bucketGlobal,
+      child: RefreshIndicator(
+        onRefresh: () async {
+          final completer = Completer();
+          context.read<MainBloc>().add(MainBlocEvent.getAllProducts(page: 0, completer: completer));
+          return await completer.future;
+        },
+        child: ScrollConfiguration(
+          // + windows
+          behavior: ScrollConfiguration.of(context).copyWith(
+            dragDevices: {
+              PointerDeviceKind.touch,
+              PointerDeviceKind.mouse,
             },
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: StreamBuilder<ShoppingBasketBlocState>(
+              stream: context.read<ShoppingBasketBloc>().state,
+              builder: (context, snapshot) {
+                var model = context.read<ShoppingBasketBloc>().model;
+                if (snapshot.hasData) {
+                  final state = snapshot.data;
+                  if (state != null) {
+                    state.map(loading: (value) {
+                      //ничего не делаем, зачем что то делать
+                    }, loaded: (value) {
+                      model = value.model;
+                    });
+                  }
+                }
+                return GridViewWidget(
+                    key: const PageStorageKey('storeBasketWidget'),
+                    model: model
+                );
+              },
+            ),
           ),
         ),
       ),
